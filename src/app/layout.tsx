@@ -50,6 +50,8 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Plausible Analytics */}
+        <script defer data-domain="easeyourmind.vercel.app" src="https://plausible.io/js/script.js"></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
