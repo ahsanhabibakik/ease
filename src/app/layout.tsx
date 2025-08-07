@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Microsoft Clarity */}
         <Script id="clarity-script" strategy="afterInteractive">
@@ -49,6 +49,15 @@ export default function RootLayout({
         </Script>
         {/* Plausible Analytics */}
         <Script defer data-domain="easeyourmind.vercel.app" src="https://plausible.io/js/script.js" strategy="afterInteractive" />
+        {/* Theme Initialization Script */}
+        <Script id="theme-init" strategy="beforeInteractive">{`
+          try {
+            const stored = localStorage.getItem('ease-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            if (theme === 'dark') document.documentElement.classList.add('dark');
+          } catch(e) {}
+        `}</Script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* Google Tag Manager (noscript) */}
