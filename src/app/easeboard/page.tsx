@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Layout from '@/components/Layout';
 import useWorryStore from '@/stores/worryStore';
 
 export default function EaseboardPage() {
@@ -69,8 +68,7 @@ export default function EaseboardPage() {
 
   return (
     <div className="space-y-10 max-w-7xl mx-auto">
-      <Layout>
-        <div className="max-w-6xl mx-auto space-y-6">
+      <div className="max-w-6xl mx-auto space-y-6">
           <section className="bg-white p-6 rounded-2xl shadow-md">
             <h1 className="text-3xl font-bold mb-6">Easeboard</h1>
             
@@ -201,8 +199,7 @@ export default function EaseboardPage() {
               </div>
             </div>
           </section>
-        </div>
-      </Layout>
+  </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Layout from '@/components/Layout';
 
 export default function Companion() {
   const [selectedGuide, setSelectedGuide] = useState<string | null>(null);
@@ -85,8 +84,7 @@ export default function Companion() {
   ];
 
   return (
-    <Layout>
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <section className="bg-white p-8 rounded-2xl shadow-md text-center">
           <h1 className="text-3xl font-bold mb-4">Your Compassionate Companion</h1>
@@ -211,7 +209,6 @@ export default function Companion() {
             </div>
           </div>
         </section>
-      </div>
-    </Layout>
+  </div>
   );
 }
