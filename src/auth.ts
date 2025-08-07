@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client"
 import GoogleProvider from "next-auth/providers/google"
 import EmailProvider from "next-auth/providers/email"
 import CredentialsProvider from "next-auth/providers/credentials"
-import bcrypt from "bcryptjs"
+
 
 const prisma = new PrismaClient()
 
