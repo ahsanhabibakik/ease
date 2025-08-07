@@ -5,11 +5,13 @@ This document lists the main technologies, libraries, and tools used in the Ease
 ---
 
 ## 1. Core Frameworks & Languages
+
 - **Next.js**: Main React framework for SSR, routing, API routes, and backend logic (API routes).
 - **TypeScript**: Type-safe JavaScript for all app logic and components.
 - **React**: UI library for building interactive user interfaces.
 
 ## 1a. Backend, Security & Authentication
+
 - **next-auth**: Authentication for Next.js (OAuth, credentials, email, etc.).
 - **bcryptjs**: Password hashing for credentials authentication.
 - **jsonwebtoken**: JWT-based authentication for APIs.
@@ -25,6 +27,7 @@ This document lists the main technologies, libraries, and tools used in the Ease
 - **sentry**/**@sentry/nextjs**: Error monitoring and reporting.
 
 ## 2. Styling & UI
+
 - **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
 - **PostCSS**: CSS processing pipeline (used by Tailwind).
 - **Autoprefixer**: Adds vendor prefixes to CSS (via PostCSS).
@@ -34,36 +37,43 @@ This document lists the main technologies, libraries, and tools used in the Ease
 - **clsx**: Utility for conditional classNames.
 
 ## 3. Animations & Interactions
+
 - **framer-motion**: Animations and transitions (e.g., fade-ins, petal swipes).
 - **react-swipeable** or **keen-slider**: Swipeable carousels for Wisdom Cards.
 
 ## 4. State Management & Utilities
+
 - **redux** & **@reduxjs/toolkit**: Global state management (alternative to zustand/jotai).
 - **react-redux**: React bindings for Redux.
 - **zustand** or **jotai**: Lightweight state management for worries, reflections, etc.
 - **date-fns** or **dayjs**: Date/time utilities (for reminders, logs).
 
 ## 5. Audio, Timers, and Notifications
+
 - **howler** or **use-sound**: Play calming sounds in Calm Corner.
 - **react-timer-hook**: Countdown timers for breathing and meditation.
 - **react-toastify**: In-app notifications (optional).
 
 ## 6. Icons & Imagery
+
 - **react-icons**: Icon library for hand-drawn style icons.
 - **Custom SVGs**: For unique, branded illustrations.
 
 ## 7. Backend & Data
+
 - **Firebase**: NoSQL database, authentication, and serverless functions (optional, or use Prisma for SQL DB).
 - **Prisma**: ORM for SQL databases (Postgres, MySQL, SQLite, etc.).
 - **LocalStorage**: For offline worry capture and local reminders.
 
 ## 8. Testing & Linting
+
 - **eslint**: Linting for code quality.
 - **prettier**: Code formatting.
 - **jest** or **vitest**: Unit and integration testing.
 - **@testing-library/react**: React component testing utilities.
 
 ## 9. Project Tooling
+
 - **pnpm**: Fast, disk-efficient package manager (used everywhere in this project).
 - **VS Code**: Recommended IDE, configured to use pnpm by default.
 - **dotenv**: For managing environment variables in all environments.
