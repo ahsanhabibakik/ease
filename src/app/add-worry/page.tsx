@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useWorryStore from '@/stores/worryStore';
+import { useSession } from 'next-auth/react';
 
 export default function AddWorry() {
   const router = useRouter();
   const addWorry = useWorryStore((state) => state.addWorry);
+  const { data: session } = useSession();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -28,27 +30,37 @@ export default function AddWorry() {
     setIsSubmitting(true);
     
     try {
-      // Add to store
-      addWorry({
-        name: formData.name.trim(),
+      const payload = {
+        title: formData.name.trim(),
         description: formData.description.trim(),
         category: formData.category,
-        bodyResponses: formData.bodyResponses,
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        description: '',
-        category: 'Work',
-        bodyResponses: [],
-      });
-      
-      // Redirect to worry reflection page
+        bodyFeeling: formData.bodyResponses.join(', '),
+        intensity: 5,
+      };
+
+      if (session?.user?.id) {
+        // Attempt server persistence
+        const res = await fetch('/api/worries', {
+          method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('Failed to save worry');
+      } else {
+        // Fallback to local store if not signed in
+        addWorry({
+          name: payload.title,
+          description: payload.description || '',
+          category: payload.category,
+          bodyResponses: formData.bodyResponses,
+        });
+      }
+
+      setFormData({ name: '', description: '', category: 'Work', bodyResponses: [] });
       router.push('/worry-reflection');
     } catch (error) {
       console.error('Error adding worry:', error);
-      alert('Something went wrong. Please try again.');
+      alert('Something went wrong saving your worry. It may have been stored locally.');
     } finally {
       setIsSubmitting(false);
     }
@@ -63,7 +75,12 @@ export default function AddWorry() {
     <div className="max-w-2xl mx-auto">
       <section className="bg-white/90 backdrop-blur rounded-2xl shadow-sm ring-1 ring-gray-200/70 p-6 sm:p-8">
         <h1 className="text-2xl font-bold mb-2 tracking-tight">Add a Worry</h1>
-        <p className="text-sm text-gray-600 mb-6">Externalize the thought so you can evaluate it later with clarity.</p>
+        <p className="text-sm text-gray-600 mb-2">Externalize the thought so you can evaluate it later with clarity.</p>
+        {!session && (
+          <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-md p-2 mb-4">
+            Sign in to sync worries across devices. Unsigned worries stay only in this browser.
+          </p>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="worry-name" className="block mb-1 font-medium">Give your worry a name</label>
