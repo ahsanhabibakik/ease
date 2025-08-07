@@ -1,3 +1,11 @@
 {
-  "npm.packageManager": "pnpm"
+  "npm.packageManager": "pnpm",
+  "cSpell.words": [
+    "cuid",
+    "Didnt",
+    "journaling",
+    "partialize",
+    "swipeable",
+    "verificationtokens"
+  ]
 }
