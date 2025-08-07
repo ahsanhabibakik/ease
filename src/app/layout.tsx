@@ -60,7 +60,11 @@ export default function RootLayout({
             title="Google Tag Manager"
           ></iframe>
         </noscript>
-        {children}
+        {/* App Layout */}
+        <div id="__ease-app-layout">
+          {/* @ts-expect-error Server Component */}
+          {require('@/components/Layout').default({ children })}
+        </div>
       </body>
     </html>
   );
