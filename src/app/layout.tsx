@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import Layout from "@/components/Layout";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -62,8 +63,7 @@ export default function RootLayout({
         </noscript>
         {/* App Layout */}
         <div id="__ease-app-layout">
-          {/* @ts-expect-error Server Component */}
-          {require('@/components/Layout').default({ children })}
+          <Layout>{children}</Layout>
         </div>
       </body>
     </html>
