@@ -5,9 +5,24 @@ This document lists the main technologies, libraries, and tools used in the Ease
 ---
 
 ## 1. Core Frameworks & Languages
-- **Next.js**: Main React framework for SSR, routing, and API routes.
+- **Next.js**: Main React framework for SSR, routing, API routes, and backend logic (API routes).
 - **TypeScript**: Type-safe JavaScript for all app logic and components.
 - **React**: UI library for building interactive user interfaces.
+
+## 1a. Backend, Security & Authentication
+- **next-auth**: Authentication for Next.js (OAuth, credentials, email, etc.).
+- **bcryptjs**: Password hashing for credentials authentication.
+- **jsonwebtoken**: JWT-based authentication for APIs.
+- **helmet**: Secures HTTP headers in API routes.
+- **rate-limiter-flexible**: API rate limiting to prevent abuse.
+- **cors**: Cross-origin resource sharing for API routes.
+- **dotenv**: Secure environment variable management.
+- **zod** or **yup**: Schema validation for API inputs and forms.
+- **validator**: Input sanitization and validation.
+- **prisma** & **@prisma/client**: Type-safe database ORM (if using SQL DB).
+- **nodemailer**: Sending emails (verification, password reset, etc.).
+- **winston** or **pino**: Server-side logging.
+- **sentry**/**@sentry/nextjs**: Error monitoring and reporting.
 
 ## 2. Styling & UI
 - **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
@@ -23,6 +38,8 @@ This document lists the main technologies, libraries, and tools used in the Ease
 - **react-swipeable** or **keen-slider**: Swipeable carousels for Wisdom Cards.
 
 ## 4. State Management & Utilities
+- **redux** & **@reduxjs/toolkit**: Global state management (alternative to zustand/jotai).
+- **react-redux**: React bindings for Redux.
 - **zustand** or **jotai**: Lightweight state management for worries, reflections, etc.
 - **date-fns** or **dayjs**: Date/time utilities (for reminders, logs).
 
@@ -36,7 +53,8 @@ This document lists the main technologies, libraries, and tools used in the Ease
 - **Custom SVGs**: For unique, branded illustrations.
 
 ## 7. Backend & Data
-- **Firebase**: NoSQL database, authentication, and serverless functions.
+- **Firebase**: NoSQL database, authentication, and serverless functions (optional, or use Prisma for SQL DB).
+- **Prisma**: ORM for SQL databases (Postgres, MySQL, SQLite, etc.).
 - **LocalStorage**: For offline worry capture and local reminders.
 
 ## 8. Testing & Linting
@@ -48,21 +66,36 @@ This document lists the main technologies, libraries, and tools used in the Ease
 ## 9. Project Tooling
 - **pnpm**: Fast, disk-efficient package manager (used everywhere in this project).
 - **VS Code**: Recommended IDE, configured to use pnpm by default.
+- **dotenv**: For managing environment variables in all environments.
 
 ---
 
 ## Where Each Is Used
 
+- **Next.js API routes**: All backend logic, authentication endpoints, and protected data access.
+- **next-auth**: User authentication (sign in, sign up, OAuth, sessions) in API routes and client.
+- **bcryptjs**: Password hashing for credentials auth in API routes.
+- **jsonwebtoken**: JWT creation/validation for secure API endpoints.
+- **helmet**: Secure HTTP headers in API routes.
+- **rate-limiter-flexible**: Rate limiting for sensitive API endpoints.
+- **cors**: Enable/limit cross-origin requests for APIs.
+- **dotenv**: Securely load environment variables for secrets, DB URLs, etc.
+- **zod/yup/validator**: Validate and sanitize all user input in forms and APIs.
+- **prisma**: Database access for user data, worries, reflections, etc. (if using SQL DB).
+- **nodemailer**: Send verification, password reset, and notification emails.
+- **winston/pino**: Log API and server events/errors.
+- **sentry**: Monitor and report errors in production.
+- **redux/@reduxjs/toolkit/react-redux**: Global state for user, worries, UI, and more (if needed).
+- **zustand/jotai**: Local state for simple stores (alternative to Redux).
 - **Tailwind CSS, PostCSS, Autoprefixer, tw-animate-css**: Styling in `globals.css` and all UI components.
 - **framer-motion**: Animations for Calm Corner, Wisdom Cards, and transitions.
 - **react-swipeable/keen-slider**: Wisdom Cards carousel.
-- **zustand/jotai**: State for worries, reflections, and UI state.
 - **date-fns/dayjs**: Handling worry timestamps, reminders, and logs.
 - **howler/use-sound**: Calming sounds in Calm Corner.
 - **react-timer-hook**: Countdown timers for breathing/meditation.
 - **@headlessui/react**: Accessible dropdowns, modals, and lists.
 - **react-icons/Custom SVGs**: All icons and illustrations.
-- **Firebase**: User data, authentication, reminders, and analytics.
+- **Firebase**: User data, authentication, reminders, and analytics (if used).
 - **LocalStorage**: Offline worry capture and reminders.
 - **eslint, prettier, jest, @testing-library/react**: Code quality and testing.
 - **pnpm**: All dependency management and scripts.
