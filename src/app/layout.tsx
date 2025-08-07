@@ -51,7 +51,9 @@ export default function RootLayout({
           }}
         />
         {/* Plausible Analytics */}
-        <script defer data-domain="easeyourmind.vercel.app" src="https://plausible.io/js/script.js"></script>
+       <script defer data-domain="easeyourmind.vercel.app" src="https://plausible.io/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js"></script>
+<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

@@ -5,7 +5,7 @@ import { useAppStore } from '@/store/appStore'
 import { motion } from 'framer-motion'
 
 export default function Home() {
-  const { addWorry, worries, setCurrentWorry } = useAppStore()
+  const { addWorry, worries } = useAppStore()
   const [worryData, setWorryData] = useState({
     title: '',
     description: '',
