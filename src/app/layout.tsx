@@ -27,8 +27,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Fetch current session on the server and hydrate client provider to avoid flashing
-  const session = await getServerSession(authOptions);
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch (e) {
+    // Gracefully ignore session failures (e.g., missing env for a provider)
+    session = null;
+  }
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
