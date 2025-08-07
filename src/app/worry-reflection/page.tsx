@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
+import ChallengeButton from '@/components/ChallengeButton';
 import useWorryStore, { Worry } from '@/stores/worryStore';
 
 export default function WorryReflection() {
@@ -98,16 +99,23 @@ export default function WorryReflection() {
                       </div>
                     )}
                     
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center gap-3">
                       <span className="text-xs text-gray-500">
                         Added {formatDate(worry.createdAt)}
                       </span>
-                      <button 
-                        onClick={() => handleReleaseWorry(worry.id)}
-                        className="px-4 py-2 bg-gradient-to-r from-accentLavender to-accentTeal text-white rounded-lg text-sm hover:shadow-md transition-shadow"
-                      >
-                        Release Worry
-                      </button>
+                      <div className="flex gap-2">
+                        <ChallengeButton 
+                          worryId={worry.id}
+                          worryText={worry.description}
+                          className="text-xs"
+                        />
+                        <button 
+                          onClick={() => handleReleaseWorry(worry.id)}
+                          className="px-4 py-2 bg-gradient-to-r from-accentLavender to-accentTeal text-white rounded-lg text-sm hover:shadow-md transition-shadow"
+                        >
+                          Release Worry
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
