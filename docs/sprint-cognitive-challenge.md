@@ -56,6 +56,7 @@ Acceptance Criteria:
 ```
 
 #### Story 4: Thought Reframing
+
 ```
 As a user completing a cognitive challenge,
 I want to create a more balanced version of my original thought,
@@ -71,6 +72,7 @@ Acceptance Criteria:
 ## Technical Implementation Plan
 
 ### Database Schema Extensions
+
 ```sql
 -- Add to existing database
 CREATE TABLE cognitive_challenges (
@@ -93,6 +95,7 @@ CREATE INDEX idx_challenges_completed ON cognitive_challenges(completed_at);
 ```
 
 ### API Endpoints
+
 ```typescript
 // New API routes to add
 POST /api/worries/:worryId/challenge          // Start new challenge
@@ -105,6 +108,7 @@ DELETE /api/challenges/:challengeId           // Delete challenge
 ### Frontend Components
 
 #### 1. Challenge Button Component
+
 ```typescript
 // components/ChallengeButton.tsx
 interface ChallengeButtonProps {
@@ -115,6 +119,7 @@ interface ChallengeButtonProps {
 ```
 
 #### 2. Challenge Wizard Component
+
 ```typescript
 // components/ChallengeWizard.tsx
 interface ChallengeWizardProps {
@@ -133,6 +138,7 @@ interface ChallengeStep {
 ```
 
 #### 3. Distortion Checker Component
+
 ```typescript
 // components/DistortionChecker.tsx
 enum CognitiveDistortion {
@@ -152,6 +158,7 @@ enum CognitiveDistortion {
 ## Implementation Tasks
 
 ### Week 1: Backend & Database Setup
+
 - [ ] **Day 1-2:** Database schema implementation
   - Create cognitive_challenges table
   - Add migration scripts
@@ -170,6 +177,7 @@ enum CognitiveDistortion {
   - Security review
 
 ### Week 2: Frontend Implementation
+
 - [ ] **Day 1-2:** Core component development
   - ChallengeButton component
   - Basic challenge wizard structure
@@ -188,6 +196,7 @@ enum CognitiveDistortion {
 ## Challenge Questions (Research-Based)
 
 ### The 5 Core Challenge Questions
+
 1. **Evidence Evaluation**
    - "What evidence do I have that this thought is true?"
    - "What evidence do I have that this thought is not completely true?"
@@ -211,21 +220,25 @@ enum CognitiveDistortion {
 ## Cognitive Distortions Reference
 
 ### 1. All-or-Nothing Thinking
+
 **Definition:** Seeing things in black and white categories  
 **Example:** "If I'm not perfect, I'm a failure"  
 **Reframe:** "I can do well without being perfect"
 
 ### 2. Overgeneralization  
+
 **Definition:** Seeing a single negative event as a pattern  
 **Example:** "I didn't get this job, I'll never get any job"  
 **Reframe:** "This wasn't the right fit, but other opportunities exist"
 
 ### 3. Mental Filter
+
 **Definition:** Focusing only on negatives  
 **Example:** "The whole presentation was terrible because I stumbled on one word"  
 **Reframe:** "The presentation went well overall, with one minor hiccup"
 
 ### 4. Catastrophizing
+
 **Definition:** Expecting the worst possible outcome  
 **Example:** "If I fail this test, my entire future is ruined"  
 **Reframe:** "This test is important, but one result doesn't determine everything"
@@ -233,12 +246,14 @@ enum CognitiveDistortion {
 ## UI/UX Design Requirements
 
 ### Design Principles
+
 - **Gentle & Non-judgmental:** Avoid clinical or harsh language
 - **Progressive Disclosure:** Reveal complexity gradually
 - **Visual Progress:** Show progress through the challenge process
 - **Encouraging Feedback:** Celebrate completion and insights
 
 ### Visual Elements
+
 - Soft color palette (consistent with app theme)
 - Progress indicators for each step
 - Icons for different distortion types
@@ -246,6 +261,7 @@ enum CognitiveDistortion {
 - Encouraging micro-interactions
 
 ### Accessibility Requirements
+
 - Screen reader compatible
 - Keyboard navigation support
 - High contrast mode support
@@ -254,16 +270,19 @@ enum CognitiveDistortion {
 ## Success Metrics
 
 ### User Engagement
+
 - Challenge completion rate (target: >60%)
 - Challenges per active worry (target: >1.2)
 - User return rate after first challenge (target: >70%)
 
 ### Clinical Effectiveness
+
 - User-reported anxiety reduction after challenging
 - Improved thought pattern recognition over time
 - Reduced catastrophic thinking indicators
 
 ### Technical Performance
+
 - Challenge wizard load time (<2 seconds)
 - Data persistence reliability (99.9%)
 - Mobile responsiveness across devices
@@ -271,17 +290,20 @@ enum CognitiveDistortion {
 ## Testing Strategy
 
 ### Unit Tests
+
 - API endpoint functionality
 - Database operations
 - Component rendering
 - Form validation
 
 ### Integration Tests
+
 - End-to-end challenge workflow
 - Data consistency across saves
 - Error handling scenarios
 
 ### User Testing
+
 - 5 users complete challenge workflow
 - Gather feedback on language and UX
 - Test on different devices and browsers
@@ -289,11 +311,13 @@ enum CognitiveDistortion {
 ## Risk Mitigation
 
 ### Technical Risks
+
 - **Data Loss:** Implement autosave functionality
 - **Performance:** Lazy load distortion content
 - **Mobile UX:** Test extensively on various screen sizes
 
 ### User Experience Risks
+
 - **Overwhelming Content:** Progressive disclosure approach
 - **Abandonment:** Save progress and allow returning
 - **Confusion:** Clear instructions and examples throughout
@@ -301,6 +325,7 @@ enum CognitiveDistortion {
 ## Definition of Done
 
 A feature is considered complete when:
+
 - [ ] All unit tests pass
 - [ ] Integration tests pass
 - [ ] API documentation is updated
@@ -314,12 +339,14 @@ A feature is considered complete when:
 ## Post-Sprint Review
 
 ### Metrics to Track
+
 - Feature adoption rate in first week post-launch
 - User feedback scores
 - Technical performance metrics
 - Bug reports and resolution time
 
 ### Next Sprint Preparation
+
 - Analyze user feedback for improvements
 - Plan Control Assessment Helper implementation
 - Consider integration with existing analytics
