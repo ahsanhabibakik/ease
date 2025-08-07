@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Layout from '@/components/Layout';
 import useWorryStore from '@/stores/worryStore';
 
 export default function AddWorry() {
@@ -61,9 +60,10 @@ export default function AddWorry() {
   };
 
   return (
-    <Layout>
-      <section className="bg-white p-6 rounded-2xl shadow-md max-w-xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Add a Worry</h1>
+    <div className="max-w-2xl mx-auto">
+      <section className="bg-white/90 backdrop-blur rounded-2xl shadow-sm ring-1 ring-gray-200/70 p-6 sm:p-8">
+        <h1 className="text-2xl font-bold mb-2 tracking-tight">Add a Worry</h1>
+        <p className="text-sm text-gray-600 mb-6">Externalize the thought so you can evaluate it later with clarity.</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="worry-name" className="block mb-1 font-medium">Give your worry a name</label>
@@ -140,6 +140,6 @@ export default function AddWorry() {
           </p>
         </form>
       </section>
-    </Layout>
+    </div>
   );
 }
