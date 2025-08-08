@@ -70,6 +70,11 @@ export const authOptions: NextAuthOptions = {
   providers,
   session: { strategy: 'jwt' },
   pages: { signIn: '/auth/signin' },
+  // Explicitly set secret to ensure stable JWT encryption/decryption
+  secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.id = user.id;
@@ -78,6 +83,17 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token && session.user) session.user.id = token.id as string;
       return session;
+    },
+  },
+  // So a single decryption failure doesn't spam console in layout
+  logger: {
+    error(code, metadata) {
+      if (code === 'JWT_SESSION_ERROR') {
+        // Likely stale/invalid cookie after secret change; silent fallback.
+        return;
+      }
+      // eslint-disable-next-line no-console
+      console.error('[next-auth]', code, metadata);
     },
   },
 };
