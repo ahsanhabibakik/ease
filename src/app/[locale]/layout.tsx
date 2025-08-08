@@ -1,0 +1,100 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
+import Layout from "@/components/Layout";
+import RouteProgress from "@/components/RouteProgress";
+import "../globals.css";
+import SessionProviderWrapper from "@/components/SessionProviderWrapper";
+import { IntlProvider } from "@/lib/intl";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Ease - Your Mental Wellness Companion",
+  description: "Compassionate, evidence-based companion to capture worries, challenge unhelpful thinking, and build resilient calm.",
+};
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { locale: string };
+}) {
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch {
+    // Common cause: JWT secret mismatch -> decryption failure. We ignore and treat as signed out.
+    session = null;
+  }
+  
+  return (
+    <html lang={params.locale} suppressHydrationWarning>
+      <head>
+        {/* Microsoft Clarity */}
+        <Script id="clarity-script" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(...args){(c[a].q=c[a].q||[]).push(...args)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "sr9wkyix5k");
+          `}
+        </Script>
+        {/* Google Tag Manager */}
+        <Script id="gtm-script" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-MN63B366');
+          `}
+        </Script>
+        {/* Plausible Analytics */}
+        <Script defer data-domain="easeyourmind.vercel.app" src="https://plausible.io/js/script.js" strategy="afterInteractive" />
+        {/* Theme Initialization Script */}
+        <Script id="theme-init" strategy="beforeInteractive">{`
+          try {
+            const stored = localStorage.getItem('ease-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            if (theme === 'dark') document.documentElement.classList.add('dark');
+          } catch(e) {}
+        `}</Script>
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MN63B366"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+            title="Google Tag Manager"
+          ></iframe>
+        </noscript>
+        {/* App Layout */}
+        <div id="__ease-app-layout">
+          <RouteProgress />
+          <SessionProviderWrapper session={session}>
+            <IntlProvider>
+              <Layout>{children}</Layout>
+            </IntlProvider>
+          </SessionProviderWrapper>
+        </div>
+      </body>
+    </html>
+  );
+}
