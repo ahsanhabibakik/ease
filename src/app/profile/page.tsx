@@ -9,8 +9,29 @@ export default async function ProfilePage() {
   if (!session?.user?.id) redirect('/auth/signin?callbackUrl=/profile');
 
   const user = await prisma.user.findUnique({ where: { id: session.user.id }, include: { settings: true } });
-  const worryCount = await prisma.worry.count({ where: { userId: session.user.id } });
-  const releasedCount = await prisma.worry.count({ where: { userId: session.user.id, status: 'RESOLVED' } });
+  const [worryCount, releasedCount, recentReflections] = await Promise.all([
+    prisma.worry.count({ where: { userId: session.user.id } }),
+    prisma.worry.count({ where: { userId: session.user.id, status: 'RESOLVED' } }),
+    prisma.reflection.findMany({ where: { userId: session.user.id }, orderBy: { createdAt: 'desc' }, take: 30 })
+  ]);
+
+  // Compute reflection streak (consecutive days including today if applicable)
+  let streak = 0;
+  const seenDays = new Set<string>();
+  for (const ref of recentReflections) {
+    const d = new Date(ref.createdAt);
+    const key = d.toISOString().slice(0,10);
+    if (!seenDays.has(key)) seenDays.add(key);
+  }
+  // Walk back from today
+  {
+    const walker = new Date();
+    for (let i=0;i<seenDays.size+2;i++) {
+      const key = walker.toISOString().slice(0,10);
+      if (seenDays.has(key)) { streak++; walker.setDate(walker.getDate()-1); }
+      else break;
+    }
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
@@ -27,7 +48,7 @@ export default async function ProfilePage() {
           <Stat label="Worries Captured" value={worryCount} />
           <Stat label="Released" value={releasedCount} />
           <Stat label="Categories Used" value={(await prisma.worry.findMany({ where: { userId: session.user.id }, select: { category: true } })).reduce((acc, w) => acc.add(w.category), new Set<string>()).size} />
-          <Stat label="Reflection Streak" value={user?.settings ? 3 : 0} />
+          <Stat label="Reflection Streak" value={streak} />
         </div>
       </section>
 
