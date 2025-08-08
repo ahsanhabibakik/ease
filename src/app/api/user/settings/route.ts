@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       },
     });
     return NextResponse.json({ settings });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to save settings' }, { status: 500 });
   }
 }
