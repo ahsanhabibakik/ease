@@ -3,27 +3,49 @@
 
 /* === Design Tokens & Theming (Phase 1) === */
 :root {
+  /* Base surfaces */
   --c-bg: #f6f8fa;
   --c-bg-soft: #eef2f5;
   --c-surface: #ffffff;
   --c-surface-alt: #f1f5f9;
+  --c-surface-inset: #e7edf3;
   --c-border: #d9e0e7;
   --c-border-strong: #b5c0c9;
 
+  /* Text */
   --c-text: #1f2732;
-  --c-text-soft: #5a6472;
-  --c-text-faint: #88929f;
+  --c-text-soft: #55606e;
+  --c-text-faint: #8a95a3;
+  --c-text-invert: #ffffff;
 
-  --c-accent: #0d9488;
+  /* Accent scale (teal -> violet accent blend) */
+  --c-accent-50: #f0fdfa;
+  --c-accent-100: #ccfbf1;
+  --c-accent-200: #99f6e4;
+  --c-accent-300: #5eead4;
+  --c-accent-400: #2dd4bf;
+  --c-accent-500: #14b8a6; /* primary */
+  --c-accent-600: #0d9488;
+  --c-accent-700: #0f766e;
+  --c-accent-800: #115e59;
+  --c-accent-900: #134e4a;
+  --c-accent: var(--c-accent-600);
   --c-accent-rgb: 13 148 136;
   --c-accent-alt: #7c3aed;
   --c-accent-alt-rgb: 124 58 237;
   --c-accent-soft: #dbf5f2;
+  --c-accent-contrast: var(--c-text-invert);
+  --c-focus-ring: rgba(var(--c-accent-rgb)/.55);
 
   --c-danger: #dc2626;
   --c-warn: #d97706;
   --c-success: #059669;
   --c-focus: #2563eb;
+
+  /* Gradients */
+  --gradient-strong: linear-gradient(135deg,#7c3aed 0%,#0d9488 100%);
+  --gradient-soft: linear-gradient(135deg,#ede9fe 0%,#d1fae5 100%);
+  --gradient-accent: linear-gradient(135deg,var(--c-accent-500) 0%,var(--c-accent-alt) 100%);
 
   --gradient-strong: linear-gradient(135deg,#7c3aed 0%,#0d9488 100%);
   --gradient-soft: linear-gradient(135deg,#ede9fe 0%,#d1fae5 100%);
@@ -47,12 +69,31 @@
   --container-max: 1280px; --content-max: 72ch;
 }
 .dark {
-  --c-bg: #0f1214; --c-bg-soft: #141a1f; --c-surface: #171d22; --c-surface-alt: #1f262c; --c-border: #2c353e; --c-border-strong: #3b4651;
-  --c-text: #f3f6f8; --c-text-soft: #b2bcc6; --c-text-faint: #7f8993;
-  --c-accent: #14b8a6; --c-accent-rgb: 20 184 166; --c-accent-alt: #8b5cf6; --c-accent-alt-rgb: 139 92 246; --c-accent-soft: #163c37;
-  --c-danger: #f87171; --c-warn: #fbbf24; --c-success: #34d399; --c-focus: #3b82f6;
+  --c-bg: #0f1214;
+  --c-bg-soft: #141a1f;
+  --c-surface: #171d22;
+  --c-surface-alt: #1f262c;
+  --c-surface-inset: #1b2228;
+  --c-border: #2c353e;
+  --c-border-strong: #3b4651;
+  --c-text: #f3f6f8;
+  --c-text-soft: #b2bcc6;
+  --c-text-faint: #7f8993;
+  --c-text-invert: #0f1214;
+  --c-accent: #14b8a6;
+  --c-accent-rgb: 20 184 166;
+  --c-accent-alt: #8b5cf6;
+  --c-accent-alt-rgb: 139 92 246;
+  --c-accent-soft: #163c37;
+  --c-accent-contrast: #ffffff;
+  --c-focus-ring: rgba(var(--c-accent-rgb)/.65);
+  --c-danger: #f87171;
+  --c-warn: #fbbf24;
+  --c-success: #34d399;
+  --c-focus: #3b82f6;
   --gradient-strong: linear-gradient(135deg,#8b5cf6 0%,#14b8a6 100%);
   --gradient-soft: linear-gradient(135deg,#2a2240 0%,#13322c 100%);
+  --gradient-accent: linear-gradient(135deg,#14b8a6 0%,#8b5cf6 100%);
 }
 html { -webkit-font-smoothing: antialiased; scroll-behavior:smooth; }
 body { background:var(--c-bg); color:var(--c-text); font-size:var(--fs-base); line-height:1.55; }
@@ -77,7 +118,7 @@ body { background:var(--c-bg); color:var(--c-text); font-size:var(--fs-base); li
 .card-elevated { box-shadow:var(--sh-lg); }
 .card-muted { background:var(--c-surface-alt); }
 .avatar-ring { background:var(--gradient-strong); padding:2px; border-radius:50%; display:inline-flex; }
-.focus-outline:focus-visible { outline:none; box-shadow:0 0 0 2px var(--c-bg),0 0 0 4px var(--c-focus); }
+.focus-outline:focus-visible { outline:none; box-shadow:0 0 0 2px var(--c-bg),0 0 0 4px var(--c-focus-ring); }
 .field-input { width:100%; border:1px solid var(--c-border); background:var(--c-surface); border-radius:var(--r-md); padding:.75rem .9rem; font-size:var(--fs-sm); line-height:1.4; transition:border-color var(--dur-fast) var(--easing), box-shadow var(--dur-fast) var(--easing), background var(--dur-fast) var(--easing); }
 .field-input::placeholder { color:var(--c-text-faint); }
 .field-input:focus { outline:none; border-color:var(--c-accent); box-shadow:0 0 0 3px rgba(var(--c-accent-rgb)/.35); }
