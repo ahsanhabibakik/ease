@@ -46,9 +46,12 @@ if (process.env.ENABLE_CREDENTIALS === 'true') {
     },
     async authorize(credentials) {
       if (!credentials?.email || !credentials?.password) return null;
-      const user = await prisma.user.findUnique({ where: { email: credentials.email } });
-      if (!user) return null;
-      return { id: user.id, email: user.email, name: user.name };
+  const user = await prisma.user.findUnique({ where: { email: credentials.email } });
+  if (!user || !user.hashedPassword) return null;
+  const bcrypt = await import('bcryptjs');
+  const valid = await bcrypt.compare(credentials.password, user.hashedPassword);
+  if (!valid) return null;
+  return { id: user.id, email: user.email, name: user.name };
     },
   }));
 }
