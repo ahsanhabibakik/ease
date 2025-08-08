@@ -5,6 +5,7 @@ import Layout from "@/components/Layout";
 import RouteProgress from "@/components/RouteProgress";
 import "./globals.css";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper";
+import { IntlProvider } from "@/lib/intl";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 
@@ -85,7 +86,9 @@ export default async function RootLayout({
         <div id="__ease-app-layout">
           <RouteProgress />
           <SessionProviderWrapper session={session}>
-            <Layout>{children}</Layout>
+            <IntlProvider>
+              <Layout>{children}</Layout>
+            </IntlProvider>
           </SessionProviderWrapper>
         </div>
       </body>
