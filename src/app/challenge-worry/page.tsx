@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useWorryStore, { CognitiveDistortion, CognitiveChallenge } from '@/stores/worryStore';
+import { useSession } from 'next-auth/react';
 
 // Cognitive distortion definitions for reference
 const DISTORTION_DEFINITIONS = {
@@ -117,6 +118,7 @@ const CHALLENGE_STEPS: ChallengeStep[] = [
 const ChallengeWorryContent: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { data: session } = useSession();
   
   const worryId = searchParams.get('worryId');
   const worryText = searchParams.get('worryText');
@@ -135,6 +137,9 @@ const ChallengeWorryContent: React.FC = () => {
   });
   
   const [currentInput, setCurrentInput] = useState('');
+  // Submission + error states (declared early to maintain stable hook order)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Initialize challenge when component mounts
@@ -182,10 +187,46 @@ const ChallengeWorryContent: React.FC = () => {
     }
   };
 
-  const handleComplete = () => {
-    if (challengeId && challengeData.reframedThought) {
-      completeChallenge(challengeId, challengeData.reframedThought);
+
+  const handleComplete = async () => {
+    if (!(challengeId && (challengeData.reframedThought || '').trim())) return;
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      // Always complete locally for offline users
+      completeChallenge(challengeId, challengeData.reframedThought || '');
+
+      // If signed in, persist as a reflection and resolve worry
+      if (session?.user?.id && worryId) {
+        const payload = {
+          worryId,
+          evidenceFor: (challengeData.evidenceFor || []).join('\n'),
+            evidenceAgainst: (challengeData.evidenceAgainst || []).join('\n'),
+            alternativeView: challengeData.reframedThought || undefined,
+            // Map probability/helpfulness + distortions into gentleAction / worstCaseReality narrative fields for now
+            worstCaseReality: `Perceived probability: ${challengeData.probabilityRating}%. Distortions: ${(challengeData.cognitiveDistortions || []).join(', ') || 'None identified.'}`,
+            gentleAction: `Helpfulness rating: ${challengeData.helpfulnessRating}/10. Next step: Focus on balanced thought.`,
+            completed: true,
+        };
+        await fetch('/api/reflections', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        // Resolve the worry (best-effort)
+        await fetch(`/api/worries/${worryId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'RESOLVED' }),
+        });
+      }
       router.push('/worry-reflection?completed=true');
+    } catch (e) {
+      console.error('Failed to persist reflection', e);
+      setError('Saved locally. Network error while syncing.');
+      router.push('/worry-reflection?completed=true');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -574,13 +615,20 @@ const ChallengeWorryContent: React.FC = () => {
               ) : (
                 <button
                   onClick={handleComplete}
-                  disabled={!canProceed()}
-                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={!canProceed() || isSubmitting}
+                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
-                  Complete Challenge
+                  {isSubmitting && (
+                    <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <circle cx="12" cy="12" r="10" strokeWidth="4" className="opacity-25" />
+                      <path d="M4 12a8 8 0 0 1 8-8" strokeWidth="4" className="opacity-75" />
+                    </svg>
+                  )}
+                  {isSubmitting ? 'Saving...' : 'Complete Challenge'}
                 </button>
               )}
             </div>
+            {error && <p className="mt-4 text-sm text-amber-600">{error}</p>}
           </div>
         </div>
       </div>
