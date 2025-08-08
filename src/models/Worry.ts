@@ -24,4 +24,8 @@ const WorrySchema = new Schema<IWorry>({
   scheduledAt: Date,
 }, { timestamps: true });
 
+// Helpful compound indexes for common dashboard queries
+WorrySchema.index({ userId: 1, status: 1, createdAt: -1 });
+WorrySchema.index({ userId: 1, createdAt: -1 });
+
 export default models.Worry || model<IWorry>('Worry', WorrySchema);

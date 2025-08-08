@@ -15,7 +15,7 @@ export interface IReflection extends Document {
 
 const ReflectionSchema = new Schema<IReflection>({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
-  worryId: { type: Schema.Types.ObjectId, ref: 'Worry' },
+  worryId: { type: Schema.Types.ObjectId, ref: 'Worry', index: true },
   evidenceFor: String,
   evidenceAgainst: String,
   alternativeView: String,
@@ -23,5 +23,7 @@ const ReflectionSchema = new Schema<IReflection>({
   gentleAction: String,
   completed: { type: Boolean, default: false },
 }, { timestamps: true });
+
+ReflectionSchema.index({ userId: 1, createdAt: -1 });
 
 export default models.Reflection || model<IReflection>('Reflection', ReflectionSchema);

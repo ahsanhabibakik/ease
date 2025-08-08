@@ -9,9 +9,12 @@ export interface IVerificationToken extends Document {
 }
 
 const VerificationTokenSchema = new Schema<IVerificationToken>({
-  identifier: { type: String, required: true, index: true },
-  token: { type: String, required: true, unique: true },
+  identifier: { type: String, required: true },
+  token: { type: String, required: true },
   expires: { type: Date, required: true },
 }, { timestamps: true });
+
+// Composite uniqueness (identifier + token) mirrors previous relational schema
+VerificationTokenSchema.index({ identifier: 1, token: 1 }, { unique: true });
 
 export default models.VerificationToken || model<IVerificationToken>('VerificationToken', VerificationTokenSchema);

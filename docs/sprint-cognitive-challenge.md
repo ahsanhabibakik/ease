@@ -16,7 +16,7 @@ Implement cognitive challenge tools that help users question and reframe their a
 
 #### Story 1: Access Challenge Interface
 
-```
+```gherkin
 As a user viewing my active worries,
 I want to see a "Challenge This Worry" option,
 So that I can actively work on reframing anxious thoughts.
@@ -29,7 +29,7 @@ Acceptance Criteria:
 
 #### Story 2: Guided Thought Questioning
 
-```
+```gherkin
 As a user challenging a worry,
 I want to be guided through evidence-based questions,
 So that I can systematically evaluate my anxious thoughts.
@@ -43,7 +43,7 @@ Acceptance Criteria:
 
 #### Story 3: Cognitive Distortion Identification
 
-```
+```gherkin
 As a user examining my thoughts,
 I want to identify common thinking patterns that increase anxiety,
 So that I can recognize and address cognitive distortions.
@@ -57,7 +57,7 @@ Acceptance Criteria:
 
 #### Story 4: Thought Reframing
 
-```
+```gherkin
 As a user completing a cognitive challenge,
 I want to create a more balanced version of my original thought,
 So that I can replace anxious thinking with realistic perspectives.
