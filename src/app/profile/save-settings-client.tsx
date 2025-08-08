@@ -39,7 +39,7 @@ export default function SaveSettingsClient({ initialSettings }: Props) {
   }
 
   return (
-  <form onSubmit={(e) => { e.preventDefault(); save(); }} className="space-y-4">
+  <form onSubmit={(_e) => { _e.preventDefault(); save(); }} className="space-y-4">
       <div>
         <label className="block text-xs font-medium mb-1 text-gray-600 dark:text-gray-400">Daily Reflection Time</label>
   <input aria-label="Daily reflection time" type="time" value={reflectionTime} onChange={e => setReflectionTime(e.target.value)} className="w-40 rounded-lg border border-gray-300/70 dark:border-gray-600 bg-white/70 dark:bg-gray-800/60 px-3 py-2 text-sm focus:outline-none focus:ring-2 ring-accentTeal/40" />

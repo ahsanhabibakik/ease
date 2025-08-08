@@ -10,7 +10,8 @@ export default function AddWorry() {
   const addWorry = useWorryStore((state) => state.addWorry);
   const { data: session } = useSession();
   
-  const CATEGORY_PRESETS = ['School','Work','Family','Finance','Politics','Health','Relationships','Other'];
+  const BASE_CATEGORY_PRESETS = ['School','Work','Family','Finance','Politics','Health','Relationships','Other'];
+  const [customCategories, setCustomCategories] = useState<string[]>([]);
   const BODY_RESPONSES = [
     'Sweaty palms','Racing heartbeat','Jaw tightness','Restless legs','Stomach knots','Shoulder tension','Chest tightness','Shallow breath','Head pressure','Other'
   ];
@@ -56,6 +57,23 @@ export default function AddWorry() {
   }, [nameSuggestions.length]);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Load custom categories from user settings if signed in
+  useEffect(() => {
+    let ignore = false;
+    async function loadSettings() {
+      if (!session?.user?.id) return;
+      try {
+        const res = await fetch('/api/user/settings');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!ignore && data.settings?.customCategories) {
+          setCustomCategories(data.settings.customCategories);
+        }
+      } catch {}
+    }
+    loadSettings();
+    return () => { ignore = true; };
+  }, [session?.user?.id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -157,7 +175,7 @@ export default function AddWorry() {
             <div>
               <label className="block mb-2 font-medium">Life area</label>
               <div className="flex flex-wrap gap-2">
-                {CATEGORY_PRESETS.concat('Custom').map(cat => {
+                {BASE_CATEGORY_PRESETS.concat(customCategories).filter((v,i,a)=>a.indexOf(v)===i).concat('Custom').map(cat => {
                   const active = formData.category === cat;
                   return (
                     <button
