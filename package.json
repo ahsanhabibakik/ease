@@ -7,10 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-  "postinstall": ""
+    "postinstall": ""
   },
   "dependencies": {
-  "mongoose": "^8.6.0",
     "@reduxjs/toolkit": "^2.8.2",
     "@sentry/nextjs": "^10.2.0",
     "axios": "^1.11.0",
@@ -24,14 +23,16 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.536.0",
+    "mongoose": "^8.6.0",
     "next": "15.4.6",
     "next-auth": "^4.24.11",
+    "next-intl": "^4.3.4",
     "nodemailer": "^7.0.5",
     "postcss": "^8.5.6",
-    
     "rate-limiter-flexible": "^7.2.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-intl": "^7.1.11",
     "react-redux": "^9.2.0",
     "sentry": "^0.1.2",
     "tailwind-merge": "^3.3.1",
