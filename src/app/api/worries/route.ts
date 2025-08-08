@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/auth'
-import { prisma } from '@/lib/prisma'
+import { dbConnect } from '@/lib/mongoose';
+import Worry from '@/models/Worry';
 import { createWorrySchema } from '@/lib/validations'
 
 export async function GET() {
@@ -12,10 +13,8 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const worries = await prisma.worry.findMany({
-      where: { userId: session.user.id },
-      orderBy: { createdAt: 'desc' },
-    })
+  await dbConnect();
+  const worries = await Worry.find({ userId: session.user.id }).sort({ createdAt: -1 }).lean();
 
     return NextResponse.json(worries)
   } catch (error) {
@@ -35,15 +34,15 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const validatedData = createWorrySchema.parse(body)
 
-    const worry = await prisma.worry.create({
-      data: {
-        ...validatedData,
-        userId: session.user.id,
-        status: validatedData.scheduledAt ? 'SCHEDULED' : 'ACTIVE',
-      },
-    })
+    await dbConnect();
+    const worry = await Worry.create({
+      ...validatedData,
+      userId: session.user.id,
+      status: validatedData.scheduledAt ? 'SCHEDULED' : 'ACTIVE'
+    });
+    const json = worry.toObject();
 
-    return NextResponse.json(worry, { status: 201 })
+    return NextResponse.json(json, { status: 201 })
   } catch (error) {
     console.error('Error creating worry:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

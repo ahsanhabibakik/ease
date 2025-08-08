@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
-import { prisma } from '@/lib/prisma';
-import { WorryStatus } from '@prisma/client';
+import { dbConnect } from '@/lib/mongoose';
+import Worry from '@/models/Worry';
 
 // Utility to extract the dynamic id from the pathname (works around type param issues)
 function extractIdFromPath(pathname: string): string | null {
@@ -27,14 +27,12 @@ export async function PATCH(request: NextRequest) {
     if (!status) {
       return NextResponse.json({ error: 'Missing status' }, { status: 400 });
     }
-    const allowed: WorryStatus[] = [WorryStatus.RESOLVED, WorryStatus.ARCHIVED];
-    if (!allowed.includes(status as WorryStatus)) {
+  const allowed = ['RESOLVED','ARCHIVED'];
+  if (!allowed.includes(status)) {
       return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
     }
-    const updated = await prisma.worry.update({
-      where: { id: worryId, userId: session.user.id },
-      data: { status: status as WorryStatus },
-    });
+  await dbConnect();
+  const updated = await Worry.findOneAndUpdate({ _id: worryId, userId: session.user.id }, { status }, { new: true }).lean();
     return NextResponse.json(updated);
   } catch (error) {
     console.error('Error updating worry:', error);

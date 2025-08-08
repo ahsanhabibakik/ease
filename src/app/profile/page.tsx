@@ -1,18 +1,23 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { redirect } from 'next/navigation';
-import { prisma } from '@/lib/prisma';
+import { dbConnect } from '@/lib/mongoose';
+import User from '@/models/User';
+import Worry from '@/models/Worry';
+import Reflection from '@/models/Reflection';
 import SaveSettingsClient from './save-settings-client';
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) redirect('/auth/signin?callbackUrl=/profile');
 
-  const user = await prisma.user.findUnique({ where: { id: session.user.id }, include: { settings: true } });
-  const [worryCount, releasedCount, recentReflections] = await Promise.all([
-    prisma.worry.count({ where: { userId: session.user.id } }),
-    prisma.worry.count({ where: { userId: session.user.id, status: 'RESOLVED' } }),
-    prisma.reflection.findMany({ where: { userId: session.user.id }, orderBy: { createdAt: 'desc' }, take: 30 })
+  await dbConnect();
+  const user = await User.findById(session.user.id).lean();
+  const [worryCount, releasedCount, recentReflections, categories] = await Promise.all([
+    Worry.countDocuments({ userId: session.user.id }),
+    Worry.countDocuments({ userId: session.user.id, status: 'RESOLVED' }),
+    Reflection.find({ userId: session.user.id }).sort({ createdAt: -1 }).limit(30).lean(),
+    Worry.find({ userId: session.user.id }).select('category').lean()
   ]);
 
   // Compute reflection streak (consecutive days including today if applicable)
@@ -47,7 +52,7 @@ export default async function ProfilePage() {
         <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <Stat label="Worries Captured" value={worryCount} />
           <Stat label="Released" value={releasedCount} />
-          <Stat label="Categories Used" value={(await prisma.worry.findMany({ where: { userId: session.user.id }, select: { category: true } })).reduce((acc, w) => acc.add(w.category), new Set<string>()).size} />
+          <Stat label="Categories Used" value={categories.reduce((acc: Set<string>, w: any) => { if (w.category) acc.add(w.category); return acc; }, new Set<string>()).size} />
           <Stat label="Reflection Streak" value={streak} />
         </div>
       </section>
