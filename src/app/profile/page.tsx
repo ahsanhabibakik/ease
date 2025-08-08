@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
+import SaveSettingsClient from './save-settings-client';
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
@@ -49,22 +50,11 @@ export default async function ProfilePage() {
 
       <section className="bg-white/90 dark:bg-gray-900/70 backdrop-blur rounded-2xl p-6 ring-1 ring-gray-200/70 dark:ring-gray-700 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Personalization</h2>
-        <form className="space-y-4">
-          <div>
-            <label className="block text-xs font-medium mb-1 text-gray-600 dark:text-gray-400">Daily Reflection Time</label>
-            <input aria-label="Daily reflection time" type="time" defaultValue={user?.settings?.reflectionTime || '17:00'} className="w-40 rounded-lg border border-gray-300/70 dark:border-gray-600 bg-white/70 dark:bg-gray-800/60 px-3 py-2 text-sm focus:outline-none focus:ring-2 ring-accentTeal/40" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium mb-1 text-gray-600 dark:text-gray-400">Custom Categories (comma separated)</label>
-            <input aria-label="Custom categories" type="text" defaultValue={(user?.settings?.customCategories || []).join(', ')} placeholder="e.g., Creativity, Spiritual" className="w-full rounded-lg border border-gray-300/70 dark:border-gray-600 bg-white/70 dark:bg-gray-800/60 px-3 py-2 text-sm focus:outline-none focus:ring-2 ring-accentTeal/40" />
-          </div>
-          <div className="flex items-center gap-2">
-            <input id="notif" type="checkbox" defaultChecked={user?.settings?.notifications} className="h-4 w-4 rounded border-gray-300 text-accentTeal focus:ring-accentTeal" />
-            <label htmlFor="notif" className="text-sm text-gray-700 dark:text-gray-300">Gentle email nudges</label>
-          </div>
-          <p className="text-[11px] text-gray-500">These personalization features are evolving—future updates will include adaptive prompts and mood pattern insights.</p>
-          <button type="button" className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-accentLavender to-accentTeal text-white px-4 py-2 text-sm font-medium shadow hover:shadow-md focus:outline-none focus-visible:ring-2 ring-accentTeal/40">Save Preferences</button>
-        </form>
+        <SaveSettingsClient initialSettings={{
+          reflectionTime: user?.settings?.reflectionTime || '17:00',
+          customCategories: user?.settings?.customCategories || [],
+          notifications: user?.settings?.notifications ?? true,
+        }} />
       </section>
 
       <section className="bg-white/90 dark:bg-gray-900/70 backdrop-blur rounded-2xl p-6 ring-1 ring-gray-200/70 dark:ring-gray-700 shadow-sm">
