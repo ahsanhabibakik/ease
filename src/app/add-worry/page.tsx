@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import useWorryStore from '@/stores/worryStore';
 import { useSession } from 'next-auth/react';
@@ -10,12 +10,50 @@ export default function AddWorry() {
   const addWorry = useWorryStore((state) => state.addWorry);
   const { data: session } = useSession();
   
+  const CATEGORY_PRESETS = ['School','Work','Family','Finance','Politics','Health','Relationships','Other'];
+  const BODY_RESPONSES = [
+    'Sweaty palms','Racing heartbeat','Jaw tightness','Restless legs','Stomach knots','Shoulder tension','Chest tightness','Shallow breath','Head pressure','Other'
+  ];
+  const DRAFT_KEY = 'ease-add-worry-draft-v1';
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     category: 'Work',
+    customCategory: '',
     bodyResponses: [] as string[],
+    intensity: 5,
   });
+  const [suggestIndex, setSuggestIndex] = useState(0);
+  const nameSuggestions = [
+    'Job interview nerves','That meeting tomorrow','Conversation I keep replaying','Money uncertainty','Health test results','Upcoming presentation'
+  ];
+
+  // Load draft
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        setFormData({ ...formData, ...parsed });
+      }
+    } catch(e) {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Autosave draft
+  useEffect(() => {
+    const id = setTimeout(() => {
+      try { localStorage.setItem(DRAFT_KEY, JSON.stringify(formData)); } catch(e) {}
+    }, 500);
+    return () => clearTimeout(id);
+  }, [formData]);
+
+  // Rotate placeholder suggestion
+  useEffect(() => {
+    const rot = setInterval(() => setSuggestIndex(i => (i + 1) % nameSuggestions.length), 4000);
+    return () => clearInterval(rot);
+  }, []);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,12 +68,15 @@ export default function AddWorry() {
     setIsSubmitting(true);
     
     try {
+      const chosenCategory = formData.category === 'Custom' && formData.customCategory.trim()
+        ? formData.customCategory.trim()
+        : formData.category;
       const payload = {
         title: formData.name.trim(),
         description: formData.description.trim(),
-        category: formData.category,
+        category: chosenCategory,
         bodyFeeling: formData.bodyResponses.join(', '),
-        intensity: 5,
+        intensity: formData.intensity,
       };
 
       if (session?.user?.id) {
@@ -56,7 +97,8 @@ export default function AddWorry() {
         });
       }
 
-      setFormData({ name: '', description: '', category: 'Work', bodyResponses: [] });
+  setFormData({ name: '', description: '', category: 'Work', customCategory: '', bodyResponses: [], intensity: 5 });
+  try { localStorage.removeItem(DRAFT_KEY); } catch(e) {}
       router.push('/worry-reflection');
     } catch (error) {
       console.error('Error adding worry:', error);
@@ -66,10 +108,16 @@ export default function AddWorry() {
     }
   };
 
-  const handleBodyResponseChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
-    setFormData(prev => ({ ...prev, bodyResponses: selectedOptions }));
-  };
+  const toggleBodyResponse = useCallback((resp: string) => {
+    setFormData(prev => ({
+      ...prev,
+      bodyResponses: prev.bodyResponses.includes(resp)
+        ? prev.bodyResponses.filter(r => r !== resp)
+        : [...prev.bodyResponses, resp]
+    }));
+  }, []);
+
+  const placeholder = nameSuggestions[suggestIndex];
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -89,7 +137,7 @@ export default function AddWorry() {
               type="text" 
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              placeholder="e.g., &quot;Job interview nerves&quot;" 
+              placeholder={`e.g., ${placeholder}`}
               className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary"
               required
             />
@@ -105,44 +153,65 @@ export default function AddWorry() {
               required
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-6">
             <div>
-              <label htmlFor="life-area-select" className="block mb-1 font-medium">Choose a life area</label>
-              <select 
-                id="life-area-select" 
-                value={formData.category}
-                onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary"
-              >
-                <option value="School">School</option>
-                <option value="Work">Work</option>
-                <option value="Family">Family</option>
-                <option value="Finance">Finance</option>
-                <option value="Politics">Politics</option>
-                <option value="Health">Health</option>
-                <option value="Relationships">Relationships</option>
-                <option value="Other">Other</option>
-              </select>
+              <label className="block mb-2 font-medium">Life area</label>
+              <div className="flex flex-wrap gap-2">
+                {CATEGORY_PRESETS.concat('Custom').map(cat => {
+                  const active = formData.category === cat;
+                  return (
+                    <button
+                      type="button"
+                      key={cat}
+                      onClick={() => setFormData(prev => ({ ...prev, category: cat }))}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${active ? 'bg-gradient-to-r from-accentLavender to-accentTeal text-white border-transparent shadow' : 'border-gray-300 hover:bg-gray-100'}`}
+                    >{cat}</button>
+                  );
+                })}
+              </div>
+              {formData.category === 'Custom' && (
+                <input
+                  type="text"
+                  value={formData.customCategory}
+                  onChange={e => setFormData(prev => ({ ...prev, customCategory: e.target.value }))}
+                  placeholder="Enter custom area (e.g., Creativity)"
+                  className="mt-3 w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                />
+              )}
             </div>
             <div>
-              <label htmlFor="body-response-select" className="block mb-1 font-medium">How does your body respond?</label>
-              <select 
-                id="body-response-select" 
-                multiple 
-                value={formData.bodyResponses}
-                onChange={handleBodyResponseChange}
-                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary h-32"
-              >
-                <option value="Sweaty palms">Sweaty palms</option>
-                <option value="Heartbeat">Racing heartbeat</option>
-                <option value="Jaw tightness">Jaw tightness</option>
-                <option value="Restless legs">Restless legs</option>
-                <option value="Stomach knots">Stomach knots</option>
-                <option value="Shoulder tension">Shoulder tension</option>
-                <option value="Chest tightness">Chest tightness</option>
-                <option value="Other">Other</option>
-              </select>
-              <p className="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple</p>
+              <label className="block mb-2 font-medium">Body responses (select all that apply)</label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {BODY_RESPONSES.map(resp => {
+                  const active = formData.bodyResponses.includes(resp);
+                  return (
+                    <button
+                      type="button"
+                      key={resp}
+                      onClick={() => toggleBodyResponse(resp)}
+                      className={`text-xs px-2 py-2 rounded-lg border flex items-center justify-between gap-2 transition-colors ${active ? 'bg-accentTeal/15 border-accentTeal text-teal-800' : 'border-gray-300 hover:bg-gray-100 text-gray-700'}`}
+                    >
+                      <span className="truncate">{resp}</span>
+                      {active && <span className="text-teal-600">✓</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div>
+              <label htmlFor="intensity-slider" className="block mb-2 font-medium">Current intensity: <span className="font-semibold">{formData.intensity}/10</span></label>
+              <input
+                id="intensity-slider"
+                type="range"
+                min={1}
+                max={10}
+                value={formData.intensity}
+                onChange={e => setFormData(prev => ({ ...prev, intensity: Number(e.target.value) }))}
+                className="w-full accent-accentTeal"
+              />
+              <div className="flex justify-between text-[10px] text-gray-500 mt-1">
+                <span>Calm</span><span>Moderate</span><span>High</span>
+              </div>
             </div>
           </div>
           <button 
