@@ -89,7 +89,7 @@ This document lists the main technologies, libraries, and tools used in the Ease
 - **cors**: Enable/limit cross-origin requests for APIs.
 - **dotenv**: Securely load environment variables for secrets, DB URLs, etc.
 - **zod/yup/validator**: Validate and sanitize all user input in forms and APIs.
-**mongoose**: Database access for user data, worries, reflections, settings, and auth entities.
+**mongoose**: Database access for user data, worries, reflections, settings, and auth entities (indexes synced programmatically on startup).
 - **nodemailer**: Send verification, password reset, and notification emails.
 - **winston/pino**: Log API and server events/errors.
 - **sentry**: Monitor and report errors in production.
@@ -103,7 +103,6 @@ This document lists the main technologies, libraries, and tools used in the Ease
 - **react-timer-hook**: Countdown timers for breathing/meditation.
 - **@headlessui/react**: Accessible dropdowns, modals, and lists.
 - **react-icons/Custom SVGs**: All icons and illustrations.
-- **Firebase**: User data, authentication, reminders, and analytics (if used).
 - **LocalStorage**: Offline worry capture and reminders.
 - **eslint, prettier, jest, @testing-library/react**: Code quality and testing.
 - **pnpm**: All dependency management and scripts.
