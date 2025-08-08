@@ -1,7 +1,10 @@
 'use client'
 import Link from 'next/link';
+import { useTranslation } from '@/lib/intl';
 
 export default function Home() {
+  const { t } = useTranslation();
+  
   return (
     <div className="space-y-20">
       {/* Hero */}
@@ -11,12 +14,12 @@ export default function Home() {
             Ease Your Mind
           </h1>
           <p className="mt-5 text-lg text-gray-600 leading-relaxed max-w-xl">
-            Your compassionate, evidence-based companion to capture worries, challenge unhelpful thinking, and build resilient calm.
+            {t('dashboard.subtitle')}
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link href="/add-worry" className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-accentLavender to-accentTeal text-white px-6 py-3 text-sm font-semibold shadow hover:shadow-md focus:outline-none focus-visible:ring-2 ring-accentTeal/40">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14" /></svg>
-              Start Now
+              {t('dashboard.addWorry')}
             </Link>
             <Link href="/companion" className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white/70 backdrop-blur px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 ring-accentTeal/40">
               Learn More
