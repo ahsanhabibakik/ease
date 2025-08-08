@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import useWorryStore from '@/stores/worryStore';
 import { useSession } from 'next-auth/react';
+import { Button } from '@/components/ui/Button';
+import { Card, CardBody, CardHeader, CardTitle } from '@/components/ui/Card';
 
 export default function AddWorry() {
   const router = useRouter();
@@ -139,111 +141,109 @@ export default function AddWorry() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <section className="bg-white/90 backdrop-blur rounded-2xl shadow-sm ring-1 ring-gray-200/70 p-6 sm:p-8">
-        <h1 className="text-2xl font-bold mb-2 tracking-tight">Add a Worry</h1>
-        <p className="text-sm text-gray-600 mb-2">Externalize the thought so you can evaluate it later with clarity.</p>
-        {!session && (
-          <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-md p-2 mb-4">
-            Sign in to sync worries across devices. Unsigned worries stay only in this browser.
-          </p>
-        )}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="worry-name" className="block mb-1 font-medium">Give your worry a name</label>
-            <input 
-              id="worry-name" 
-              type="text" 
-              value={formData.name}
-              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              placeholder={`e.g., ${placeholder}`}
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="worry-description" className="block mb-1 font-medium">Why does it matter to you?</label>
-            <textarea 
-              id="worry-description" 
-              value={formData.description}
-              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="Share what's on your heart..." 
-              className="w-full border rounded-lg p-3 h-24 focus:ring-2 focus:ring-primary focus:border-primary"
-              required
-            />
-          </div>
-          <div className="space-y-6">
-            <div>
-              <label className="block mb-2 font-medium">Life area</label>
-              <div className="flex flex-wrap gap-2">
-                {BASE_CATEGORY_PRESETS.concat(customCategories).filter((v,i,a)=>a.indexOf(v)===i).concat('Custom').map(cat => {
-                  const active = formData.category === cat;
-                  return (
-                    <button
-                      type="button"
-                      key={cat}
-                      onClick={() => setFormData(prev => ({ ...prev, category: cat }))}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${active ? 'bg-gradient-to-r from-accentLavender to-accentTeal text-white border-transparent shadow' : 'border-gray-300 hover:bg-gray-100'}`}
-                    >{cat}</button>
-                  );
-                })}
-              </div>
-              {formData.category === 'Custom' && (
+      <Card>
+        <CardHeader>
+          <CardTitle className="h2 mb-1">Add a Worry</CardTitle>
+          <p className="text-soft text-sm">Externalize the thought so you can evaluate it later with clarity.</p>
+          {!session && (
+            <p className="mt-3 text-xs rounded-md border border-[var(--c-warn)]/40 bg-[var(--c-warn)]/10 text-[var(--c-warn)] px-3 py-2">Sign in to sync worries across devices. Unsigned worries stay only in this browser.</p>
+          )}
+        </CardHeader>
+        <CardBody>
+          <form onSubmit={handleSubmit} className="form-gap">
+            <div className="form-gap">
+              <div>
+                <label htmlFor="worry-name" className="block mb-1 font-medium text-[var(--c-text)]">Give your worry a name</label>
                 <input
+                  id="worry-name"
                   type="text"
-                  value={formData.customCategory}
-                  onChange={e => setFormData(prev => ({ ...prev, customCategory: e.target.value }))}
-                  placeholder="Enter custom area (e.g., Creativity)"
-                  className="mt-3 w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  value={formData.name}
+                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder={`e.g., ${placeholder}`}
+                  className="field-input"
+                  required
                 />
-              )}
-            </div>
-            <div>
-              <label className="block mb-2 font-medium">Body responses (select all that apply)</label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {BODY_RESPONSES.map(resp => {
-                  const active = formData.bodyResponses.includes(resp);
-                  return (
-                    <button
-                      type="button"
-                      key={resp}
-                      onClick={() => toggleBodyResponse(resp)}
-                      className={`text-xs px-2 py-2 rounded-lg border flex items-center justify-between gap-2 transition-colors ${active ? 'bg-accentTeal/15 border-accentTeal text-teal-800' : 'border-gray-300 hover:bg-gray-100 text-gray-700'}`}
-                    >
-                      <span className="truncate">{resp}</span>
-                      {active && <span className="text-teal-600">✓</span>}
-                    </button>
-                  );
-                })}
+              </div>
+              <div>
+                <label htmlFor="worry-description" className="block mb-1 font-medium text-[var(--c-text)]">Why does it matter to you?</label>
+                <textarea
+                  id="worry-description"
+                  value={formData.description}
+                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Share what's on your heart..."
+                  className="field-input min-h-[110px] resize-vertical"
+                  required
+                />
               </div>
             </div>
-            <div>
-              <label htmlFor="intensity-slider" className="block mb-2 font-medium">Current intensity: <span className="font-semibold">{formData.intensity}/10</span></label>
-              <input
-                id="intensity-slider"
-                type="range"
-                min={1}
-                max={10}
-                value={formData.intensity}
-                onChange={e => setFormData(prev => ({ ...prev, intensity: Number(e.target.value) }))}
-                className="w-full accent-accentTeal"
-              />
-              <div className="flex justify-between text-[10px] text-gray-500 mt-1">
-                <span>Calm</span><span>Moderate</span><span>High</span>
+            <div className="section-gap">
+              <div>
+                <label className="block mb-2 font-medium text-[var(--c-text)]">Life area</label>
+                <div className="flex flex-wrap gap-2">
+                  {BASE_CATEGORY_PRESETS.concat(customCategories).filter((v,i,a)=>a.indexOf(v)===i).concat('Custom').map(cat => {
+                    const active = formData.category === cat;
+                    return (
+                      <button
+                        type="button"
+                        key={cat}
+                        onClick={() => setFormData(prev => ({ ...prev, category: cat }))}
+                        className={`chip ${active ? 'chip-active' : ''}`}
+                      >{cat}</button>
+                    );
+                  })}
+                </div>
+                {formData.category === 'Custom' && (
+                  <input
+                    type="text"
+                    value={formData.customCategory}
+                    onChange={e => setFormData(prev => ({ ...prev, customCategory: e.target.value }))}
+                    placeholder="Enter custom area (e.g., Creativity)"
+                    className="field-input mt-3"
+                  />
+                )}
+              </div>
+              <div>
+                <label className="block mb-2 font-medium text-[var(--c-text)]">Body responses (select all that apply)</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {BODY_RESPONSES.map(resp => {
+                    const active = formData.bodyResponses.includes(resp);
+                    return (
+                      <button
+                        type="button"
+                        key={resp}
+                        onClick={() => toggleBodyResponse(resp)}
+                        className={`chip body-chip ${active ? 'body-chip-active' : ''}`}
+                      >
+                        <span className="truncate">{resp}</span>
+                        {active && <span aria-hidden>✓</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div>
+                <label htmlFor="intensity-slider" className="block mb-2 font-medium text-[var(--c-text)]">Current intensity: <span className="font-semibold">{formData.intensity}/10</span></label>
+                <input
+                  id="intensity-slider"
+                  type="range"
+                  min={1}
+                  max={10}
+                  value={formData.intensity}
+                  onChange={e => setFormData(prev => ({ ...prev, intensity: Number(e.target.value) }))}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-[10px] text-[var(--c-text-faint)] mt-1">
+                  <span>Calm</span><span>Moderate</span><span>High</span>
+                </div>
               </div>
             </div>
-          </div>
-          <button 
-            type="submit" 
-            disabled={isSubmitting}
-            className="w-full py-3 mt-4 bg-gradient-to-r from-accentLavender to-accentTeal text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-shadow"
-          >
-            {isSubmitting ? 'Adding Worry...' : 'Drop It Gently'}
-          </button>
-          <p className="text-center text-sm text-primary underline mt-2">
-            <a href="/companion#worry-input">How this works</a>
-          </p>
-        </form>
-      </section>
+            <div className="pt-2">
+              <Button type="submit" variant="primary" className="w-full py-3 text-[var(--fs-sm)]" disabled={isSubmitting}>{isSubmitting ? 'Adding Worry...' : 'Drop It Gently'}</Button>
+              <p className="text-center text-xs mt-3"><a href="/companion#worry-input" className="text-[var(--c-accent)] hover:underline">How this works</a></p>
+            </div>
+          </form>
+        </CardBody>
+      </Card>
     </div>
   );
 }
