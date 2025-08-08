@@ -37,14 +37,14 @@ export default function AddWorry() {
         const parsed = JSON.parse(raw);
         setFormData({ ...formData, ...parsed });
       }
-    } catch(e) {}
+  } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Autosave draft
   useEffect(() => {
     const id = setTimeout(() => {
-      try { localStorage.setItem(DRAFT_KEY, JSON.stringify(formData)); } catch(e) {}
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify(formData)); } catch {}
     }, 500);
     return () => clearTimeout(id);
   }, [formData]);
@@ -53,7 +53,7 @@ export default function AddWorry() {
   useEffect(() => {
     const rot = setInterval(() => setSuggestIndex(i => (i + 1) % nameSuggestions.length), 4000);
     return () => clearInterval(rot);
-  }, []);
+  }, [nameSuggestions.length]);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -98,7 +98,7 @@ export default function AddWorry() {
       }
 
   setFormData({ name: '', description: '', category: 'Work', customCategory: '', bodyResponses: [], intensity: 5 });
-  try { localStorage.removeItem(DRAFT_KEY); } catch(e) {}
+  try { localStorage.removeItem(DRAFT_KEY); } catch {}
       router.push('/worry-reflection');
     } catch (error) {
       console.error('Error adding worry:', error);

@@ -33,7 +33,7 @@ export default function Navbar() {
   const toggleTheme = () => {
     const root = document.documentElement;
     const isDark = root.classList.toggle('dark');
-    try { localStorage.setItem('ease-theme', isDark ? 'dark' : 'light'); } catch(e) {}
+  try { localStorage.setItem('ease-theme', isDark ? 'dark' : 'light'); } catch {}
   };
 
   return (

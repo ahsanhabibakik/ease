@@ -30,7 +30,7 @@ export default async function RootLayout({
   let session = null;
   try {
     session = await getServerSession(authOptions);
-  } catch (e) {
+  } catch {
     // Gracefully ignore session failures (e.g., missing env for a provider)
     session = null;
   }

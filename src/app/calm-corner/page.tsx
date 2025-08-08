@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 export default function CalmCorner() {
   const [isBreathing, setIsBreathing] = useState(false);
@@ -8,12 +8,12 @@ export default function CalmCorner() {
   const [countdown, setCountdown] = useState(4);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const breathingCycle = {
+  const breathingCycle = useMemo(() => ({
     inhale: { duration: 4, next: 'hold', instruction: 'Breathe in...' },
     hold: { duration: 4, next: 'exhale', instruction: 'Hold...' },
     exhale: { duration: 6, next: 'pause', instruction: 'Breathe out...' },
     pause: { duration: 2, next: 'inhale', instruction: 'Pause...' }
-  };
+  }), []);
 
   const startBreathing = () => {
     setIsBreathing(true);
@@ -51,7 +51,7 @@ export default function CalmCorner() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isBreathing, breathingPhase]);
+  }, [isBreathing, breathingPhase, breathingCycle]);
 
   const getCircleScale = () => {
     if (breathingPhase === 'inhale') return 'scale-150';
