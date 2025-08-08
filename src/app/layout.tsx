@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import Layout from "@/components/Layout";
+import RouteProgress from "@/components/RouteProgress";
 import "./globals.css";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import { getServerSession } from "next-auth";
@@ -82,6 +83,7 @@ export default async function RootLayout({
         </noscript>
         {/* App Layout */}
         <div id="__ease-app-layout">
+          <RouteProgress />
           <SessionProviderWrapper session={session}>
             <Layout>{children}</Layout>
           </SessionProviderWrapper>
