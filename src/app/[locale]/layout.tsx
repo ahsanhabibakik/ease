@@ -29,8 +29,10 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
+  
   let session = null;
   try {
     session = await getServerSession(authOptions);
@@ -40,7 +42,7 @@ export default async function LocaleLayout({
   }
   
   return (
-    <html lang={params.locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         {/* Microsoft Clarity */}
         <Script id="clarity-script" strategy="afterInteractive">
