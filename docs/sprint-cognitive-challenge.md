@@ -159,10 +159,9 @@ enum CognitiveDistortion {
 
 ### Week 1: Backend & Database Setup
 
-- [ ] **Day 1-2:** Database schema implementation
-  - Create cognitive_challenges table
-  - Add migration scripts
-  - Update Prisma schema
+- [ ] **Day 1-2:** Database schema implementation (Mongoose models)
+  - Create cognitive_challenges model
+  - Add necessary indexes
   - Test database connectivity
 
 - [ ] **Day 3-4:** API endpoint development

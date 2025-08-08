@@ -12,7 +12,19 @@ export default async function ProfilePage() {
   if (!session?.user?.id) redirect('/auth/signin?callbackUrl=/profile');
 
   await dbConnect();
-  const user = await User.findById(session.user.id).lean();
+  type LeanUser = {
+    _id: unknown;
+    name?: string | null;
+    email: string;
+    image?: string | null;
+    createdAt?: Date;
+    settings?: {
+      reflectionTime?: string;
+      customCategories?: string[];
+      notifications?: boolean;
+    };
+  } | null;
+  const user = (await User.findById(session.user.id).lean()) as LeanUser;
   const [worryCount, releasedCount, recentReflections, categories] = await Promise.all([
     Worry.countDocuments({ userId: session.user.id }),
     Worry.countDocuments({ userId: session.user.id, status: 'RESOLVED' }),
@@ -43,7 +55,7 @@ export default async function ProfilePage() {
       <section className="bg-white/90 dark:bg-gray-900/70 backdrop-blur rounded-2xl p-8 ring-1 ring-gray-200/70 dark:ring-gray-700 shadow-sm">
         <div className="flex items-center gap-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={user?.image || 'https://avatar.vercel.sh/' + user?.email} alt={user?.name || 'User'} className="h-20 w-20 rounded-2xl object-cover ring-2 ring-accentTeal/30" />
+          <img src={user?.image || ('https://avatar.vercel.sh/' + (user?.email || 'user'))} alt={user?.name || user?.email || 'User'} className="h-20 w-20 rounded-2xl object-cover ring-2 ring-accentTeal/30" />
           <div>
             <h1 className="text-2xl font-bold tracking-tight mb-1">{user?.name || user?.email}</h1>
             <p className="text-sm text-gray-600 dark:text-gray-400">Private mindful space • Joined {new Date(user?.createdAt || Date.now()).toLocaleDateString()}</p>
@@ -52,7 +64,11 @@ export default async function ProfilePage() {
         <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <Stat label="Worries Captured" value={worryCount} />
           <Stat label="Released" value={releasedCount} />
-          <Stat label="Categories Used" value={categories.reduce((acc: Set<string>, w: any) => { if (w.category) acc.add(w.category); return acc; }, new Set<string>()).size} />
+          {(() => {
+            const categorySet = new Set<string>();
+            (categories as Array<{ category?: string }>).forEach(w => { if (w.category) categorySet.add(w.category); });
+            return <Stat label="Categories Used" value={categorySet.size} />;
+          })()}
           <Stat label="Reflection Streak" value={streak} />
         </div>
       </section>

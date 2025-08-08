@@ -31,7 +31,7 @@ export default async function RootLayout({
   let session = null;
   try {
     session = await getServerSession(authOptions);
-  } catch (err) {
+  } catch {
     // Common cause: JWT secret mismatch -> decryption failure. We ignore and treat as signed out.
     session = null;
   }

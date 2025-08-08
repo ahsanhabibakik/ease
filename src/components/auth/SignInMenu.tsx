@@ -8,11 +8,17 @@ interface SignInMenuProps { onClose?: ()=>void; className?: string; }
 
 export default function SignInMenu({ onClose, className }: SignInMenuProps) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [providers,setProviders] = useState<Record<string, any> | null>(null);
+  type ProviderInfo = { id: string; name: string } & Record<string, unknown>;
+  const [providers,setProviders] = useState<Record<string, ProviderInfo> | null>(null);
   const [email,setEmail] = useState('');
   const [submitting,setSubmitting] = useState(false);
 
-  useEffect(()=>{ getProviders().then(p=> setProviders(p)); },[]);
+  useEffect(()=>{ getProviders().then(p=> {
+    if (!p) { setProviders(null); return; }
+    const mapped: Record<string, ProviderInfo> = {};
+  Object.entries(p).forEach(([k,v])=> { mapped[k] = { ...v, id: v.id, name: v.name } as ProviderInfo; });
+    setProviders(mapped);
+  }); },[]);
   useEffect(()=>{
     function onKey(e:KeyboardEvent){ if(e.key==='Escape'){ onClose?.(); }}
     function onClick(e:MouseEvent){ if(ref.current && !ref.current.contains(e.target as Node)){ onClose?.(); }}
@@ -26,7 +32,7 @@ export default function SignInMenu({ onClose, className }: SignInMenuProps) {
     try { await signIn('email',{ email, redirect:true }); } finally { setSubmitting(false); }
   }
 
-  const list = providers ? Object.values(providers) : [];
+  const list: ProviderInfo[] = providers ? Object.values(providers) : [];
   const emailProvider = list.find(p=>p.id==='email');
   const credentialLess = list.filter(p=> p.id!=='email' && p.id!=='credentials');
 

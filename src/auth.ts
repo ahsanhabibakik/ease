@@ -1,32 +1,113 @@
 import { NextAuthOptions } from "next-auth";
+import type { Adapter, AdapterUser as AdapterUserType } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google"
 import EmailProvider from "next-auth/providers/email"
 import FacebookProvider from "next-auth/providers/facebook"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { dbConnect } from '@/lib/mongoose';
 import User from '@/models/User';
-import Account from '@/models/Account';
-import VerificationToken from '@/models/VerificationToken';
+import AccountModel from '@/models/Account';
+import VerificationTokenModel from '@/models/VerificationToken';
 
 // Lightweight custom adapter for Mongo using mongoose (session strategy = jwt)
-const MongoAdapter = {
-  async createUser(data: any) { await dbConnect(); const user = await User.create(data); return user.toObject(); },
-  async getUser(id: string) { await dbConnect(); return User.findById(id).lean(); },
-  async getUserByEmail(email: string) { await dbConnect(); return User.findOne({ email }).lean(); },
-  async getUserByAccount({ providerAccountId, provider }: { providerAccountId: string; provider: string; }) {
-    await dbConnect(); const account = await Account.findOne({ provider, providerAccountId }).lean(); if (!account) return null; return User.findById(account.userId).lean();
+// Local shapes for items not exported from next-auth/adapters in current version
+interface AdapterAccountShape {
+  userId: string;
+  type: string;
+  provider: string;
+  providerAccountId: string;
+  refresh_token?: string | null;
+  access_token?: string | null;
+  expires_at?: number | null;
+  token_type?: string | null;
+  scope?: string | null;
+  id_token?: string | null;
+  session_state?: string | null;
+}
+interface AdapterVerificationTokenShape { identifier: string; token: string; expires: Date; }
+
+const MongoAdapter: Adapter = {
+  async createUser(data: Omit<AdapterUserType, 'id'>) {
+    await dbConnect();
+    // Mongoose will ignore undefined fields; ensure email present per NextAuth contract
+    const user = await User.create(data);
+    const obj = user.toObject();
+    return { id: user._id.toString(), name: obj.name ?? null, email: obj.email, emailVerified: obj.emailVerified ?? null, image: obj.image ?? null } satisfies AdapterUserType;
   },
-  async updateUser(data: any) { await dbConnect(); const { id, ...rest } = data; return User.findByIdAndUpdate(id, rest, { new: true }).lean(); },
-  async deleteUser(id: string) { await dbConnect(); await User.findByIdAndDelete(id); await Account.deleteMany({ userId: id }); return null; },
-  async linkAccount(data: any) { await dbConnect(); await Account.create({ ...data, userId: data.userId }); return data; },
-  async unlinkAccount({ providerAccountId, provider }: { providerAccountId: string; provider: string; }) { await dbConnect(); await Account.deleteOne({ provider, providerAccountId }); return null; },
-  async createVerificationToken(data: any) { await dbConnect(); const vt = await VerificationToken.create(data); return { identifier: vt.identifier, token: vt.token, expires: vt.expires }; },
-  async useVerificationToken({ identifier, token }: { identifier: string; token: string; }) { await dbConnect(); const vt = await VerificationToken.findOneAndDelete({ identifier, token }).lean(); if (!vt) return null; return { identifier: vt.identifier, token: vt.token, expires: vt.expires }; },
-  // Sessions not used (JWT strategy)
-  createSession: async () => null,
-  getSessionAndUser: async () => null,
-  updateSession: async () => null,
-  deleteSession: async () => null,
+  async getUser(id: string) {
+    await dbConnect();
+  const u = await User.findById(id).lean() as (AdapterUserType & { _id: { toString(): string } }) | null;
+    if (!u) return null;
+    return { id: u._id.toString(), name: u.name ?? null, email: u.email, emailVerified: u.emailVerified ?? null, image: u.image ?? null } satisfies AdapterUserType;
+  },
+  async getUserByEmail(email: string) {
+    await dbConnect();
+  const u = await User.findOne({ email }).lean() as (AdapterUserType & { _id: { toString(): string } }) | null;
+    if (!u) return null;
+    return { id: u._id.toString(), name: u.name ?? null, email: u.email, emailVerified: u.emailVerified ?? null, image: u.image ?? null } satisfies AdapterUserType;
+  },
+  async getUserByAccount({ providerAccountId, provider }: { providerAccountId: string; provider: string }) {
+    await dbConnect();
+  const account = await AccountModel.findOne({ provider, providerAccountId }).lean() as ({ userId: string } & { _id: unknown }) | null;
+    if (!account) return null;
+  const u = await User.findById(account.userId).lean() as (AdapterUserType & { _id: { toString(): string } }) | null;
+    if (!u) return null;
+    return { id: u._id.toString(), name: u.name ?? null, email: u.email, emailVerified: u.emailVerified ?? null, image: u.image ?? null } satisfies AdapterUserType;
+  },
+  async updateUser(data: Partial<AdapterUserType> & { id: string }) {
+    await dbConnect();
+    const { id, ...rest } = data;
+  const u = await User.findByIdAndUpdate(id, rest, { new: true }).lean() as (AdapterUserType & { _id: { toString(): string } }) | null;
+  if (!u) throw new Error('User not found');
+    return { id: u._id.toString(), name: u.name ?? null, email: u.email, emailVerified: u.emailVerified ?? null, image: u.image ?? null } satisfies AdapterUserType;
+  },
+  async deleteUser(id: string) {
+    await dbConnect();
+    await User.findByIdAndDelete(id);
+    await AccountModel.deleteMany({ userId: id });
+    return null;
+  },
+  async linkAccount(data: AdapterAccountShape) {
+    await dbConnect();
+    await AccountModel.create({ ...data, userId: data.userId });
+    // Return shape must satisfy AdapterAccountType
+  const account: AdapterAccountShape = {
+      userId: data.userId,
+      type: data.type,
+      provider: data.provider,
+      providerAccountId: data.providerAccountId,
+      refresh_token: data.refresh_token ?? null,
+      access_token: data.access_token ?? null,
+      expires_at: data.expires_at ?? null,
+      token_type: data.token_type ?? null,
+      scope: data.scope ?? null,
+      id_token: data.id_token ?? null,
+      session_state: data.session_state ?? null,
+    };
+    return account;
+  },
+  async unlinkAccount({ providerAccountId, provider }: { providerAccountId: string; provider: string }) {
+    await dbConnect();
+    await AccountModel.deleteOne({ provider, providerAccountId });
+    return undefined;
+  },
+  async createVerificationToken(data: AdapterVerificationTokenShape) {
+    await dbConnect();
+    const vt = await VerificationTokenModel.create(data);
+  const token: AdapterVerificationTokenShape = { identifier: vt.identifier, token: vt.token, expires: vt.expires };
+    return token;
+  },
+  async useVerificationToken({ identifier, token }: { identifier: string; token: string }) {
+    await dbConnect();
+  const vt = await VerificationTokenModel.findOneAndDelete({ identifier, token }).lean() as (AdapterVerificationTokenShape & { _id: unknown }) | null;
+  if (!vt) return null;
+  return { identifier: vt.identifier, token: vt.token, expires: vt.expires } satisfies AdapterVerificationTokenShape;
+  },
+  // The following are not used since we use JWT strategy
+  async createSession() { throw new Error('createSession not implemented: JWT strategy in use'); },
+  async getSessionAndUser() { throw new Error('getSessionAndUser not implemented: JWT strategy in use'); },
+  async updateSession() { throw new Error('updateSession not implemented: JWT strategy in use'); },
+  async deleteSession() { throw new Error('deleteSession not implemented: JWT strategy in use'); },
 };
 
 
@@ -90,7 +171,7 @@ if (process.env.ENABLE_CREDENTIALS === 'true') {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: MongoAdapter as any,
+  adapter: MongoAdapter,
   providers,
   session: { strategy: 'jwt' },
   pages: { signIn: '/auth/signin' },
@@ -116,8 +197,7 @@ export const authOptions: NextAuthOptions = {
         // Likely stale/invalid cookie after secret change; silent fallback.
         return;
       }
-      // eslint-disable-next-line no-console
-      console.error('[next-auth]', code, metadata);
+  console.error('[next-auth]', code, metadata);
     },
   },
 };

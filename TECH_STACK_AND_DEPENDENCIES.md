@@ -21,7 +21,6 @@ This document lists the main technologies, libraries, and tools used in the Ease
 - **dotenv**: Secure environment variable management.
 - **zod** or **yup**: Schema validation for API inputs and forms.
 - **validator**: Input sanitization and validation.
-- **prisma** & **@prisma/client**: Type-safe database ORM (if using SQL DB).
 - **nodemailer**: Sending emails (verification, password reset, etc.).
 - **winston** or **pino**: Server-side logging.
 - **sentry**/**@sentry/nextjs**: Error monitoring and reporting.
@@ -61,8 +60,7 @@ This document lists the main technologies, libraries, and tools used in the Ease
 
 ## 7. Backend & Data
 
-- **Firebase**: NoSQL database, authentication, and serverless functions (optional, or use Prisma for SQL DB).
-- **Prisma**: ORM for SQL databases (Postgres, MySQL, SQLite, etc.).
+**MongoDB / Mongoose**: Document database & ODM used for persistence (users, worries, reflections, settings, auth accounts, verification tokens).
 - **LocalStorage**: For offline worry capture and local reminders.
 
 ## 8. Testing & Linting
@@ -91,7 +89,7 @@ This document lists the main technologies, libraries, and tools used in the Ease
 - **cors**: Enable/limit cross-origin requests for APIs.
 - **dotenv**: Securely load environment variables for secrets, DB URLs, etc.
 - **zod/yup/validator**: Validate and sanitize all user input in forms and APIs.
-- **prisma**: Database access for user data, worries, reflections, etc. (if using SQL DB).
+**mongoose**: Database access for user data, worries, reflections, settings, and auth entities.
 - **nodemailer**: Send verification, password reset, and notification emails.
 - **winston/pino**: Log API and server events/errors.
 - **sentry**: Monitor and report errors in production.

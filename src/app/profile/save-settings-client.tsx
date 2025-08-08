@@ -31,7 +31,7 @@ export default function SaveSettingsClient({ initialSettings }: Props) {
       if (!res.ok) throw new Error('Save failed');
       setStatus('Saved');
       setTimeout(() => setStatus(null), 2500);
-    } catch (e) {
+  } catch {
       setStatus('Error saving');
     } finally {
       setLoading(false);
