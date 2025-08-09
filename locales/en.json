@@ -132,7 +132,25 @@
   "home": {
     "hero": {
       "title": "Ease Your Mind, Find Your Peace",
+      "titleRest": "your mind. Clarify, challenge & reframe.",
+      "toolkit": "Mind wellness toolkit",
       "learnMore": "Learn More"
+    },
+    "features": {
+      "captureWorries": "Capture worries fast",
+      "evidenceBased": "Evidence-based prompts",
+      "trackGrowth": "Track reframes & growth"
+    },
+    "nextStep": {
+      "title": "Your next gentle step",
+      "description": "Offload looping thoughts into a structured flow. Separate facts from fears, surface balanced perspectives and practice calmer narratives that stick.",
+      "privacy": "Private by default • You own your data",
+      "steps": {
+        "logWorry": "Log worry",
+        "challengeBelief": "Challenge belief",
+        "reframeThought": "Reframe thought",
+        "noteAction": "Note action"
+      }
     },
     "howItWorks": {
       "title": "How Ease Helps",
@@ -158,6 +176,7 @@
         "subtitle": "Guided breathing & grounding tools"
       },
       "dashboard": {
+        "title": "Track Your Progress",
         "subtitle": "Patterns, insights & reframes"
       }
     }
@@ -237,5 +256,146 @@
     "unauthorized": "You are not authorized to perform this action.",
     "notFound": "The requested resource was not found.",
     "validationError": "Please check your input and try again."
+  },
+  "calmCorner": {
+    "title": "Your Calm Corner",
+    "subtitle": "Find peace in the present moment with guided breathing and grounding exercises",
+    "breathing": {
+      "title": "Guided Breathing Exercise",
+      "subtitle": "4-4-6-2 breathing pattern • Proven to activate your relaxation response",
+      "ready": "Ready to begin?",
+      "readySubtitle": "Follow the circle and let your breath guide you to calm",
+      "start": "Start Breathing",
+      "stop": "Stop Session",
+      "inhale": "Breathe in...",
+      "hold": "Hold...",
+      "exhale": "Breathe out...",
+      "pause": "Pause...",
+      "phases": {
+        "inhale": "Inhale phase",
+        "hold": "Hold phase", 
+        "exhale": "Exhale phase",
+        "pause": "Pause phase"
+      }
+    },
+    "techniques": {
+      "title": "Quick Calming Techniques",
+      "subtitle": "Simple, effective tools you can use anywhere to find calm in moments of stress",
+      "progressiveRelaxation": {
+        "title": "Progressive Relaxation",
+        "description": "Tense and release each muscle group, starting from your toes and working up to your head.",
+        "duration": "5-10 minutes"
+      },
+      "grounding": {
+        "title": "5-4-3-2-1 Grounding",
+        "description": "Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, and 1 you taste.",
+        "duration": "2-3 minutes"
+      },
+      "selfMassage": {
+        "title": "Gentle Self-Massage",
+        "description": "Massage your temples, shoulders, or hands with slow, circular motions.",
+        "duration": "3-5 minutes"
+      },
+      "mindfulObservation": {
+        "title": "Mindful Observation", 
+        "description": "Focus completely on one object near you. Notice its color, texture, and details.",
+        "duration": "1-2 minutes"
+      },
+      "howToDoIt": "How to do it:"
+    },
+    "affirmations": {
+      "title": "Gentle Reminders",
+      "subtitle": "Compassionate words to comfort your heart and remind you of your strength",
+      "list": {
+        "feeling": "This feeling will pass, just like clouds in the sky.",
+        "safe": "I am safe in this moment, right here, right now.",
+        "visitors": "My worries don't define me; they're just visitors.",
+        "handle": "I can handle whatever comes my way.",
+        "okay": "It's okay to not be okay sometimes.",
+        "worthy": "I am worthy of peace and calm."
+      }
+    },
+    "emergency": {
+      "title": "Need Immediate Support?",
+      "subtitle": "If you're in crisis or having thoughts of self-harm, please reach out immediately",
+      "crisisText": {
+        "title": "Crisis Text Line",
+        "subtitle": "Available 24/7",
+        "contact": "Text HOME to 741741"
+      },
+      "suicidePrevention": {
+        "title": "Suicide Prevention",
+        "subtitle": "24/7 Support", 
+        "contact": "Call 988"
+      },
+      "emergency": {
+        "title": "Emergency Services",
+        "subtitle": "Life-threatening emergency",
+        "contact": "Call 911"
+      },
+      "reminder": "Remember: Seeking help is a sign of strength, not weakness. You matter, and there are people who care about you."
+    }
+  },
+  "worryReflection": {
+    "title": "Worry Jar",
+    "activeWorries": "active worry || active worries",
+    "dailyWorryTime": "Daily worry time",
+    "min": "min",
+    "worryTimeHelp": "Set aside time to process worries",
+    "currentWorries": "Current Worries",
+    "physicalResponses": "Physical responses",
+    "added": "Added",
+    "releaseWorry": "Release Worry",
+    "released": "Released",
+    "unknown": "Unknown",
+    "emptyJar": {
+      "title": "Your worry jar is empty",
+      "subtitle": "No worries captured yet. Add one to get started!",
+      "addFirst": "Add First Worry"
+    },
+    "releasedWorries": {
+      "title": "Released Worries",
+      "subtitle": "You've let go of {count} worry || You've let go of {count} worries",
+      "andMore": "And {count} more..."
+    }
+  },
+  "easeboard": {
+    "title": "Easeboard",
+    "quickInsights": {
+      "weighing": "What's Been Weighing on Me",
+      "feltMost": "Where I've Felt It Most",
+      "calmMoments": "My Calm Moments",
+      "worryTime": "Worry Time"
+    },
+    "trends": {
+      "noData": "No data yet",
+      "great": "Great progress! 📈",
+      "making": "Making progress 📊",
+      "building": "Building awareness 🌱"
+    },
+    "stats": {
+      "totalWorries": "Total Worries",
+      "activeNow": "Active Now",
+      "released": "Released",
+      "progress": "Progress"
+    },
+    "patterns": {
+      "title": "Worry Patterns",
+      "commonCategory": "Most Common Category",
+      "commonBodyResponse": "Most Common Body Response",
+      "releaseRate": "Release Rate",
+      "released": "released"
+    },
+    "activity": {
+      "title": "Recent Activity",
+      "released": "Released",
+      "active": "Active",
+      "noActivity": "No activity yet",
+      "addFirst": "Add Your First Worry"
+    },
+    "mood": {
+      "title": "How I've Been Feeling",
+      "comingSoon": "Mood tracking coming soon"
+    }
   }
 }
