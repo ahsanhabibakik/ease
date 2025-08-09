@@ -163,28 +163,28 @@
     }
   },
   "addWorry": {
-    "title": "What's Weighing on Your Heart?",
-    "subtitle": "Give your worry a safe place to rest. Externalizing your thoughts helps you see them more clearly and process them with compassion.",
+    "title": "Add a Worry",
+    "subtitle": "Externalize the thought so you can evaluate it later with clarity.",
     "signInTip": {
       "title": "Quick tip",
-      "message": "Sign in to sync your worries across devices and never lose your progress."
+      "message": "Sign in to sync worries across devices. Unsigned worries stay only in this browser."
     },
     "form": {
       "nameLabel": "Give your worry a name",
       "namePlaceholder": "e.g., {example}",
       "nameHelp": "Keep it simple and specific - this helps you recognize the worry later",
-      "descriptionLabel": "Tell your worry story",
-      "descriptionPlaceholder": "Share what's on your heart... Why does this worry matter to you right now?",
+      "descriptionLabel": "Why does it matter to you?",
+      "descriptionPlaceholder": "Share what's on your heart...",
       "descriptionHelp": "Express what's really at stake for you - there's no wrong way to share",
-      "categoryLabel": "Where does this belong in your life?",
+      "categoryLabel": "Life area",
       "customCategoryPlaceholder": "Enter custom area (e.g., Creativity, Parenting)",
       "categoryHelp": "Categorizing helps you spot patterns over time",
       "bodyLabel": "Where do you feel this in your body?",
       "bodyHelp": "Physical awareness helps you recognize worry patterns early",
       "intensityLabel": "How intense does this feel right now?",
       "intensityHelp": "Your current feeling level - this can change, and that's okay",
-      "submit": "Drop It Gently",
-      "submitting": "Gently placing in your worry jar..."
+      "submit": "Add Worry",
+      "submitting": "Adding..."
     },
     "categories": {
       "school": "School",

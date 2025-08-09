@@ -162,6 +162,75 @@
       }
     }
   },
+  "addWorry": {
+    "title": "Ajouter une inquiétude",
+    "subtitle": "Externalisez la pensée afin de pouvoir l'évaluer plus tard avec clarté.",
+    "signInTip": {
+      "title": "Conseil rapide",
+      "message": "Connectez-vous pour synchroniser les inquiétudes entre appareils. Les inquiétudes non signées restent uniquement dans ce navigateur."
+    },
+    "form": {
+      "nameLabel": "Donnez un nom à votre inquiétude",
+      "namePlaceholder": "par ex., {example}",
+      "nameHelp": "Gardez-le simple et spécifique - cela vous aide à reconnaître l'inquiétude plus tard",
+      "descriptionLabel": "Pourquoi est-ce important pour vous ?",
+      "descriptionPlaceholder": "Partagez ce qui vous tient à cœur...",
+      "descriptionHelp": "Exprimez ce qui est vraiment en jeu pour vous - il n'y a pas de mauvaise façon de partager",
+      "categoryLabel": "Domaine de vie",
+      "customCategoryPlaceholder": "Entrez un domaine personnalisé (par ex., Créativité, Parentalité)",
+      "categoryHelp": "La catégorisation vous aide à repérer les modèles au fil du temps",
+      "bodyLabel": "Où ressentez-vous cela dans votre corps ?",
+      "bodyHelp": "La conscience corporelle vous aide à reconnaître tôt les modèles d'inquiétude",
+      "intensityLabel": "À quel point cela vous semble-t-il intense en ce moment ?",
+      "intensityHelp": "Votre niveau de sentiment actuel - cela peut changer, et c'est normal",
+      "submit": "Ajouter l'inquiétude",
+      "submitting": "Ajout..."
+    },
+    "categories": {
+      "school": "École",
+      "work": "Travail",
+      "family": "Famille",
+      "finance": "Finance",
+      "politics": "Politique",
+      "health": "Santé",
+      "relationships": "Relations",
+      "other": "Autre"
+    },
+    "bodyResponses": {
+      "sweatyPalms": "Paumes moites",
+      "racingHeartbeat": "Battements de cœur rapides",
+      "jawTightness": "Tension de la mâchoire",
+      "restlessLegs": "Jambes agitées",
+      "stomachKnots": "Nœuds dans l'estomac",
+      "shoulderTension": "Tension dans les épaules",
+      "chestTightness": "Oppression thoracique",
+      "shallowBreath": "Respiration superficielle",
+      "headPressure": "Pression dans la tête",
+      "other": "Autre"
+    },
+    "suggestions": {
+      "jobInterview": "Nervosité d'entretien d'embauche",
+      "meetingTomorrow": "Cette réunion de demain",
+      "conversation": "Conversation que je ne cesse de rejouer",
+      "moneyUncertainty": "Incertitude financière",
+      "healthTests": "Résultats de tests de santé",
+      "presentation": "Présentation à venir"
+    },
+    "intensity": {
+      "calm": "Calme",
+      "moderate": "Modéré",
+      "intense": "Intense"
+    },
+    "encouragement": "Vous faites un pas courageux en reconnaissant cette inquiétude. Rappelez-vous, vous n'êtes pas seul dans cela.",
+    "learnMore": "Comment ce processus aide",
+    "processLater": "Vous serez guidé pour traiter cette inquiétude quand vous serez prêt",
+    "validation": {
+      "required": "Veuillez remplir à la fois le nom de l'inquiétude et la description."
+    },
+    "errors": {
+      "saveFailed": "Quelque chose s'est mal passé en sauvegardant votre inquiétude. Elle peut avoir été stockée localement."
+    }
+  },
   "errors": {
     "generic": "Quelque chose s'est mal passé. Veuillez réessayer.",
     "networkError": "Erreur réseau. Veuillez vérifier votre connexion.",
