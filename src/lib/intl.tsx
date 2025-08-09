@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,15 +33,27 @@ async function loadMessages(locale: string): Promise<Messages> {
 function getLocaleFromPath(pathname: string): string {
   const segments = pathname.split('/').filter(Boolean);
   const firstSegment = segments[0];
-  return SUPPORTED_LOCALES.includes(firstSegment) ? firstSegment : DEFAULT_LOCALE;
+  // Only return locale if the path actually starts with a supported locale
+  if (SUPPORTED_LOCALES.includes(firstSegment)) {
+    return firstSegment;
+  }
+  return DEFAULT_LOCALE;
 }
 
 export function IntlProvider({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
   const pathname = usePathname();
   const [locale, setLocaleState] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('ease-locale') || getLocaleFromPath(pathname) || DEFAULT_LOCALE;
+      // First check localStorage
+      const stored = localStorage.getItem('ease-locale');
+      if (stored && SUPPORTED_LOCALES.includes(stored)) {
+        return stored;
+      }
+      // Then check path
+      const pathLocale = getLocaleFromPath(pathname);
+      if (pathLocale !== DEFAULT_LOCALE) {
+        return pathLocale;
+      }
     }
     return DEFAULT_LOCALE;
   });
@@ -63,34 +75,47 @@ export function IntlProvider({ children }: { children: React.ReactNode }) {
       setLocaleState(newLocale);
       if (typeof window !== 'undefined') {
         localStorage.setItem('ease-locale', newLocale);
+        // Set cookie for server-side detection
+        document.cookie = `ease-locale=${newLocale}; path=/; max-age=31536000`;
       }
-      // For App Router, we'll manage locale client-side
-      const currentPath = pathname.replace(`/${locale}`, '').replace(/^\/+/, '') || '/';
-      const newPath = newLocale === DEFAULT_LOCALE ? currentPath : `/${newLocale}${currentPath === '/' ? '' : '/' + currentPath}`;
-      router.push(newPath);
+      // Don't navigate - just store preference
+      // The user can manually navigate or refresh to see changes
     }
   };
 
   const formatMessage = (id: string, values?: Record<string, string | number>): string => {
-    const keys = id.split('.');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let message: any = messages;
-    
-    for (const key of keys) {
-      message = message?.[key];
-    }
+    try {
+      if (!messages || Object.keys(messages).length === 0) {
+        return id;
+      }
 
-    if (typeof message !== 'string') {
-      console.warn(`Translation missing for key: ${id}`);
+      const keys = id.split('.');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let message: any = messages;
+      
+      for (const key of keys) {
+        if (!message || typeof message !== 'object') {
+          console.warn(`Translation path not found: ${id}`);
+          return id;
+        }
+        message = message[key];
+      }
+
+      if (typeof message !== 'string') {
+        console.warn(`Translation missing for key: ${id}`);
+        return id;
+      }
+
+      if (!values) return message;
+
+      // Simple placeholder replacement
+      return message.replace(/\{(\w+)\}/g, (match: string, key: string) => {
+        return values[key]?.toString() || match;
+      });
+    } catch (error) {
+      console.error(`Error formatting message for key: ${id}`, error);
       return id;
     }
-
-    if (!values) return message;
-
-    // Simple placeholder replacement
-    return message.replace(/\{(\w+)\}/g, (match: string, key: string) => {
-      return values[key]?.toString() || match;
-    });
   };
 
   if (loading) {
@@ -107,7 +132,14 @@ export function IntlProvider({ children }: { children: React.ReactNode }) {
 export function useIntl() {
   const context = useContext(IntlContext);
   if (!context) {
-    throw new Error('useIntl must be used within an IntlProvider');
+    console.error('useIntl must be used within an IntlProvider');
+    // Return a safe fallback instead of throwing
+    return {
+      locale: DEFAULT_LOCALE,
+      messages: {},
+      formatMessage: (id: string) => id,
+      setLocale: () => {}
+    };
   }
   return context;
 }

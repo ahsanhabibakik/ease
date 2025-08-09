@@ -44,6 +44,23 @@ export function middleware(request: NextRequest) {
     return;
   }
 
+  // List of existing non-localized routes
+  const existingRoutes = [
+    '/add-worry',
+    '/companion', 
+    '/calm-corner',
+    '/easeboard',
+    '/profile',
+    '/worry-reflection',
+    '/challenge-worry',
+    '/auth/signin'
+  ];
+
+  // If it's an existing route, don't redirect
+  if (existingRoutes.some(route => pathname.startsWith(route))) {
+    return;
+  }
+
   const pathnameIsMissingLocale = supportedLocales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
@@ -51,14 +68,12 @@ export function middleware(request: NextRequest) {
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
     
-    // Don't redirect if it's the default locale and we're on root
-    if (locale === defaultLocale && pathname === '/') {
-      return;
+    // Only redirect root path and paths that don't exist as regular routes
+    if (pathname === '/') {
+      // For root, redirect to locale-specific home
+      const redirectUrl = new URL(`/${locale}`, request.url);
+      return NextResponse.redirect(redirectUrl);
     }
-    
-    // Redirect to locale-prefixed URL
-    const redirectUrl = new URL(`/${locale}${pathname}`, request.url);
-    return NextResponse.redirect(redirectUrl);
   }
 }
 
