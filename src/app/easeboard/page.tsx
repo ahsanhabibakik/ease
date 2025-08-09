@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import useWorryStore from '@/stores/worryStore';
 
 export default function EaseboardPage() {
@@ -178,12 +179,12 @@ export default function EaseboardPage() {
               ) : (
                 <div className="text-center py-8">
                   <p className="text-gray-500 mb-4">No activity yet</p>
-                  <a 
+                  <Link 
                     href="/add-worry" 
                     className="inline-block px-4 py-2 bg-gradient-to-r from-accentLavender to-accentTeal text-white rounded-lg text-sm"
                   >
                     Add Your First Worry
-                  </a>
+                  </Link>
                 </div>
               )}
             </section>

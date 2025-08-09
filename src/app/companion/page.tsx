@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Companion() {
   const [selectedGuide, setSelectedGuide] = useState<string | null>(null);
@@ -181,9 +182,9 @@ export default function Companion() {
               </div>
               <h3 className="font-semibold mb-2">Add Your First Worry</h3>
               <p className="text-sm text-gray-600 mb-3">Start by gently placing one concern into your worry jar.</p>
-              <a href="/add-worry" className="inline-block px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:shadow-md transition-shadow">
+              <Link href="/add-worry" className="inline-block px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:shadow-md transition-shadow">
                 Add Worry
-              </a>
+              </Link>
             </div>
             
             <div className="text-center p-4 bg-gray-50 rounded-lg">
@@ -192,9 +193,9 @@ export default function Companion() {
               </div>
               <h3 className="font-semibold mb-2">Find Your Calm</h3>
               <p className="text-sm text-gray-600 mb-3">Try a breathing exercise or gentle technique.</p>
-              <a href="/calm-corner" className="inline-block px-4 py-2 bg-green-500 text-white rounded-lg text-sm hover:shadow-md transition-shadow">
+              <Link href="/calm-corner" className="inline-block px-4 py-2 bg-green-500 text-white rounded-lg text-sm hover:shadow-md transition-shadow">
                 Calm Corner
-              </a>
+              </Link>
             </div>
             
             <div className="text-center p-4 bg-gray-50 rounded-lg">
@@ -203,9 +204,9 @@ export default function Companion() {
               </div>
               <h3 className="font-semibold mb-2">Track Your Progress</h3>
               <p className="text-sm text-gray-600 mb-3">See your patterns and celebrate your growth.</p>
-              <a href="/easeboard" className="inline-block px-4 py-2 bg-purple-500 text-white rounded-lg text-sm hover:shadow-md transition-shadow">
+              <Link href="/easeboard" className="inline-block px-4 py-2 bg-purple-500 text-white rounded-lg text-sm hover:shadow-md transition-shadow">
                 Easeboard
-              </a>
+              </Link>
             </div>
           </div>
         </section>

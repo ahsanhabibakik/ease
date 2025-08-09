@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Link from 'next/link';
 import Navbar from './Navbar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -18,10 +19,10 @@ function Footer(){
       <div className="layout-container py-6 flex flex-col gap-4 md:flex-row md:items-center justify-between">
         <p>© {new Date().getFullYear()} Ease. All rights reserved.</p>
         <nav className="flex flex-wrap gap-x-6 gap-y-2">
-          <a href="/companion#about" className="hover:text-[var(--c-text)] transition-colors">About</a>
-          <a href="/companion#research" className="hover:text-[var(--c-text)] transition-colors">Research</a>
-          <a href="/easeboard" className="hover:text-[var(--c-text)] transition-colors">Progress</a>
-          <a href="/calm-corner" className="hover:text-[var(--c-text)] transition-colors">Calm Corner</a>
+          <Link href="/companion#about" className="hover:text-[var(--c-text)] transition-colors">About</Link>
+          <Link href="/companion#research" className="hover:text-[var(--c-text)] transition-colors">Research</Link>
+          <Link href="/easeboard" className="hover:text-[var(--c-text)] transition-colors">Progress</Link>
+          <Link href="/calm-corner" className="hover:text-[var(--c-text)] transition-colors">Calm Corner</Link>
         </nav>
       </div>
     </footer>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import useWorryStore, { Worry } from '@/stores/worryStore';
 import ChallengeButton from '@/components/ChallengeButton';
 
@@ -128,12 +129,12 @@ export default function WorryReflection() {
             </div>
             <h2 className="font-semibold text-lg mb-2">Your worry jar is empty</h2>
             <p className="text-gray-600 mb-4">No worries captured yet. Add one to get started!</p>
-            <a 
+            <Link 
               href="/add-worry" 
               className="inline-block px-6 py-2 bg-gradient-to-r from-accentLavender to-accentTeal text-white rounded-lg hover:shadow-md transition-shadow"
             >
               Add First Worry
-            </a>
+            </Link>
           </div>
         )}
       </section>
