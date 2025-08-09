@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import { toastApiError, toastApiSuccess } from '@/lib/toast';
 
 type Props = {
   initialSettings: {
@@ -18,6 +19,7 @@ export default function SaveSettingsClient({ initialSettings }: Props) {
 
   async function save() {
     setLoading(true); setStatus(null);
+    const action = 'Preferences saved';
     try {
       const res = await fetch('/api/user/settings', {
         method: 'POST',
@@ -30,9 +32,11 @@ export default function SaveSettingsClient({ initialSettings }: Props) {
       });
       if (!res.ok) throw new Error('Save failed');
       setStatus('Saved');
+      toastApiSuccess(action);
       setTimeout(() => setStatus(null), 2500);
-  } catch {
+    } catch (e) {
       setStatus('Error saving');
+      toastApiError('Preferences save', e);
     } finally {
       setLoading(false);
     }
