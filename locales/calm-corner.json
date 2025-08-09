@@ -1,0 +1,73 @@
+{
+  "en": {
+    "title": "Your Calm Corner",
+    "subtitle": "Find peace in the present moment with guided breathing and grounding exercises",
+    "breathing": {
+      "title": "Guided Breathing Exercise",
+      "subtitle": "4-4-6-2 breathing pattern • Proven to activate your relaxation response",
+      "ready": "Ready to begin?",
+      "readySubtitle": "Follow the circle and let your breath guide you to calm",
+      "start": "Start Breathing",
+      "stop": "Stop Session",
+      "inhale": "Breathe in...",
+      "hold": "Hold...",
+      "exhale": "Breathe out...",
+      "pause": "Pause...",
+      "phases": {
+        "inhale": "Inhale phase",
+        "hold": "Hold phase", 
+        "exhale": "Exhale phase",
+        "pause": "Pause phase"
+      }
+    },
+    "techniques": {
+      "title": "Quick Calming Techniques",
+      "subtitle": "Simple, effective tools you can use anywhere to find calm in moments of stress",
+      "progressiveRelaxation": {
+        "title": "Progressive Relaxation",
+        "description": "Tense and release each muscle group, starting from your toes and working up to your head.",
+        "duration": "5-10 minutes"
+      },
+      "grounding": {
+        "title": "5-4-3-2-1 Grounding",
+        "description": "Ground yourself in the present moment by engaging all your senses.",
+        "duration": "2-3 minutes"
+      },
+      "selfMassage": {
+        "title": "Gentle Self-Massage",
+        "description": "Release tension with soothing, circular massage motions.",
+        "duration": "3-5 minutes"
+      },
+      "mindfulObservation": {
+        "title": "Mindful Observation", 
+        "description": "Anchor your attention by focusing completely on a single object.",
+        "duration": "1-2 minutes"
+      },
+      "howToDoIt": "How to do it:"
+    },
+    "affirmations": {
+      "title": "Gentle Reminders",
+      "subtitle": "Compassionate words to comfort your heart and remind you of your strength"
+    },
+    "emergency": {
+      "title": "Need Immediate Support?",
+      "subtitle": "If you're in crisis or having thoughts of self-harm, please reach out immediately",
+      "crisisText": {
+        "title": "Crisis Text Line",
+        "subtitle": "Available 24/7",
+        "contact": "Text HOME to 741741"
+      },
+      "suicidePrevention": {
+        "title": "Suicide Prevention",
+        "subtitle": "24/7 Support", 
+        "contact": "Call 988"
+      },
+      "emergency": {
+        "title": "Emergency Services",
+        "subtitle": "Life-threatening emergency",
+        "contact": "Call 911"
+      },
+      "reminder": "Remember: Seeking help is a sign of strength, not weakness. You matter, and there are people who care about you."
+    }
+  }
+}

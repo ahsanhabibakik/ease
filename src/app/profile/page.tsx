@@ -6,8 +6,7 @@ import User from '@/models/User';
 import Worry from '@/models/Worry';
 import Reflection from '@/models/Reflection';
 import SaveSettingsClient from './save-settings-client';
-import dynamic from 'next/dynamic';
-const ProfileToastClient = dynamic(()=>import('./ProfileToastClient'),{ ssr:false });
+import ProfileToastClient from './ProfileToastClient';
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
