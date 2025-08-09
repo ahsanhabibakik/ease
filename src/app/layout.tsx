@@ -9,6 +9,7 @@ import { IntlProvider } from "@/lib/intl";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import ToastProvider from '@/components/ToastProvider';
+import SessionToastWatcher from '@/components/SessionToastWatcher';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -91,6 +92,7 @@ export default async function RootLayout({
               <Layout>
                 {children}
                 <ToastProvider />
+                <SessionToastWatcher />
               </Layout>
             </IntlProvider>
           </SessionProviderWrapper>
