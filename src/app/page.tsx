@@ -14,11 +14,10 @@ export default function Home() {
             {/* Text */}
             <div className="space-y-6 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 rounded-full border border-[var(--c-border)] bg-[var(--c-surface-alt)] px-4 py-1 text-xs font-medium tracking-wide text-[var(--c-text-soft)] shadow-sm">
-                <span className="h-2 w-2 rounded-full bg-[var(--c-accent)] animate-pulse" /> Mind wellness toolkit
+                <span className="h-2 w-2 rounded-full bg-[var(--c-accent)] animate-pulse" /> {t('home.hero.toolkit')}
               </div>
               <h1 className="font-bold tracking-tight text-3xl sm:text-5xl leading-tight">
-                <span className="bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)] bg-clip-text text-transparent">Ease</span> your mind.
-                <br className="hidden sm:block" /> Clarify, challenge & reframe.
+                <span className="bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)] bg-clip-text text-transparent">Ease</span> {t('home.hero.titleRest')}
               </h1>
               <p className="text-base sm:text-lg text-[var(--c-text-soft)] leading-relaxed max-w-xl mx-auto lg:mx-0">
                 {t('dashboard.subtitle')}
@@ -28,14 +27,14 @@ export default function Home() {
                   {t('dashboard.addWorry')}
                 </Link>
                 <Link href="/companion" className="inline-flex items-center justify-center rounded-xl border border-[var(--c-border)] bg-[var(--c-surface-alt)] px-7 py-3 text-sm font-medium text-[var(--c-text)] hover:bg-[var(--c-surface)] transition focus:outline-none focus-visible:ring-2 ring-[var(--c-accent)]/40">
-                  Learn how it works
+                  {t('home.hero.learnMore')}
                 </Link>
               </div>
               <ul className="mt-4 grid gap-3 sm:grid-cols-3 text-left text-xs sm:text-sm">
                 {[
-                  'Capture worries fast',
-                  'Evidence-based prompts',
-                  'Track reframes & growth',
+                  t('home.features.captureWorries'),
+                  t('home.features.evidenceBased'),
+                  t('home.features.trackGrowth'),
                 ].map(item => (
                   <li key={item} className="flex items-start gap-2">
                     <span className="mt-1 inline-block h-2 w-2 rounded-full bg-[var(--c-accent)]" />
@@ -50,20 +49,20 @@ export default function Home() {
               <div className="relative rounded-2xl border border-[var(--c-border)] bg-[var(--c-surface-alt)]/60 backdrop-blur-sm p-6 shadow-inner flex flex-col gap-5">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[var(--c-accent)] to-[var(--c-accent-alt)] text-white font-semibold flex items-center justify-center shadow">📝</div>
-                  <h2 className="text-sm font-semibold text-[var(--c-text)]">Your next gentle step</h2>
+                  <h2 className="text-sm font-semibold text-[var(--c-text)]">{t('home.nextStep.title')}</h2>
                 </div>
                 <p className="text-sm leading-relaxed text-[var(--c-text-soft)]">
-                  Offload looping thoughts into a structured flow. Separate facts from fears, surface balanced perspectives and practice calmer narratives that stick.
+                  {t('home.nextStep.description')}
                 </p>
                 <div className="grid grid-cols-2 gap-3 text-[11px]">
-                  {['Log worry','Challenge belief','Reframe thought','Note action'].map(tag => (
+                  {[t('home.nextStep.steps.logWorry'), t('home.nextStep.steps.challengeBelief'), t('home.nextStep.steps.reframeThought'), t('home.nextStep.steps.noteAction')].map(tag => (
                     <div key={tag} className="rounded-md bg-[var(--c-surface)] border border-[var(--c-border)] px-3 py-2 text-[var(--c-text-soft)] font-medium flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-[var(--c-accent)]" />{tag}
                     </div>
                   ))}
                 </div>
                 <div className="mt-2 text-xs text-[var(--c-text-soft)]">
-                  Private by default • You own your data
+                  {t('home.nextStep.privacy')}
                 </div>
               </div>
             </div>
@@ -80,15 +79,15 @@ export default function Home() {
       <section className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">How Ease Helps</h2>
-            <p className="mt-2 text-gray-600 text-sm sm:text-base max-w-xl">A structured, science-informed flow to externalize worry, evaluate it rationally, and cultivate calm.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">{t('home.howItWorks.title')}</h2>
+            <p className="mt-2 text-gray-600 text-sm sm:text-base max-w-xl">{t('home.howItWorks.subtitle')}</p>
           </div>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {[
-            { title: 'Capture', desc: 'Lighten mental load by safely storing and labeling worries with context.' },
-            { title: 'Challenge', desc: 'Use cognitive techniques to examine evidence, distortions, and probability.' },
-            { title: 'Reframe & Grow', desc: 'Generate balanced thoughts, track insights, and reinforce adaptive patterns.' },
+            { title: t('home.steps.capture.title'), desc: t('home.steps.capture.desc') },
+            { title: t('home.steps.challenge.title'), desc: t('home.steps.challenge.desc') },
+            { title: t('home.steps.reframe.title'), desc: t('home.steps.reframe.desc') },
           ].map((card, i) => (
             <div key={card.title} className="group relative overflow-hidden rounded-2xl bg-white border border-gray-200/70 p-6 flex flex-col shadow-sm hover:shadow-md transition-shadow">
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-br from-accentLavender/10 to-accentTeal/10 transition-opacity" />
@@ -107,8 +106,8 @@ export default function Home() {
       {/* Quick Access */}
       <section className="grid gap-6 md:grid-cols-2">
         {[
-          { href: '/calm-corner', title: 'Need Calm Right Now?', subtitle: 'Guided breathing & grounding tools', icon: '🫧' },
-          { href: '/easeboard', title: 'Track Your Progress', subtitle: 'Patterns, insights & reframes', icon: '📊' },
+          { href: '/calm-corner', title: t('home.quickAccess.calmCorner.title'), subtitle: t('home.quickAccess.calmCorner.subtitle'), icon: '🫧' },
+          { href: '/easeboard', title: t('home.quickAccess.dashboard.title'), subtitle: t('home.quickAccess.dashboard.subtitle'), icon: '📊' },
         ].map(tile => (
           <Link key={tile.href} href={tile.href} className="group relative overflow-hidden rounded-2xl border border-gray-200/70 bg-white p-6 shadow-sm hover:shadow-md transition-all">
             <div className="absolute inset-0 bg-gradient-to-br from-accentLavender/0 via-accentLavender/0 to-accentTeal/0 group-hover:from-accentLavender/10 group-hover:to-accentTeal/10 transition-colors" />
