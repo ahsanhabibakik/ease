@@ -1,6 +1,5 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,29 +29,34 @@ async function loadMessages(locale: string): Promise<Messages> {
   }
 }
 
-function getLocaleFromPath(pathname: string): string {
-  const segments = pathname.split('/').filter(Boolean);
-  const firstSegment = segments[0];
-  // Only return locale if the path actually starts with a supported locale
-  if (SUPPORTED_LOCALES.includes(firstSegment)) {
-    return firstSegment;
+function getLocaleFromCookie(): string {
+  if (typeof window !== 'undefined') {
+    const cookies = document.cookie.split(';');
+    const localeCookie = cookies.find(cookie => 
+      cookie.trim().startsWith('ease-locale=')
+    );
+    if (localeCookie) {
+      const locale = localeCookie.split('=')[1].trim();
+      if (SUPPORTED_LOCALES.includes(locale)) {
+        return locale;
+      }
+    }
   }
   return DEFAULT_LOCALE;
 }
 
 export function IntlProvider({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
   const [locale, setLocaleState] = useState(() => {
     if (typeof window !== 'undefined') {
-      // First check localStorage
+      // 1. Check localStorage first
       const stored = localStorage.getItem('ease-locale');
       if (stored && SUPPORTED_LOCALES.includes(stored)) {
         return stored;
       }
-      // Then check path
-      const pathLocale = getLocaleFromPath(pathname);
-      if (pathLocale !== DEFAULT_LOCALE) {
-        return pathLocale;
+      // 2. Check cookie
+      const cookieLocale = getLocaleFromCookie();
+      if (cookieLocale !== DEFAULT_LOCALE) {
+        return cookieLocale;
       }
     }
     return DEFAULT_LOCALE;

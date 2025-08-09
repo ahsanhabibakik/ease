@@ -4,33 +4,6 @@ import type { NextRequest } from 'next/server';
 const supportedLocales = ['en', 'hi', 'bn', 'fr'];
 const defaultLocale = 'en';
 
-function getLocale(request: NextRequest): string {
-  // Check if locale is in pathname
-  const pathname = request.nextUrl.pathname;
-  const pathnameIsMissingLocale = supportedLocales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-  );
-
-  if (pathnameIsMissingLocale) {
-    // Check for stored preference in cookie
-    const locale = request.cookies.get('ease-locale')?.value;
-    if (locale && supportedLocales.includes(locale)) {
-      return locale;
-    }
-    
-    // Check Accept-Language header
-    const acceptLanguage = request.headers.get('accept-language');
-    if (acceptLanguage) {
-      const preferredLocale = supportedLocales.find(
-        locale => acceptLanguage.toLowerCase().includes(locale)
-      );
-      if (preferredLocale) return preferredLocale;
-    }
-  }
-
-  return defaultLocale;
-}
-
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   
@@ -44,36 +17,24 @@ export function middleware(request: NextRequest) {
     return;
   }
 
-  // List of existing non-localized routes
-  const existingRoutes = [
-    '/add-worry',
-    '/companion', 
-    '/calm-corner',
-    '/easeboard',
-    '/profile',
-    '/worry-reflection',
-    '/challenge-worry',
-    '/auth/signin'
-  ];
-
-  // If it's an existing route, don't redirect
-  if (existingRoutes.some(route => pathname.startsWith(route))) {
-    return;
-  }
-
-  const pathnameIsMissingLocale = supportedLocales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-  );
-
-  if (pathnameIsMissingLocale) {
-    const locale = getLocale(request);
+  // Set locale cookie based on Accept-Language if not already set
+  if (!request.cookies.has('ease-locale')) {
+    const acceptLanguage = request.headers.get('accept-language');
+    let locale = defaultLocale;
     
-    // Only redirect root path and paths that don't exist as regular routes
-    if (pathname === '/') {
-      // For root, redirect to locale-specific home
-      const redirectUrl = new URL(`/${locale}`, request.url);
-      return NextResponse.redirect(redirectUrl);
+    if (acceptLanguage) {
+      const preferredLocale = supportedLocales.find(
+        loc => acceptLanguage.toLowerCase().includes(loc)
+      );
+      if (preferredLocale) locale = preferredLocale;
     }
+    
+    const response = NextResponse.next();
+    response.cookies.set('ease-locale', locale, { 
+      path: '/', 
+      maxAge: 60 * 60 * 24 * 365 // 1 year
+    });
+    return response;
   }
 }
 
