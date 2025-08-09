@@ -11,7 +11,8 @@
     "confirm": "Confirm",
     "welcome": "Welcome",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "challengeWorry": "Challenge This Worry"
   },
   "navigation": {
     "home": "Home",
@@ -396,6 +397,222 @@
     "mood": {
       "title": "How I've Been Feeling",
       "comingSoon": "Mood tracking coming soon"
+    }
+  },
+  "companion": {
+    "title": "Your Compassionate Companion",
+    "subtitle": "Gentle guidance for your journey with worry and peace",
+    "quickTipsTitle": "Quick Tips for Today",
+    "guidedHelpTitle": "Guided Help",
+    "clickToCollapse": "Click to collapse",
+    "clickForGuidance": "Click for detailed guidance",
+    "gentleRemindersTitle": "Gentle Reminders",
+    "startJourneyTitle": "New Here? Start Your Journey",
+    "quickTips": {
+      "startSmall": {
+        "title": "Start Small",
+        "tip": "Begin with one worry at a time. You don't need to solve everything today."
+      },
+      "setWorryTime": {
+        "title": "Set Worry Time",
+        "tip": "Designate 10-15 minutes daily for processing worries, then let them rest."
+      },
+      "beGentle": {
+        "title": "Be Gentle",
+        "tip": "Treat your worries (and yourself) with the kindness you'd show a good friend."
+      },
+      "practiceRegularly": {
+        "title": "Practice Regularly",
+        "tip": "Like any skill, worry management gets easier with consistent practice."
+      }
+    },
+    "guides": {
+      "worryInput": {
+        "title": "How to Add Worries",
+        "content": "Adding worries to Ease is like placing them in a safe container where they can be acknowledged and processed:\n\n1. **Give your worry a name** - Keep it simple and specific\n2. **Share why it matters** - Express what's really at stake for you\n3. **Choose a life area** - This helps you see patterns over time\n4. **Notice body responses** - Awareness of physical symptoms helps you recognize worry patterns\n\nRemember: Adding a worry doesn't make it bigger - it makes it manageable."
+      },
+      "breathing": {
+        "title": "Breathing Exercises",
+        "content": "The 4-4-6-2 breathing pattern is designed to activate your body's relaxation response:\n\n• **Inhale for 4 counts** - Breathe slowly through your nose\n• **Hold for 4 counts** - Let the breath settle in your body\n• **Exhale for 6 counts** - Release slowly through your mouth\n• **Pause for 2 counts** - Rest before the next breath\n\nThis pattern helps shift your nervous system from anxiety to calm."
+      },
+      "releasing": {
+        "title": "Releasing Worries",
+        "content": "Releasing a worry doesn't mean ignoring it. It means you've processed it enough for now:\n\n• **Acknowledge the worry** - \"I see you, worry about...\"\n• **Thank it for protecting you** - Worries often come from care\n• **Set it free gently** - Like releasing a butterfly\n• **Trust the process** - You can always revisit if needed\n\nReleasing is an act of self-compassion, not avoidance."
+      },
+      "patterns": {
+        "title": "Understanding Your Patterns",
+        "content": "Your Easeboard shows patterns to help you understand your worry habits:\n\n• **Categories** - Which areas of life trigger worry most?\n• **Body responses** - How does your body signal worry?\n• **Timing** - When do worries tend to appear?\n• **Release rate** - How often do you let worries go?\n\nPatterns aren't judgments - they're information to help you care for yourself better."
+      }
+    },
+    "reminders": {
+      "feelings": "Your feelings are valid and deserving of care.",
+      "alone": "You don't have to carry all your worries alone.",
+      "peace": "Taking time for peace isn't selfish—it's necessary.",
+      "steps": "Every small step toward calm is meaningful.",
+      "resilient": "You are more resilient than your worries."
+    },
+    "journey": {
+      "addWorry": {
+        "title": "Add Your First Worry",
+        "description": "Start by gently placing one concern into your worry jar.",
+        "button": "Add Worry"
+      },
+      "findCalm": {
+        "title": "Find Your Calm",
+        "description": "Try a breathing exercise or gentle technique.",
+        "button": "Calm Corner"
+      },
+      "trackProgress": {
+        "title": "Track Your Progress",
+        "description": "See your patterns and celebrate your growth.",
+        "button": "Easeboard"
+      }
+    }
+  },
+  "challengeWorry": {
+    "title": "Challenge Your Worry",
+    "subtitle": "Let's examine this thought together and find a more balanced perspective.",
+    "backToWorries": "Back to Worries",
+    "stepOf": "Step {current} of {total}",
+    "percentComplete": "{percent}% complete",
+    "loading": "Loading challenge...",
+    "missingInfo": "Missing worry information. Please return to your worries and try again.",
+    "challengeStarted": "Challenge started",
+    "challengeStartedDesc": "Move through each step at your pace",
+    "challengeComplete": "Challenge complete",
+    "challengeCompleteDesc": "Balanced thought saved",
+    "syncError": "Saved locally. Network error while syncing.",
+    "distortions": {
+      "ALL_OR_NOTHING": {
+        "name": "All-or-Nothing Thinking",
+        "description": "Seeing things in black and white categories",
+        "example": "\"If I'm not perfect, I'm a failure\"",
+        "reframe": "\"I can do well without being perfect\""
+      },
+      "OVERGENERALIZATION": {
+        "name": "Overgeneralization",
+        "description": "Seeing a single negative event as a pattern",
+        "example": "\"I didn't get this job, I'll never get any job\"",
+        "reframe": "\"This wasn't the right fit, but other opportunities exist\""
+      },
+      "MENTAL_FILTER": {
+        "name": "Mental Filter",
+        "description": "Focusing only on negatives",
+        "example": "\"The whole presentation was terrible because I stumbled on one word\"",
+        "reframe": "\"The presentation went well overall, with one minor hiccup\""
+      },
+      "CATASTROPHIZING": {
+        "name": "Catastrophizing",
+        "description": "Expecting the worst possible outcome",
+        "example": "\"If I fail this test, my entire future is ruined\"",
+        "reframe": "\"This test is important, but one result doesn't determine everything\""
+      },
+      "JUMPING_TO_CONCLUSIONS": {
+        "name": "Jumping to Conclusions",
+        "description": "Making negative assumptions without evidence",
+        "example": "\"They didn't call back, they must hate me\"",
+        "reframe": "\"There could be many reasons for the delay\""
+      },
+      "EMOTIONAL_REASONING": {
+        "name": "Emotional Reasoning",
+        "description": "Believing feelings are facts",
+        "example": "\"I feel stupid, so I must be stupid\"",
+        "reframe": "\"Feeling something doesn't make it true\""
+      },
+      "SHOULD_STATEMENTS": {
+        "name": "Should Statements",
+        "description": "Using \"should,\" \"must,\" or \"ought\" statements",
+        "example": "\"I should never make mistakes\"",
+        "reframe": "\"Making mistakes is human and helps me learn\""
+      },
+      "LABELING": {
+        "name": "Labeling",
+        "description": "Calling yourself or others names",
+        "example": "\"I'm such an idiot for forgetting that\"",
+        "reframe": "\"I made a mistake, but that doesn't define me\""
+      },
+      "PERSONALIZATION": {
+        "name": "Personalization",
+        "description": "Blaming yourself for things outside your control",
+        "example": "\"My friend is upset, it must be my fault\"",
+        "reframe": "\"People have their own reasons for their emotions\""
+      },
+      "DIMINISHING_POSITIVE": {
+        "name": "Diminishing the Positive",
+        "description": "Rejecting positive experiences or achievements",
+        "example": "\"That compliment doesn't count, they were just being nice\"",
+        "reframe": "\"I can accept and appreciate positive feedback\""
+      }
+    },
+    "steps": {
+      "evidenceFor": {
+        "title": "Evidence Supporting the Worry",
+        "question": "What evidence do I have that this thought is true?",
+        "description": "List any facts, experiences, or observations that support your worry. Be specific and objective.",
+        "placeholder": "Add evidence that supports your worry...",
+        "add": "Add",
+        "remove": "Remove evidence",
+        "noEvidence": "No evidence added yet. Add some above."
+      },
+      "evidenceAgainst": {
+        "title": "Evidence Against the Worry",
+        "question": "What evidence do I have that this thought is not completely true?",
+        "description": "Look for facts, past experiences, or alternative explanations that challenge your worry.",
+        "placeholder": "Add evidence against your worry...",
+        "add": "Add",
+        "remove": "Remove evidence",
+        "noEvidence": "No evidence added yet. Add some above."
+      },
+      "probability": {
+        "title": "Realistic Probability",
+        "question": "What's the realistic probability that my feared outcome will actually happen?",
+        "description": "Consider all factors and give an honest percentage estimate (0-100%).",
+        "likelihood": "Likelihood of feared outcome",
+        "wontHappen": "Won't happen",
+        "mightHappen": "Might happen",
+        "willHappen": "Will definitely happen",
+        "tip": "Most worries feel like they have a high probability when we're anxious. Take a step back and consider the realistic likelihood based on facts and past experiences."
+      },
+      "distortions": {
+        "title": "Thinking Patterns",
+        "question": "Which unhelpful thinking patterns might be affecting this worry?",
+        "description": "Review the list below and select any patterns that apply to your current thinking.",
+        "example": "Example:",
+        "selected": "Selected: {count} thinking pattern",
+        "selectedPlural": "Selected: {count} thinking patterns"
+      },
+      "helpfulness": {
+        "title": "Is This Helpful?",
+        "question": "How helpful is this thought to me right now?",
+        "description": "Rate from 1 (very harmful) to 10 (very helpful). Consider how this thought affects your mood and actions.",
+        "helpful": "How helpful is this thought?",
+        "veryHarmful": "Very harmful",
+        "neutral": "Neutral",
+        "veryHelpful": "Very helpful",
+        "harmfulDesc": "This thought increases anxiety, prevents action, or makes me feel worse.",
+        "neutralDesc": "This thought doesn't help or harm me significantly.",
+        "helpfulDesc": "This thought motivates positive action and reduces unnecessary worry."
+      },
+      "reframe": {
+        "title": "Create a Balanced Thought",
+        "question": "Based on my answers above, how could I rewrite this thought in a more balanced way?",
+        "description": "Use your evidence and insights to create a more realistic and helpful perspective.",
+        "originalThought": "Original Thought:",
+        "newThought": "New, Balanced Thought:",
+        "placeholder": "Write a more balanced, realistic version of your original thought...",
+        "tips": "Tips for reframing:",
+        "tip1": "Use evidence from your previous answers",
+        "tip2": "Include realistic probability assessments",
+        "tip3": "Focus on what you can control",
+        "tip4": "Use compassionate, supportive language",
+        "tip5": "Keep it believable and practical"
+      }
+    },
+    "navigation": {
+      "back": "Back",
+      "nextStep": "Next Step",
+      "completeChallenge": "Complete Challenge",
+      "saving": "Saving..."
     }
   }
 }
