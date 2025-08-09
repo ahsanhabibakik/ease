@@ -187,15 +187,16 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Always send users to their profile after auth unless returning to same origin callback
-      // Allow relative callback URLs provided by next-auth (starting with /)
-      if (url.startsWith('/')) return `${baseUrl}/profile`;
+      // Allow internal relative URLs (NextAuth supplies callbackUrl like /profile)
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
       try {
         const u = new URL(url);
-        if (u.origin === baseUrl) return `${baseUrl}/profile`;
-      } catch { /* ignore malformed */ }
+        // Only allow same-origin redirects
+        if (u.origin === baseUrl) return u.toString();
+      } catch {/* ignore */}
+      // Fallback: go to profile after successful auth
       return `${baseUrl}/profile`;
-    }
+    },
   },
   // So a single decryption failure doesn't spam console in layout
   logger: {

@@ -31,7 +31,7 @@ export default function SignInMenu({ onClose, className }: SignInMenuProps) {
 
   async function handleEmail(e:React.FormEvent){
     e.preventDefault(); if(!email) return; setSubmitting(true);
-    try { await signIn('email',{ email, redirect:true }); } finally { setSubmitting(false); }
+  try { await signIn('email',{ email, redirect:true, callbackUrl: '/profile' }); } finally { setSubmitting(false); }
   }
 
   const list: ProviderInfo[] = providers ? Object.values(providers) : [];
@@ -43,7 +43,7 @@ export default function SignInMenu({ onClose, className }: SignInMenuProps) {
       <p className="text-xs font-medium tracking-wide text-[var(--c-text-faint)] px-1">{t('auth.orContinueWith')}</p>
       {credentialLess.length === 0 && <p className="text-[10px] text-[var(--c-text-faint)] px-1">No OAuth providers configured.</p>}
       {credentialLess.map(p => (
-        <Button key={p.id} variant="subtle" className="w-full justify-start" onClick={()=> signIn(p.id)}>
+    <Button key={p.id} variant="subtle" className="w-full justify-start" onClick={()=> signIn(p.id, { callbackUrl: '/profile' })}>
           <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[var(--c-accent-soft)] text-[11px] font-semibold text-[var(--c-accent)]">{p.name[0]}</span>
           {p.name}
         </Button>

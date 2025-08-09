@@ -46,8 +46,20 @@ export default function Navbar() {
           <span className="text-base">🌙</span>
         </button>
         
-        {/* Mobile menu button */}
-        <button onClick={()=>setMobileMenuOpen(o=>!o)} className="md:hidden ml-auto btn-ghost btn px-3 py-2 !text-sm" aria-label="Toggle menu">{mobileMenuOpen?'Close':'Menu'}</button>
+        {/* Mobile menu button (hidden ≥ md) */}
+        <button
+          onClick={()=>setMobileMenuOpen(o=>!o)}
+          className="md:hidden ml-auto btn-ghost btn px-2 py-2 !text-sm flex items-center justify-center gap-1"
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileMenuOpen ? 'true':'false'}
+        >
+          <span className="relative inline-block w-5 h-3">
+            <span className={clsx('absolute inset-x-0 top-0 h-0.5 rounded bg-[var(--c-text)] transition-transform', mobileMenuOpen && 'translate-y-1.5 rotate-45')} />
+            <span className={clsx('absolute inset-x-0 top-1.5 h-0.5 rounded bg-[var(--c-text)] transition-opacity', mobileMenuOpen && 'opacity-0')} />
+            <span className={clsx('absolute inset-x-0 bottom-0 h-0.5 rounded bg-[var(--c-text)] transition-transform', mobileMenuOpen && '-translate-y-1.5 -rotate-45')} />
+          </span>
+          <span className="sr-only">Menu</span>
+        </button>
         
         {/* Desktop Navigation */}
         <ul className="hidden md:flex items-center gap-1 ml-2">
@@ -92,7 +104,7 @@ export default function Navbar() {
                 const active = pathname===i.href; 
                 return (
                   <li key={i.href}>
-                    <Link href={i.href} className={clsx('block w-full px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2', active ? 'bg-[var(--c-surface)] text-[var(--c-text)] shadow-sm':'text-[var(--c-text-soft)] hover:bg-[var(--c-surface)] hover:text-[var(--c-text)]')}>
+                    <Link href={i.href} className={clsx('w-full px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2', active ? 'bg-[var(--c-surface)] text-[var(--c-text)] shadow-sm':'text-[var(--c-text-soft)] hover:bg-[var(--c-surface)] hover:text-[var(--c-text)]')}>
                       {i.icon && <span className="text-base font-bold">{i.icon}</span>}
                       <span className={clsx(i.href === '/add-worry' ? 'text-sm' : '')}>{i.label}</span>
                     </Link>
