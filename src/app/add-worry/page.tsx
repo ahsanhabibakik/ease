@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import useWorryStore from '@/stores/worryStore';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
@@ -239,7 +240,7 @@ export default function AddWorry() {
             </div>
             <div className="pt-2">
               <Button type="submit" variant="primary" className="w-full py-3 text-[var(--fs-sm)]" disabled={isSubmitting}>{isSubmitting ? 'Adding Worry...' : 'Drop It Gently'}</Button>
-              <p className="text-center text-xs mt-3"><a href="/companion#worry-input" className="text-[var(--c-accent)] hover:underline">How this works</a></p>
+              <p className="text-center text-xs mt-3"><Link href="/companion#worry-input" className="text-[var(--c-accent)] hover:underline">How this works</Link></p>
             </div>
           </form>
         </CardBody>
