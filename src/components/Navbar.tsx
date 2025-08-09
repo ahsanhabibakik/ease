@@ -8,6 +8,7 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { useTranslation } from '@/lib/intl';
 import clsx from 'clsx';
 import dynamic from 'next/dynamic';
+import { toast } from 'sonner';
 
 const SignInMenu = dynamic(()=>import('@/components/auth/SignInMenu'),{ ssr:false });
 
@@ -51,7 +52,7 @@ export default function Navbar() {
           onClick={()=>setMobileMenuOpen(o=>!o)}
           className="md:hidden ml-auto btn-ghost btn px-2 py-2 !text-sm flex items-center justify-center gap-1"
           aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileMenuOpen ? 'true':'false'}
+          aria-expanded={mobileMenuOpen ? 'true' : 'false'}
         >
           <span className="relative inline-block w-5 h-3">
             <span className={clsx('absolute inset-x-0 top-0 h-0.5 rounded bg-[var(--c-text)] transition-transform', mobileMenuOpen && 'translate-y-1.5 rotate-45')} />
@@ -79,7 +80,7 @@ export default function Navbar() {
           {/* Authentication Section */}
           {!session ? (
             <div className="relative">
-              <Button variant="primary" onClick={()=>setSignInMenuOpen(o=>!o)} className="min-w-[110px]">{t('auth.signIn')}</Button>
+              <Button variant="primary" onClick={() => { setSignInMenuOpen(o=>!o); toast.message('Sign in to sync your progress'); }} className="min-w-[110px]">{t('auth.signIn')}</Button>
               {signInMenuOpen && <SignInMenu onClose={()=>setSignInMenuOpen(false)} className="absolute right-0 mt-2" />}
             </div>
           ) : (
@@ -91,7 +92,7 @@ export default function Navbar() {
                   </div>
                 </div>
               </Link>
-              <Button variant="ghost" onClick={()=>signOut()}>{t('auth.signOut')}</Button>
+              <Button variant="ghost" onClick={()=>{ signOut({ callbackUrl: '/' }); toast.success('Signed out'); }}>{t('auth.signOut')}</Button>
             </div>
           )}
         </div>

@@ -8,6 +8,7 @@ import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import { IntlProvider } from "@/lib/intl";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
+import ToastProvider from '@/components/ToastProvider';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -87,7 +88,10 @@ export default async function RootLayout({
           <RouteProgress />
           <SessionProviderWrapper session={session}>
             <IntlProvider>
-              <Layout>{children}</Layout>
+              <Layout>
+                {children}
+                <ToastProvider />
+              </Layout>
             </IntlProvider>
           </SessionProviderWrapper>
         </div>

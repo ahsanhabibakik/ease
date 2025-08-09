@@ -6,6 +6,8 @@ import User from '@/models/User';
 import Worry from '@/models/Worry';
 import Reflection from '@/models/Reflection';
 import SaveSettingsClient from './save-settings-client';
+import dynamic from 'next/dynamic';
+const ProfileToastClient = dynamic(()=>import('./ProfileToastClient'),{ ssr:false });
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
@@ -52,6 +54,7 @@ export default async function ProfilePage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      <ProfileToastClient />
       <section className="bg-white/90 dark:bg-gray-900/70 backdrop-blur rounded-2xl p-8 ring-1 ring-gray-200/70 dark:ring-gray-700 shadow-sm">
         <div className="flex items-center gap-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
