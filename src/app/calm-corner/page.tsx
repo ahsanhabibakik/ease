@@ -1,19 +1,21 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { useTranslation } from '@/lib/intl';
 
 export default function CalmCorner() {
+  const { t } = useTranslation();
   const [isBreathing, setIsBreathing] = useState(false);
   const [breathingPhase, setBreathingPhase] = useState<'inhale' | 'hold' | 'exhale' | 'pause'>('inhale');
   const [countdown, setCountdown] = useState(4);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const breathingCycle = useMemo(() => ({
-    inhale: { duration: 4, next: 'hold', instruction: 'Breathe in...' },
-    hold: { duration: 4, next: 'exhale', instruction: 'Hold...' },
-    exhale: { duration: 6, next: 'pause', instruction: 'Breathe out...' },
-    pause: { duration: 2, next: 'inhale', instruction: 'Pause...' }
-  }), []);
+    inhale: { duration: 4, next: 'hold', instruction: t('calmCorner.breathing.inhale') },
+    hold: { duration: 4, next: 'exhale', instruction: t('calmCorner.breathing.hold') },
+    exhale: { duration: 6, next: 'pause', instruction: t('calmCorner.breathing.exhale') },
+    pause: { duration: 2, next: 'inhale', instruction: t('calmCorner.breathing.pause') }
+  }), [t]);
 
   const startBreathing = () => {
     setIsBreathing(true);
@@ -63,8 +65,8 @@ export default function CalmCorner() {
     <div className="space-y-10 max-w-5xl mx-auto">
       {/* Breathing Exercise */}
       <section className="bg-white/90 backdrop-blur rounded-2xl p-8 shadow-sm ring-1 ring-gray-200/70 text-center">
-        <h1 className="text-3xl font-bold mb-2">Calm Corner</h1>
-        <p className="text-gray-600 mb-8">Find your center with guided breathing</p>
+        <h1 className="text-3xl font-bold mb-2">{t('calmCorner.title')}</h1>
+        <p className="text-gray-600 mb-8">{t('calmCorner.subtitle')}</p>
         
         <div className="mb-8">
           <div className={`w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-accentLavender to-accentTeal transition-transform duration-1000 ease-in-out flex items-center justify-center ${getCircleScale()}`}>
@@ -73,10 +75,10 @@ export default function CalmCorner() {
           
           <div className="mt-6">
             <h2 className="text-xl font-semibold mb-2">
-              {isBreathing ? breathingCycle[breathingPhase].instruction : 'Ready to breathe?'}
+              {isBreathing ? breathingCycle[breathingPhase].instruction : t('calmCorner.breathing.ready')}
             </h2>
             <p className="text-gray-600 mb-4">
-              {isBreathing ? `${breathingPhase} phase` : '4-4-6-2 breathing pattern'}
+              {isBreathing ? t(`calmCorner.breathing.phases.${breathingPhase}`) : t('calmCorner.breathing.subtitle')}
             </p>
             
             <button
@@ -87,7 +89,7 @@ export default function CalmCorner() {
                   : 'bg-gradient-to-r from-accentLavender to-accentTeal hover:shadow-lg text-white'
               }`}
             >
-              {isBreathing ? 'Stop' : 'Start Breathing'}
+              {isBreathing ? t('calmCorner.breathing.stop') : t('calmCorner.breathing.start')}
             </button>
           </div>
         </div>
@@ -95,55 +97,55 @@ export default function CalmCorner() {
 
       {/* Quick Techniques */}
       <section className="bg-white p-6 rounded-2xl shadow-md">
-        <h2 className="text-2xl font-bold mb-6">Quick Calming Techniques</h2>
+        <h2 className="text-2xl font-bold mb-6">{t('calmCorner.techniques.title')}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-4 border rounded-lg hover:shadow-md transition-shadow">
-            <h3 className="font-semibold mb-2">🌊 Progressive Relaxation</h3>
+            <h3 className="font-semibold mb-2">🌊 {t('calmCorner.techniques.progressiveRelaxation.title')}</h3>
             <p className="text-gray-600 text-sm mb-3">
-              Tense and release each muscle group, starting from your toes and working up to your head.
+              {t('calmCorner.techniques.progressiveRelaxation.description')}
             </p>
-            <p className="text-xs text-gray-500">5-10 minutes</p>
+            <p className="text-xs text-gray-500">{t('calmCorner.techniques.progressiveRelaxation.duration')}</p>
           </div>
           
           <div className="p-4 border rounded-lg hover:shadow-md transition-shadow">
-            <h3 className="font-semibold mb-2">🎯 5-4-3-2-1 Grounding</h3>
+            <h3 className="font-semibold mb-2">🎯 {t('calmCorner.techniques.grounding.title')}</h3>
             <p className="text-gray-600 text-sm mb-3">
-              Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, and 1 you taste.
+              {t('calmCorner.techniques.grounding.description')}
             </p>
-            <p className="text-xs text-gray-500">2-3 minutes</p>
+            <p className="text-xs text-gray-500">{t('calmCorner.techniques.grounding.duration')}</p>
           </div>
           
           <div className="p-4 border rounded-lg hover:shadow-md transition-shadow">
-            <h3 className="font-semibold mb-2">🤲 Gentle Self-Massage</h3>
+            <h3 className="font-semibold mb-2">🤲 {t('calmCorner.techniques.selfMassage.title')}</h3>
             <p className="text-gray-600 text-sm mb-3">
-              Massage your temples, shoulders, or hands with slow, circular motions.
+              {t('calmCorner.techniques.selfMassage.description')}
             </p>
-            <p className="text-xs text-gray-500">3-5 minutes</p>
+            <p className="text-xs text-gray-500">{t('calmCorner.techniques.selfMassage.duration')}</p>
           </div>
           
           <div className="p-4 border rounded-lg hover:shadow-md transition-shadow">
-            <h3 className="font-semibold mb-2">🧘 Mindful Observation</h3>
+            <h3 className="font-semibold mb-2">🧘 {t('calmCorner.techniques.mindfulObservation.title')}</h3>
             <p className="text-gray-600 text-sm mb-3">
-              Focus completely on one object near you. Notice its color, texture, and details.
+              {t('calmCorner.techniques.mindfulObservation.description')}
             </p>
-            <p className="text-xs text-gray-500">1-2 minutes</p>
+            <p className="text-xs text-gray-500">{t('calmCorner.techniques.mindfulObservation.duration')}</p>
           </div>
         </div>
       </section>
 
       {/* Affirmations */}
       <section className="bg-white p-6 rounded-2xl shadow-md">
-        <h2 className="text-2xl font-bold mb-4">Gentle Reminders</h2>
+        <h2 className="text-2xl font-bold mb-4">{t('calmCorner.affirmations.title')}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            "This feeling will pass, just like clouds in the sky.",
-            "I am safe in this moment, right here, right now.",
-            "My worries don't define me; they're just visitors.",
-            "I can handle whatever comes my way.",
-            "It's okay to not be okay sometimes.",
-            "I am worthy of peace and calm."
+            t('calmCorner.affirmations.list.feeling'),
+            t('calmCorner.affirmations.list.safe'),
+            t('calmCorner.affirmations.list.visitors'),
+            t('calmCorner.affirmations.list.handle'),
+            t('calmCorner.affirmations.list.okay'),
+            t('calmCorner.affirmations.list.worthy')
           ].map((affirmation, index) => (
             <div key={index} className="p-4 bg-gray-50 rounded-lg">
               <p className="text-gray-700 italic">&quot;{affirmation}&quot;</p>
@@ -154,19 +156,19 @@ export default function CalmCorner() {
 
       {/* Emergency Resources */}
       <section className="bg-white p-6 rounded-2xl shadow-md border-l-4 border-red-400">
-        <h2 className="text-xl font-bold mb-4 text-red-800">Need Immediate Support?</h2>
+        <h2 className="text-xl font-bold mb-4 text-red-800">{t('calmCorner.emergency.title')}</h2>
         <div className="space-y-3 text-sm">
           <div className="flex justify-between items-center">
-            <span className="font-medium">Crisis Text Line:</span>
-            <span className="text-blue-600">Text HOME to 741741</span>
+            <span className="font-medium">{t('calmCorner.emergency.crisisText.title')}:</span>
+            <span className="text-blue-600">{t('calmCorner.emergency.crisisText.contact')}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="font-medium">National Suicide Prevention Lifeline:</span>
-            <span className="text-blue-600">988</span>
+            <span className="font-medium">{t('calmCorner.emergency.suicidePrevention.title')}:</span>
+            <span className="text-blue-600">{t('calmCorner.emergency.suicidePrevention.contact')}</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="font-medium">Emergency Services:</span>
-            <span className="text-red-600">911</span>
+            <span className="font-medium">{t('calmCorner.emergency.emergency.title')}:</span>
+            <span className="text-red-600">{t('calmCorner.emergency.emergency.contact')}</span>
           </div>
         </div>
       </section>
