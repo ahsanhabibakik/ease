@@ -7,22 +7,71 @@ export default function Home() {
   
   return (
     <div className="space-y-12">
-      {/* Simplified Hero */}
-      <section className="rounded-2xl border border-[var(--c-border)] bg-[var(--c-surface)] px-6 py-12 sm:py-14 sm:px-10 shadow-sm">
-        <div className="max-w-3xl mx-auto text-center space-y-6">
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--c-text)]">
-            Ease your mind. Track, challenge & reframe worries.
-          </h1>
-          <p className="text-base sm:text-lg text-[var(--c-text-soft)] max-w-2xl mx-auto leading-relaxed">
-            {t('dashboard.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center sm:items-center max-w-md mx-auto">
-            <Link href="/add-worry" className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl bg-[var(--c-accent)] text-white px-6 py-3 text-sm font-medium shadow hover:shadow-md transition focus:outline-none focus-visible:ring-2 ring-[var(--c-accent)]/50">
-              {t('dashboard.addWorry')}
-            </Link>
-            <Link href="/companion" className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-[var(--c-border)] bg-[var(--c-surface-alt)] px-6 py-3 text-sm font-medium text-[var(--c-text)] hover:bg-[var(--c-surface)] transition focus:outline-none focus-visible:ring-2 ring-[var(--c-accent)]/40">
-              Learn how it works
-            </Link>
+      {/* Enhanced Hero (balanced) */}
+      <section className="relative overflow-hidden rounded-3xl p-[1px] bg-gradient-to-br from-[var(--c-accent)]/60 via-[var(--c-accent-alt)]/40 to-[var(--c-accent)]/60 shadow-md">
+        <div className="relative rounded-[calc(1.5rem-1px)] bg-[var(--c-surface)]/90 backdrop-blur-sm px-6 py-12 sm:py-16 sm:px-12">
+          <div className="mx-auto max-w-5xl grid gap-10 lg:grid-cols-2 items-center">
+            {/* Text */}
+            <div className="space-y-6 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--c-border)] bg-[var(--c-surface-alt)] px-4 py-1 text-xs font-medium tracking-wide text-[var(--c-text-soft)] shadow-sm">
+                <span className="h-2 w-2 rounded-full bg-[var(--c-accent)] animate-pulse" /> Mind wellness toolkit
+              </div>
+              <h1 className="font-bold tracking-tight text-3xl sm:text-5xl leading-tight">
+                <span className="bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)] bg-clip-text text-transparent">Ease</span> your mind.
+                <br className="hidden sm:block" /> Clarify, challenge & reframe.
+              </h1>
+              <p className="text-base sm:text-lg text-[var(--c-text-soft)] leading-relaxed max-w-xl mx-auto lg:mx-0">
+                {t('dashboard.subtitle')}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 sm:items-center justify-center lg:justify-start">
+                <Link href="/add-worry" className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)] text-white px-7 py-3 text-sm font-semibold shadow hover:shadow-lg transition-all focus:outline-none focus-visible:ring-2 ring-[var(--c-accent)]/50">
+                  {t('dashboard.addWorry')}
+                </Link>
+                <Link href="/companion" className="inline-flex items-center justify-center rounded-xl border border-[var(--c-border)] bg-[var(--c-surface-alt)] px-7 py-3 text-sm font-medium text-[var(--c-text)] hover:bg-[var(--c-surface)] transition focus:outline-none focus-visible:ring-2 ring-[var(--c-accent)]/40">
+                  Learn how it works
+                </Link>
+              </div>
+              <ul className="mt-4 grid gap-3 sm:grid-cols-3 text-left text-xs sm:text-sm">
+                {[
+                  'Capture worries fast',
+                  'Evidence-based prompts',
+                  'Track reframes & growth',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-[var(--c-accent)]" />
+                    <span className="text-[var(--c-text-soft)]">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Accent Panel */}
+            <div className="relative hidden lg:block">
+              <div className="absolute -inset-6 bg-gradient-to-tr from-[var(--c-accent)]/20 to-[var(--c-accent-alt)]/20 blur-2xl" />
+              <div className="relative rounded-2xl border border-[var(--c-border)] bg-[var(--c-surface-alt)]/60 backdrop-blur-sm p-6 shadow-inner flex flex-col gap-5">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[var(--c-accent)] to-[var(--c-accent-alt)] text-white font-semibold flex items-center justify-center shadow">📝</div>
+                  <h2 className="text-sm font-semibold text-[var(--c-text)]">Your next gentle step</h2>
+                </div>
+                <p className="text-sm leading-relaxed text-[var(--c-text-soft)]">
+                  Offload looping thoughts into a structured flow. Separate facts from fears, surface balanced perspectives and practice calmer narratives that stick.
+                </p>
+                <div className="grid grid-cols-2 gap-3 text-[11px]">
+                  {['Log worry','Challenge belief','Reframe thought','Note action'].map(tag => (
+                    <div key={tag} className="rounded-md bg-[var(--c-surface)] border border-[var(--c-border)] px-3 py-2 text-[var(--c-text-soft)] font-medium flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[var(--c-accent)]" />{tag}
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-2 text-xs text-[var(--c-text-soft)]">
+                  Private by default • You own your data
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Subtle corner accents */}
+          <div className="pointer-events-none absolute inset-0 [mask-image:radial-gradient(circle_at_center,black,transparent)]">
+            <div className="absolute top-0 left-0 w-40 h-40 bg-[var(--c-accent)]/10 blur-3xl" />
+            <div className="absolute bottom-0 right-0 w-48 h-48 bg-[var(--c-accent-alt)]/10 blur-3xl" />
           </div>
         </div>
       </section>
