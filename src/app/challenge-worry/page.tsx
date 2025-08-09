@@ -6,70 +6,71 @@ import useWorryStore, { CognitiveDistortion, CognitiveChallenge } from '@/stores
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { toastApiError, toastSuccess, toastInfo } from '@/lib/toast';
+import { useTranslation } from '@/lib/intl';
 
-// Cognitive distortion definitions for reference
-const DISTORTION_DEFINITIONS = {
+// Cognitive distortion definitions for reference - now using translations
+const getDistortionDefinitions = (t: any) => ({
   [CognitiveDistortion.ALL_OR_NOTHING]: {
-    name: 'All-or-Nothing Thinking',
-    description: 'Seeing things in black and white categories',
-    example: '"If I&apos;m not perfect, I&apos;m a failure"',
-    reframe: '"I can do well without being perfect"'
+    name: t('challengeWorry.distortions.ALL_OR_NOTHING.name'),
+    description: t('challengeWorry.distortions.ALL_OR_NOTHING.description'),
+    example: t('challengeWorry.distortions.ALL_OR_NOTHING.example'),
+    reframe: t('challengeWorry.distortions.ALL_OR_NOTHING.reframe')
   },
   [CognitiveDistortion.OVERGENERALIZATION]: {
-    name: 'Overgeneralization',
-    description: 'Seeing a single negative event as a pattern',
-    example: '"I didn&apos;t get this job, I&apos;ll never get any job"',
-    reframe: '"This wasn&apos;t the right fit, but other opportunities exist"'
+    name: t('challengeWorry.distortions.OVERGENERALIZATION.name'),
+    description: t('challengeWorry.distortions.OVERGENERALIZATION.description'),
+    example: t('challengeWorry.distortions.OVERGENERALIZATION.example'),
+    reframe: t('challengeWorry.distortions.OVERGENERALIZATION.reframe')
   },
   [CognitiveDistortion.MENTAL_FILTER]: {
-    name: 'Mental Filter',
-    description: 'Focusing only on negatives',
-    example: '"The whole presentation was terrible because I stumbled on one word"',
-    reframe: '"The presentation went well overall, with one minor hiccup"'
+    name: t('challengeWorry.distortions.MENTAL_FILTER.name'),
+    description: t('challengeWorry.distortions.MENTAL_FILTER.description'),
+    example: t('challengeWorry.distortions.MENTAL_FILTER.example'),
+    reframe: t('challengeWorry.distortions.MENTAL_FILTER.reframe')
   },
   [CognitiveDistortion.CATASTROPHIZING]: {
-    name: 'Catastrophizing',
-    description: 'Expecting the worst possible outcome',
-    example: '"If I fail this test, my entire future is ruined"',
-    reframe: '"This test is important, but one result doesn\'t determine everything"'
+    name: t('challengeWorry.distortions.CATASTROPHIZING.name'),
+    description: t('challengeWorry.distortions.CATASTROPHIZING.description'),
+    example: t('challengeWorry.distortions.CATASTROPHIZING.example'),
+    reframe: t('challengeWorry.distortions.CATASTROPHIZING.reframe')
   },
   [CognitiveDistortion.JUMPING_TO_CONCLUSIONS]: {
-    name: 'Jumping to Conclusions',
-    description: 'Making negative assumptions without evidence',
-    example: '"They didn&apos;t call back, they must hate me"',
-    reframe: '"There could be many reasons for the delay"'
+    name: t('challengeWorry.distortions.JUMPING_TO_CONCLUSIONS.name'),
+    description: t('challengeWorry.distortions.JUMPING_TO_CONCLUSIONS.description'),
+    example: t('challengeWorry.distortions.JUMPING_TO_CONCLUSIONS.example'),
+    reframe: t('challengeWorry.distortions.JUMPING_TO_CONCLUSIONS.reframe')
   },
   [CognitiveDistortion.EMOTIONAL_REASONING]: {
-    name: 'Emotional Reasoning',
-    description: 'Believing feelings are facts',
-    example: '"I feel stupid, so I must be stupid"',
-    reframe: '"Feeling something doesn\'t make it true"'
+    name: t('challengeWorry.distortions.EMOTIONAL_REASONING.name'),
+    description: t('challengeWorry.distortions.EMOTIONAL_REASONING.description'),
+    example: t('challengeWorry.distortions.EMOTIONAL_REASONING.example'),
+    reframe: t('challengeWorry.distortions.EMOTIONAL_REASONING.reframe')
   },
   [CognitiveDistortion.SHOULD_STATEMENTS]: {
-    name: 'Should Statements',
-    description: 'Using "should," "must," or "ought" statements',
-    example: '"I should never make mistakes"',
-    reframe: '"Making mistakes is human and helps me learn"'
+    name: t('challengeWorry.distortions.SHOULD_STATEMENTS.name'),
+    description: t('challengeWorry.distortions.SHOULD_STATEMENTS.description'),
+    example: t('challengeWorry.distortions.SHOULD_STATEMENTS.example'),
+    reframe: t('challengeWorry.distortions.SHOULD_STATEMENTS.reframe')
   },
   [CognitiveDistortion.LABELING]: {
-    name: 'Labeling',
-    description: 'Calling yourself or others names',
-    example: '"I\'m such an idiot for forgetting that"',
-    reframe: '"I made a mistake, but that doesn\'t define me"'
+    name: t('challengeWorry.distortions.LABELING.name'),
+    description: t('challengeWorry.distortions.LABELING.description'),
+    example: t('challengeWorry.distortions.LABELING.example'),
+    reframe: t('challengeWorry.distortions.LABELING.reframe')
   },
   [CognitiveDistortion.PERSONALIZATION]: {
-    name: 'Personalization',
-    description: 'Blaming yourself for things outside your control',
-    example: '"My friend is upset, it must be my fault"',
-    reframe: '"People have their own reasons for their emotions"'
+    name: t('challengeWorry.distortions.PERSONALIZATION.name'),
+    description: t('challengeWorry.distortions.PERSONALIZATION.description'),
+    example: t('challengeWorry.distortions.PERSONALIZATION.example'),
+    reframe: t('challengeWorry.distortions.PERSONALIZATION.reframe')
   },
   [CognitiveDistortion.DIMINISHING_POSITIVE]: {
-    name: 'Diminishing the Positive',
-    description: 'Rejecting positive experiences or achievements',
-    example: '"That compliment doesn\'t count, they were just being nice"',
-    reframe: '"I can accept and appreciate positive feedback"'
+    name: t('challengeWorry.distortions.DIMINISHING_POSITIVE.name'),
+    description: t('challengeWorry.distortions.DIMINISHING_POSITIVE.description'),
+    example: t('challengeWorry.distortions.DIMINISHING_POSITIVE.example'),
+    reframe: t('challengeWorry.distortions.DIMINISHING_POSITIVE.reframe')
   },
-};
+});
 
 interface ChallengeStep {
   id: string;
@@ -78,42 +79,42 @@ interface ChallengeStep {
   description?: string;
 }
 
-const CHALLENGE_STEPS: ChallengeStep[] = [
+const getChallengeSteps = (t: any): ChallengeStep[] => [
   {
     id: 'evidence-for',
-    title: 'Evidence Supporting the Worry',
-    question: 'What evidence do I have that this thought is true?',
-    description: 'List any facts, experiences, or observations that support your worry. Be specific and objective.'
+    title: t('challengeWorry.steps.evidenceFor.title'),
+    question: t('challengeWorry.steps.evidenceFor.question'),
+    description: t('challengeWorry.steps.evidenceFor.description')
   },
   {
     id: 'evidence-against',
-    title: 'Evidence Against the Worry',
-    question: 'What evidence do I have that this thought is not completely true?',
-    description: 'Look for facts, past experiences, or alternative explanations that challenge your worry.'
+    title: t('challengeWorry.steps.evidenceAgainst.title'),
+    question: t('challengeWorry.steps.evidenceAgainst.question'),
+    description: t('challengeWorry.steps.evidenceAgainst.description')
   },
   {
     id: 'probability',
-    title: 'Realistic Probability',
-    question: 'What\'s the realistic probability that my feared outcome will actually happen?',
-    description: 'Consider all factors and give an honest percentage estimate (0-100%).'
+    title: t('challengeWorry.steps.probability.title'),
+    question: t('challengeWorry.steps.probability.question'),
+    description: t('challengeWorry.steps.probability.description')
   },
   {
     id: 'distortions',
-    title: 'Thinking Patterns',
-    question: 'Which unhelpful thinking patterns might be affecting this worry?',
-    description: 'Review the list below and select any patterns that apply to your current thinking.'
+    title: t('challengeWorry.steps.distortions.title'),
+    question: t('challengeWorry.steps.distortions.question'),
+    description: t('challengeWorry.steps.distortions.description')
   },
   {
     id: 'helpfulness',
-    title: 'Is This Helpful?',
-    question: 'How helpful is this thought to me right now?',
-    description: 'Rate from 1 (very harmful) to 10 (very helpful). Consider how this thought affects your mood and actions.'
+    title: t('challengeWorry.steps.helpfulness.title'),
+    question: t('challengeWorry.steps.helpfulness.question'),
+    description: t('challengeWorry.steps.helpfulness.description')
   },
   {
     id: 'reframe',
-    title: 'Create a Balanced Thought',
-    question: 'Based on my answers above, how could I rewrite this thought in a more balanced way?',
-    description: 'Use your evidence and insights to create a more realistic and helpful perspective.'
+    title: t('challengeWorry.steps.reframe.title'),
+    question: t('challengeWorry.steps.reframe.question'),
+    description: t('challengeWorry.steps.reframe.description')
   },
 ];
 
@@ -121,11 +122,15 @@ const ChallengeWorryContent: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session } = useSession();
+  const { t } = useTranslation();
   
   const worryId = searchParams.get('worryId');
   const worryText = searchParams.get('worryText');
   
   const { startChallenge, updateChallenge, completeChallenge } = useWorryStore();
+  
+  const DISTORTION_DEFINITIONS = getDistortionDefinitions(t);
+  const CHALLENGE_STEPS = getChallengeSteps(t);
   
   const [currentStep, setCurrentStep] = useState(0);
   const [challengeId, setChallengeId] = useState<string | null>(null);
@@ -148,7 +153,7 @@ const ChallengeWorryContent: React.FC = () => {
     if (worryId && worryText && !challengeId) {
       const newChallengeId = startChallenge(worryId, decodeURIComponent(worryText));
       setChallengeId(newChallengeId);
-      toastInfo('Challenge started', { description: 'Move through each step at your pace' });
+      toastInfo(t('challengeWorry.challengeStarted'), { description: t('challengeWorry.challengeStartedDesc') });
     }
   }, [worryId, worryText, challengeId, startChallenge]);
 
@@ -156,12 +161,12 @@ const ChallengeWorryContent: React.FC = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
         <div className="text-center">
-          <p className="text-red-600 mb-4">Missing worry information. Please return to your worries and try again.</p>
+          <p className="text-red-600 mb-4">{t('challengeWorry.missingInfo')}</p>
           <button 
             onClick={() => router.push('/worry-reflection')}
             className="px-4 py-2 bg-accentTeal text-white rounded-lg hover:bg-accentTeal/90"
           >
-            Back to Worries
+            {t('challengeWorry.backToWorries')}
           </button>
         </div>
       </div>
@@ -225,11 +230,11 @@ const ChallengeWorryContent: React.FC = () => {
         });
         if (!resWorry.ok) throw new Error('Worry update failed');
       }
-      toastSuccess('Challenge complete', { description: 'Balanced thought saved' });
+      toastSuccess(t('challengeWorry.challengeComplete'), { description: t('challengeWorry.challengeCompleteDesc') });
       router.push('/worry-reflection?completed=true');
     } catch (e) {
       console.error('Failed to persist reflection', e);
-      setError('Saved locally. Network error while syncing.');
+      setError(t('challengeWorry.syncError'));
       toastApiError('Sync', e);
       router.push('/worry-reflection?completed=true');
     } finally {
@@ -272,7 +277,7 @@ const ChallengeWorryContent: React.FC = () => {
                 type="text"
                 value={currentInput}
                 onChange={(e) => setCurrentInput(e.target.value)}
-                placeholder="Add evidence that supports your worry..."
+                placeholder={t('challengeWorry.steps.evidenceFor.placeholder')}
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accentTeal focus:border-transparent"
                 onKeyPress={(e) => e.key === 'Enter' && addEvidence('evidenceFor')}
               />
@@ -281,7 +286,7 @@ const ChallengeWorryContent: React.FC = () => {
                 disabled={!currentInput.trim()}
                 className="px-4 py-2 bg-accentTeal text-white rounded-lg hover:bg-accentTeal/90 disabled:opacity-50"
               >
-                Add
+                {t('challengeWorry.steps.evidenceFor.add')}
               </button>
             </div>
             
@@ -292,7 +297,7 @@ const ChallengeWorryContent: React.FC = () => {
                   <button
                     onClick={() => removeEvidence('evidenceFor', index)}
                     className="text-red-500 hover:text-red-700"
-                    aria-label="Remove evidence"
+                    aria-label={t('challengeWorry.steps.evidenceFor.remove')}
                   >
                     ×
                   </button>
@@ -301,7 +306,7 @@ const ChallengeWorryContent: React.FC = () => {
             </div>
             
             {(challengeData.evidenceFor || []).length === 0 && (
-              <p className="text-gray-500 text-center py-8">No evidence added yet. Add some above.</p>
+              <p className="text-gray-500 text-center py-8">{t('challengeWorry.steps.evidenceFor.noEvidence')}</p>
             )}
           </div>
         );
@@ -314,7 +319,7 @@ const ChallengeWorryContent: React.FC = () => {
                 type="text"
                 value={currentInput}
                 onChange={(e) => setCurrentInput(e.target.value)}
-                placeholder="Add evidence against your worry..."
+                placeholder={t('challengeWorry.steps.evidenceAgainst.placeholder')}
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accentTeal focus:border-transparent"
                 onKeyPress={(e) => e.key === 'Enter' && addEvidence('evidenceAgainst')}
               />
@@ -323,7 +328,7 @@ const ChallengeWorryContent: React.FC = () => {
                 disabled={!currentInput.trim()}
                 className="px-4 py-2 bg-accentTeal text-white rounded-lg hover:bg-accentTeal/90 disabled:opacity-50"
               >
-                Add
+                {t('challengeWorry.steps.evidenceAgainst.add')}
               </button>
             </div>
             
@@ -334,7 +339,7 @@ const ChallengeWorryContent: React.FC = () => {
                   <button
                     onClick={() => removeEvidence('evidenceAgainst', index)}
                     className="text-red-500 hover:text-red-700"
-                    aria-label="Remove evidence"
+                    aria-label={t('challengeWorry.steps.evidenceAgainst.remove')}
                   >
                     ×
                   </button>
@@ -343,7 +348,7 @@ const ChallengeWorryContent: React.FC = () => {
             </div>
             
             {(challengeData.evidenceAgainst || []).length === 0 && (
-              <p className="text-gray-500 text-center py-8">No evidence added yet. Add some above.</p>
+              <p className="text-gray-500 text-center py-8">{t('challengeWorry.steps.evidenceAgainst.noEvidence')}</p>
             )}
           </div>
         );
@@ -355,7 +360,7 @@ const ChallengeWorryContent: React.FC = () => {
               <div className="text-4xl font-bold text-accentTeal mb-2">
                 {challengeData.probabilityRating}%
               </div>
-              <div className="text-gray-600">Likelihood of feared outcome</div>
+              <div className="text-gray-600">{t('challengeWorry.steps.probability.likelihood')}</div>
             </div>
             
             <label htmlFor="probability-slider" className="sr-only">
@@ -375,15 +380,14 @@ const ChallengeWorryContent: React.FC = () => {
             />
             
             <div className="flex justify-between text-sm text-gray-500">
-              <span>0% - Won&apos;t happen</span>
-              <span>50% - Might happen</span>
-              <span>100% - Will definitely happen</span>
+              <span>0% - {t('challengeWorry.steps.probability.wontHappen')}</span>
+              <span>50% - {t('challengeWorry.steps.probability.mightHappen')}</span>
+              <span>100% - {t('challengeWorry.steps.probability.willHappen')}</span>
             </div>
             
             <div className="p-4 bg-blue-50 rounded-lg">
               <p className="text-sm text-blue-800">
-                💡 <strong>Tip:</strong> Most worries feel like they have a high probability when we&apos;re anxious. 
-                Take a step back and consider the realistic likelihood based on facts and past experiences.
+                💡 <strong>{t('challengeWorry.steps.probability.tip')}</strong>
               </p>
             </div>
           </div>
@@ -417,7 +421,7 @@ const ChallengeWorryContent: React.FC = () => {
                         <h3 className="font-semibold text-gray-900">{def.name}</h3>
                         <p className="text-sm text-gray-600 mt-1">{def.description}</p>
                         <p className="text-xs text-gray-500 mt-2">
-                          <strong>Example:</strong> {def.example}
+                          <strong>{t('challengeWorry.steps.distortions.example')}</strong> {def.example}
                         </p>
                       </div>
                     </div>
@@ -428,8 +432,9 @@ const ChallengeWorryContent: React.FC = () => {
             
             <div className="p-4 bg-green-50 rounded-lg">
               <p className="text-sm text-green-800">
-                ✨ Selected: {(challengeData.cognitiveDistortions || []).length} thinking pattern
-                {(challengeData.cognitiveDistortions || []).length !== 1 ? 's' : ''}
+                ✨ {(challengeData.cognitiveDistortions || []).length === 1 
+                  ? t('challengeWorry.steps.distortions.selected', { count: (challengeData.cognitiveDistortions || []).length })
+                  : t('challengeWorry.steps.distortions.selectedPlural', { count: (challengeData.cognitiveDistortions || []).length })}
               </p>
             </div>
           </div>
@@ -442,7 +447,7 @@ const ChallengeWorryContent: React.FC = () => {
               <div className="text-4xl font-bold text-accentTeal mb-2">
                 {challengeData.helpfulnessRating}/10
               </div>
-              <div className="text-gray-600">How helpful is this thought?</div>
+              <div className="text-gray-600">{t('challengeWorry.steps.helpfulness.helpful')}</div>
             </div>
             
             <label htmlFor="helpfulness-slider" className="sr-only">
@@ -462,25 +467,25 @@ const ChallengeWorryContent: React.FC = () => {
             />
             
             <div className="flex justify-between text-sm text-gray-500">
-              <span>1 - Very harmful</span>
-              <span>5 - Neutral</span>
-              <span>10 - Very helpful</span>
+              <span>1 - {t('challengeWorry.steps.helpfulness.veryHarmful')}</span>
+              <span>5 - {t('challengeWorry.steps.helpfulness.neutral')}</span>
+              <span>10 - {t('challengeWorry.steps.helpfulness.veryHelpful')}</span>
             </div>
             
             <div className="space-y-3 text-sm">
               <div className="p-3 bg-red-50 rounded-lg">
                 <p className="text-red-800">
-                  <strong>Harmful (1-3):</strong> This thought increases anxiety, prevents action, or makes me feel worse.
+                  <strong>Harmful (1-3):</strong> {t('challengeWorry.steps.helpfulness.harmfulDesc')}
                 </p>
               </div>
               <div className="p-3 bg-yellow-50 rounded-lg">
                 <p className="text-yellow-800">
-                  <strong>Neutral (4-6):</strong> This thought doesn&apos;t help or harm me significantly.
+                  <strong>Neutral (4-6):</strong> {t('challengeWorry.steps.helpfulness.neutralDesc')}
                 </p>
               </div>
               <div className="p-3 bg-green-50 rounded-lg">
                 <p className="text-green-800">
-                  <strong>Helpful (7-10):</strong> This thought motivates positive action and reduces unnecessary worry.
+                  <strong>Helpful (7-10):</strong> {t('challengeWorry.steps.helpfulness.helpfulDesc')}
                 </p>
               </div>
             </div>
@@ -491,13 +496,13 @@ const ChallengeWorryContent: React.FC = () => {
         return (
           <div className="space-y-6">
             <div className="p-4 bg-gray-50 rounded-lg">
-              <h3 className="font-semibold text-gray-900 mb-2">Original Thought:</h3>
+              <h3 className="font-semibold text-gray-900 mb-2">{t('challengeWorry.steps.reframe.originalThought')}</h3>
               <p className="text-gray-700 italic">&ldquo;{decodeURIComponent(worryText || '')}&rdquo;</p>
             </div>
             
             <div>
               <label htmlFor="reframed-thought" className="block text-sm font-medium text-gray-700 mb-2">
-                New, Balanced Thought:
+                {t('challengeWorry.steps.reframe.newThought')}
               </label>
               <textarea
                 id="reframed-thought"
@@ -506,20 +511,20 @@ const ChallengeWorryContent: React.FC = () => {
                   ...prev, 
                   reframedThought: e.target.value 
                 }))}
-                placeholder="Write a more balanced, realistic version of your original thought..."
+                placeholder={t('challengeWorry.steps.reframe.placeholder')}
                 rows={4}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accentTeal focus:border-transparent resize-none"
               />
             </div>
             
             <div className="p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">Tips for reframing:</h4>
+              <h4 className="font-semibold text-blue-900 mb-2">{t('challengeWorry.steps.reframe.tips')}</h4>
               <ul className="text-sm text-blue-800 space-y-1">
-                <li>• Use evidence from your previous answers</li>
-                <li>• Include realistic probability assessments</li>
-                <li>• Focus on what you can control</li>
-                <li>• Use compassionate, supportive language</li>
-                <li>• Keep it believable and practical</li>
+                <li>• {t('challengeWorry.steps.reframe.tip1')}</li>
+                <li>• {t('challengeWorry.steps.reframe.tip2')}</li>
+                <li>• {t('challengeWorry.steps.reframe.tip3')}</li>
+                <li>• {t('challengeWorry.steps.reframe.tip4')}</li>
+                <li>• {t('challengeWorry.steps.reframe.tip5')}</li>
               </ul>
             </div>
           </div>
@@ -559,20 +564,20 @@ const ChallengeWorryContent: React.FC = () => {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Worries
+            {t('challengeWorry.backToWorries')}
           </button>
           
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Challenge Your Worry</h1>
-          <p className="text-gray-600">Let&apos;s examine this thought together and find a more balanced perspective.</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('challengeWorry.title')}</h1>
+          <p className="text-gray-600">{t('challengeWorry.subtitle')}</p>
         </div>
 
         {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-gray-700">
-              Step {currentStep + 1} of {CHALLENGE_STEPS.length}
+              {t('challengeWorry.stepOf', { current: currentStep + 1, total: CHALLENGE_STEPS.length })}
             </span>
-            <span className="text-sm text-gray-500">{Math.round(progress)}% complete</span>
+            <span className="text-sm text-gray-500">{t('challengeWorry.percentComplete', { percent: Math.round(progress) })}</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div 
@@ -608,7 +613,7 @@ const ChallengeWorryContent: React.FC = () => {
                 disabled={currentStep === 0}
                 className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Back
+                {t('challengeWorry.navigation.back')}
               </button>
 
               {currentStep < CHALLENGE_STEPS.length - 1 ? (
@@ -617,7 +622,7 @@ const ChallengeWorryContent: React.FC = () => {
                   disabled={!canProceed()}
                   className="px-6 py-2 bg-accentTeal text-white rounded-lg hover:bg-accentTeal/90 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Next Step
+                  {t('challengeWorry.navigation.nextStep')}
                 </button>
               ) : (
                 <button
@@ -631,7 +636,7 @@ const ChallengeWorryContent: React.FC = () => {
                       <path d="M4 12a8 8 0 0 1 8-8" strokeWidth="4" className="opacity-75" />
                     </svg>
                   )}
-                  {isSubmitting ? 'Saving...' : 'Complete Challenge'}
+                  {isSubmitting ? t('challengeWorry.navigation.saving') : t('challengeWorry.navigation.completeChallenge')}
                 </button>
               )}
             </div>
@@ -649,7 +654,7 @@ const ChallengeWorryPage: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accentTeal mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading challenge...</p>
+          <p className="text-gray-600">{t('challengeWorry.loading')}</p>
         </div>
       </div>
     }>
