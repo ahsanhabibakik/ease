@@ -26,7 +26,6 @@ export default function Navbar() {
     { href:'/worry-reflection', label: t('navigation.reflections') },
     { href:'/calm-corner', label:'Calm Corner' },
     { href:'/easeboard', label: t('navigation.dashboard') },
-    { href:'/profile', label: t('navigation.profile') },
   ];
 
   const toggleTheme = () => {
