@@ -1,9 +1,11 @@
-'use client';
+"use client";
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useWorryStore, { CognitiveDistortion, CognitiveChallenge } from '@/stores/worryStore';
 import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
+import { toastApiError, toastSuccess, toastInfo } from '@/lib/toast';
 
 // Cognitive distortion definitions for reference
 const DISTORTION_DEFINITIONS = {
@@ -146,6 +148,7 @@ const ChallengeWorryContent: React.FC = () => {
     if (worryId && worryText && !challengeId) {
       const newChallengeId = startChallenge(worryId, decodeURIComponent(worryText));
       setChallengeId(newChallengeId);
+      toastInfo('Challenge started', { description: 'Move through each step at your pace' });
     }
   }, [worryId, worryText, challengeId, startChallenge]);
 
@@ -208,22 +211,26 @@ const ChallengeWorryContent: React.FC = () => {
             gentleAction: `Helpfulness rating: ${challengeData.helpfulnessRating}/10. Next step: Focus on balanced thought.`,
             completed: true,
         };
-        await fetch('/api/reflections', {
+        const resRef = await fetch('/api/reflections', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
+        if (!resRef.ok) throw new Error('Reflection save failed');
         // Resolve the worry (best-effort)
-        await fetch(`/api/worries/${worryId}`, {
+        const resWorry = await fetch(`/api/worries/${worryId}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ status: 'RESOLVED' }),
         });
+        if (!resWorry.ok) throw new Error('Worry update failed');
       }
+      toastSuccess('Challenge complete', { description: 'Balanced thought saved' });
       router.push('/worry-reflection?completed=true');
     } catch (e) {
       console.error('Failed to persist reflection', e);
       setError('Saved locally. Network error while syncing.');
+      toastApiError('Sync', e);
       router.push('/worry-reflection?completed=true');
     } finally {
       setIsSubmitting(false);
