@@ -25,7 +25,7 @@
 Current features align well with evidence-based practices from HelpGuide research:
 
 - Scheduled worry periods ✅
-- Physical intervention techniques ✅  
+- Physical intervention techniques ✅
 - Mindfulness elements ✅
 - Progress tracking ✅
 
@@ -41,23 +41,23 @@ Current features align well with evidence-based practices from HelpGuide researc
 
 ```typescript
 interface CognitiveChallenge {
-  worryId: string;
-  originalThought: string;
+  worryId: string
+  originalThought: string
   evidence: {
-    for: string[];
-    against: string[];
-  };
-  reframedThought: string;
-  probability: number;
-  helpfulness: number;
-  distortions: CognitiveDistortion[];
+    for: string[]
+    against: string[]
+  }
+  reframedThought: string
+  probability: number
+  helpfulness: number
+  distortions: CognitiveDistortion[]
 }
 
 enum CognitiveDistortion {
-  AllOrNothing = "all-or-nothing",
-  Overgeneralization = "overgeneralization", 
-  MentalFilter = "mental-filter",
-  Catastrophizing = "catastrophizing",
+  AllOrNothing = 'all-or-nothing',
+  Overgeneralization = 'overgeneralization',
+  MentalFilter = 'mental-filter',
+  Catastrophizing = 'catastrophizing'
   // ... others
 }
 ```
@@ -85,17 +85,17 @@ enum CognitiveDistortion {
 
 ```typescript
 interface ControlAssessment {
-  worryId: string;
-  controllable: boolean;
-  actionPlan?: ActionItem[];
-  acceptanceNotes?: string;
-  uncertaintyLevel: number;
+  worryId: string
+  controllable: boolean
+  actionPlan?: ActionItem[]
+  acceptanceNotes?: string
+  uncertaintyLevel: number
 }
 
 interface ActionItem {
-  task: string;
-  timeline: string;
-  completed: boolean;
+  task: string
+  timeline: string
+  completed: boolean
 }
 ```
 
@@ -136,13 +136,13 @@ interface ActionItem {
 
 ```typescript
 interface MeditationSession {
-  id: string;
-  type: MeditationType;
-  duration: number;
-  audioUrl: string;
-  transcript: string;
-  completedAt?: Date;
-  rating?: number;
+  id: string
+  type: MeditationType
+  duration: number
+  audioUrl: string
+  transcript: string
+  completedAt?: Date
+  rating?: number
 }
 ```
 
@@ -238,7 +238,7 @@ CREATE TABLE cognitive_challenges (
   created_at TIMESTAMP
 );
 
--- Control Assessment Tables  
+-- Control Assessment Tables
 CREATE TABLE control_assessments (
   id UUID PRIMARY KEY,
   worry_id UUID REFERENCES worries(id),

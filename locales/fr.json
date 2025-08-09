@@ -16,7 +16,7 @@
   },
   "navigation": {
     "home": "Accueil",
-  "dashboard": "Easeboard",
+    "dashboard": "Easeboard",
     "worries": "Inquiétudes",
     "addWorry": "Ajouter",
     "reflections": "Réflexions",
@@ -76,7 +76,7 @@
     "archive": "Archiver",
     "categories": {
       "work": "Travail",
-      "family": "Famille", 
+      "family": "Famille",
       "health": "Santé",
       "finance": "Finance",
       "relationships": "Relations",
@@ -163,7 +163,7 @@
         "desc": "Allégez la charge mentale en stockant et étiquetant en sécurité les inquiétudes avec leur contexte."
       },
       "challenge": {
-        "title": "Défier", 
+        "title": "Défier",
         "desc": "Utilisez des techniques cognitives pour examiner les preuves, les distorsions et la probabilité."
       },
       "reframe": {
@@ -274,7 +274,7 @@
       "pause": "Pause...",
       "phases": {
         "inhale": "Phase d'inspiration",
-        "hold": "Phase de rétention", 
+        "hold": "Phase de rétention",
         "exhale": "Phase d'expiration",
         "pause": "Phase de pause"
       }
@@ -298,7 +298,7 @@
         "duration": "3-5 minutes"
       },
       "mindfulObservation": {
-        "title": "Observation attentive", 
+        "title": "Observation attentive",
         "description": "Concentrez-vous complètement sur un objet près de vous. Remarquez sa couleur, sa texture et ses détails.",
         "duration": "1-2 minutes"
       },
@@ -326,7 +326,7 @@
       },
       "suicidePrevention": {
         "title": "Prévention du suicide",
-        "subtitle": "Support 24h/24 et 7j/7", 
+        "subtitle": "Support 24h/24 et 7j/7",
         "contact": "Appelez le 988"
       },
       "emergency": {

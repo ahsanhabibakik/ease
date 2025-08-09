@@ -16,7 +16,7 @@
   },
   "navigation": {
     "home": "Home",
-  "dashboard": "Easeboard",
+    "dashboard": "Easeboard",
     "worries": "Worries",
     "addWorry": "Add Worry",
     "reflections": "Reflections",
@@ -76,7 +76,7 @@
     "archive": "Archive",
     "categories": {
       "work": "Work",
-      "family": "Family", 
+      "family": "Family",
       "health": "Health",
       "finance": "Finance",
       "relationships": "Relationships",
@@ -163,7 +163,7 @@
         "desc": "Lighten mental load by safely storing and labeling worries with context."
       },
       "challenge": {
-        "title": "Challenge", 
+        "title": "Challenge",
         "desc": "Use cognitive techniques to examine evidence, distortions, and probability."
       },
       "reframe": {
@@ -208,7 +208,7 @@
     },
     "categories": {
       "school": "School",
-      "work": "Work", 
+      "work": "Work",
       "family": "Family",
       "finance": "Finance",
       "politics": "Politics",
@@ -218,7 +218,7 @@
     },
     "bodyResponses": {
       "sweatyPalms": "Sweaty palms",
-      "racingHeartbeat": "Racing heartbeat", 
+      "racingHeartbeat": "Racing heartbeat",
       "jawTightness": "Jaw tightness",
       "restlessLegs": "Restless legs",
       "stomachKnots": "Stomach knots",
@@ -232,7 +232,7 @@
       "jobInterview": "Job interview nerves",
       "meetingTomorrow": "That meeting tomorrow",
       "conversation": "Conversation I keep replaying",
-      "moneyUncertainty": "Money uncertainty", 
+      "moneyUncertainty": "Money uncertainty",
       "healthTests": "Health test results",
       "presentation": "Upcoming presentation"
     },
@@ -274,7 +274,7 @@
       "pause": "Pause...",
       "phases": {
         "inhale": "Inhale phase",
-        "hold": "Hold phase", 
+        "hold": "Hold phase",
         "exhale": "Exhale phase",
         "pause": "Pause phase"
       }
@@ -298,7 +298,7 @@
         "duration": "3-5 minutes"
       },
       "mindfulObservation": {
-        "title": "Mindful Observation", 
+        "title": "Mindful Observation",
         "description": "Focus completely on one object near you. Notice its color, texture, and details.",
         "duration": "1-2 minutes"
       },
@@ -326,7 +326,7 @@
       },
       "suicidePrevention": {
         "title": "Suicide Prevention",
-        "subtitle": "24/7 Support", 
+        "subtitle": "24/7 Support",
         "contact": "Call 988"
       },
       "emergency": {

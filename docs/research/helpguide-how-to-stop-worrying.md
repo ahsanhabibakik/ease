@@ -237,16 +237,19 @@ The Ease app already incorporates several of these evidence-based strategies:
 #### High Priority Features
 
 1. **Cognitive Challenge Tools**
+
    - Guided thought questioning interface
    - Cognitive distortion identification
    - Evidence evaluation worksheets
 
 2. **Control Assessment Helper**
+
    - Worry categorization (controllable vs. uncontrollable)
    - Action planning for controllable worries
    - Uncertainty acceptance exercises
 
 3. **Enhanced Mindfulness**
+
    - Guided meditation library
    - Progressive muscle relaxation audio
    - Mindful observation exercises
@@ -259,11 +262,13 @@ The Ease app already incorporates several of these evidence-based strategies:
 #### Medium Priority Features
 
 1. **Physical Activity Integration**
+
    - Exercise tracking for anxiety relief
    - Movement reminders
    - Body awareness exercises
 
 2. **Pattern Recognition**
+
    - Cognitive distortion tracking
    - Trigger identification
    - Personal insight generation

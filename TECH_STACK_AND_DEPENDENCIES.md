@@ -61,6 +61,7 @@ This document lists the main technologies, libraries, and tools used in the Ease
 ## 7. Backend & Data
 
 **MongoDB / Mongoose**: Document database & ODM used for persistence (users, worries, reflections, settings, auth accounts, verification tokens).
+
 - **LocalStorage**: For offline worry capture and local reminders.
 
 ## 8. Testing & Linting
@@ -89,7 +90,7 @@ This document lists the main technologies, libraries, and tools used in the Ease
 - **cors**: Enable/limit cross-origin requests for APIs.
 - **dotenv**: Securely load environment variables for secrets, DB URLs, etc.
 - **zod/yup/validator**: Validate and sanitize all user input in forms and APIs.
-**mongoose**: Database access for user data, worries, reflections, settings, and auth entities (indexes synced programmatically on startup).
+  **mongoose**: Database access for user data, worries, reflections, settings, and auth entities (indexes synced programmatically on startup).
 - **nodemailer**: Send verification, password reset, and notification emails.
 - **winston/pino**: Log API and server events/errors.
 - **sentry**: Monitor and report errors in production.

@@ -112,9 +112,9 @@ DELETE /api/challenges/:challengeId           // Delete challenge
 ```typescript
 // components/ChallengeButton.tsx
 interface ChallengeButtonProps {
-  worryId: string;
-  worryText: string;
-  onChallengeStart: () => void;
+  worryId: string
+  worryText: string
+  onChallengeStart: () => void
 }
 ```
 
@@ -123,17 +123,17 @@ interface ChallengeButtonProps {
 ```typescript
 // components/ChallengeWizard.tsx
 interface ChallengeWizardProps {
-  worryId: string;
-  onComplete: (challenge: CognitiveChallenge) => void;
-  onCancel: () => void;
+  worryId: string
+  onComplete: (challenge: CognitiveChallenge) => void
+  onCancel: () => void
 }
 
 interface ChallengeStep {
-  id: string;
-  title: string;
-  question: string;
-  inputType: 'text' | 'scale' | 'multiselect' | 'textarea';
-  required: boolean;
+  id: string
+  title: string
+  question: string
+  inputType: 'text' | 'scale' | 'multiselect' | 'textarea'
+  required: boolean
 }
 ```
 
@@ -143,7 +143,7 @@ interface ChallengeStep {
 // components/DistortionChecker.tsx
 enum CognitiveDistortion {
   ALL_OR_NOTHING = 'all-or-nothing',
-  OVERGENERALIZATION = 'overgeneralization', 
+  OVERGENERALIZATION = 'overgeneralization',
   MENTAL_FILTER = 'mental-filter',
   DIMINISHING_POSITIVE = 'diminishing-positive',
   JUMPING_TO_CONCLUSIONS = 'jumping-to-conclusions',
@@ -160,11 +160,13 @@ enum CognitiveDistortion {
 ### Week 1: Backend & Database Setup
 
 - [ ] **Day 1-2:** Database schema implementation (Mongoose models)
+
   - Create cognitive_challenges model
   - Add necessary indexes
   - Test database connectivity
 
 - [ ] **Day 3-4:** API endpoint development
+
   - Implement challenge CRUD operations
   - Add validation and error handling
   - Write API documentation
@@ -178,11 +180,13 @@ enum CognitiveDistortion {
 ### Week 2: Frontend Implementation
 
 - [ ] **Day 1-2:** Core component development
+
   - ChallengeButton component
   - Basic challenge wizard structure
   - Routing setup
 
 - [ ] **Day 3-4:** Challenge wizard completion
+
   - All 5 challenge steps
   - Progress tracking
   - Data persistence
@@ -197,18 +201,22 @@ enum CognitiveDistortion {
 ### The 5 Core Challenge Questions
 
 1. **Evidence Evaluation**
+
    - "What evidence do I have that this thought is true?"
    - "What evidence do I have that this thought is not completely true?"
 
 2. **Probability Assessment**
+
    - "What's the realistic probability that my feared outcome will actually happen?"
    - Scale: 0-100%
 
 3. **Alternative Perspectives**
+
    - "Is there a more balanced or realistic way to look at this situation?"
    - "What would I tell a good friend who had this worry?"
 
 4. **Helpfulness Check**
+
    - "Is this thought helpful to me right now?"
    - "How is this thought helping me, and how is it hurting me?"
    - Scale: 1-10 (harmful to helpful)
@@ -224,7 +232,7 @@ enum CognitiveDistortion {
 **Example:** "If I'm not perfect, I'm a failure"  
 **Reframe:** "I can do well without being perfect"
 
-### 2. Overgeneralization  
+### 2. Overgeneralization
 
 **Definition:** Seeing a single negative event as a pattern  
 **Example:** "I didn't get this job, I'll never get any job"  
