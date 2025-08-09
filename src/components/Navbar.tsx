@@ -15,8 +15,10 @@ export default function Navbar() {
   const pathname = usePathname();
   const { data: session } = useSession();
   const { t } = useTranslation();
-  const [open,setOpen] = useState(false);
-  useEffect(()=>{ setOpen(false); },[pathname]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [signInMenuOpen, setSignInMenuOpen] = useState(false);
+  
+  useEffect(()=>{ setMobileMenuOpen(false); },[pathname]);
 
   const NAV = [
     { href:'/', label: t('navigation.home') },
@@ -39,8 +41,13 @@ export default function Navbar() {
           <span className="avatar-ring"><span className="w-9 h-9 rounded-full bg-[var(--c-surface)] text-sm font-semibold flex items-center justify-center text-[var(--c-accent)]">E</span></span>
           <span className="hidden sm:inline text-[var(--c-text)]">Ease</span>
         </Link>
-  <button onClick={toggleTheme} className="hidden md:inline-flex btn-ghost btn px-3 py-2 !text-sm" aria-label="Toggle theme">Theme</button>
-  <button onClick={()=>setOpen(o=>!o)} className="md:hidden ml-auto btn-ghost btn px-3 py-2 !text-sm" aria-label="Toggle menu">{open?'Close':'Menu'}</button>
+        
+        <button onClick={toggleTheme} className="hidden md:inline-flex btn-ghost btn px-3 py-2 !text-sm" aria-label="Toggle theme">Theme</button>
+        
+        {/* Mobile menu button */}
+        <button onClick={()=>setMobileMenuOpen(o=>!o)} className="md:hidden ml-auto btn-ghost btn px-3 py-2 !text-sm" aria-label="Toggle menu">{mobileMenuOpen?'Close':'Menu'}</button>
+        
+        {/* Desktop Navigation */}
         <ul className="hidden md:flex items-center gap-1 ml-2">
           {NAV.map(i=>{ const active = pathname===i.href; return (
             <li key={i.href}>
@@ -50,25 +57,60 @@ export default function Navbar() {
               </Link>
             </li> ); })}
         </ul>
-        <div className="hidden md:flex items-center gap-3 ml-auto relative">
+        {/* Desktop Navigation Actions */}
+        <div className="hidden md:flex items-center gap-3 ml-auto">
           <LanguageSwitcher />
           <Link href="/add-worry"><Button variant="subtle" leftIcon={<span>＋</span>}>{t('worries.addNew')}</Button></Link>
-          {!session && (
+          
+          {/* Authentication Section */}
+          {!session ? (
             <div className="relative">
-              <Button variant="primary" onClick={()=>setOpen(o=>!o)} className="min-w-[110px]">{t('auth.signIn')}</Button>
-              {open && <SignInMenu onClose={()=>setOpen(false)} className="absolute right-0 mt-2" />}
+              <Button variant="primary" onClick={()=>setSignInMenuOpen(o=>!o)} className="min-w-[110px]">{t('auth.signIn')}</Button>
+              {signInMenuOpen && <SignInMenu onClose={()=>setSignInMenuOpen(false)} className="absolute right-0 mt-2" />}
             </div>
-          )}
-          {session && (
+          ) : (
             <div className="flex items-center gap-2">
               <Link href="/profile" className="focus-outline" aria-label="Profile">
-                <div className="avatar-ring"><div className="w-9 h-9 rounded-full bg-[var(--c-accent-soft)] flex items-center justify-center text-[var(--c-accent)] font-medium text-sm">{(session.user?.name || 'U').slice(0,1).toUpperCase()}</div></div>
+                <div className="avatar-ring">
+                  <div className="w-9 h-9 rounded-full bg-[var(--c-accent-soft)] flex items-center justify-center text-[var(--c-accent)] font-medium text-sm">
+                    {(session.user?.name || 'U').slice(0,1).toUpperCase()}
+                  </div>
+                </div>
               </Link>
               <Button variant="ghost" onClick={()=>signOut()}>{t('auth.signOut')}</Button>
             </div>
           )}
         </div>
-        {open && <div className="md:hidden absolute top-[64px] left-0 right-0 px-4 pb-6 pt-2 bg-[var(--c-bg-soft)] border-b border-[var(--c-border)] shadow-sm"> <ul className="flex flex-col gap-1">{NAV.map(i=>{ const active = pathname===i.href; return <li key={i.href}><Link href={i.href} className={clsx('block w-full px-3 py-2 rounded-md text-sm font-medium', active ? 'bg-[var(--c-surface)] text-[var(--c-text)] shadow-sm':'text-[var(--c-text-soft)] hover:bg-[var(--c-surface)] hover:text-[var(--c-text)]')}>{i.label}</Link></li>; })}</ul><div className="mt-4 flex items-center gap-3"><LanguageSwitcher />{!session ? <Button variant="primary" className="flex-1" onClick={()=>signIn()}>{t('auth.signIn')}</Button>:<Button variant="subtle" className="flex-1" onClick={()=>signOut()}>{t('auth.signOut')}</Button>}</div></div>}
+        
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-[64px] left-0 right-0 px-4 pb-6 pt-2 bg-[var(--c-bg-soft)] border-b border-[var(--c-border)] shadow-sm">
+            <ul className="flex flex-col gap-1">
+              {NAV.map(i=>{ 
+                const active = pathname===i.href; 
+                return (
+                  <li key={i.href}>
+                    <Link href={i.href} className={clsx('block w-full px-3 py-2 rounded-md text-sm font-medium', active ? 'bg-[var(--c-surface)] text-[var(--c-text)] shadow-sm':'text-[var(--c-text-soft)] hover:bg-[var(--c-surface)] hover:text-[var(--c-text)]')}>
+                      {i.label}
+                    </Link>
+                  </li>
+                ); 
+              })}
+            </ul>
+            <div className="mt-4 flex items-center gap-3">
+              <LanguageSwitcher />
+              {!session ? (
+                <Button variant="primary" className="flex-1" onClick={()=>signIn()}>
+                  {t('auth.signIn')}
+                </Button>
+              ) : (
+                <Button variant="subtle" className="flex-1" onClick={()=>signOut()}>
+                  {t('auth.signOut')}
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
       </nav>
     </header>
   );
