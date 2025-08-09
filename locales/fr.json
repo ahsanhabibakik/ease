@@ -132,7 +132,25 @@
   "home": {
     "hero": {
       "title": "Apaisez votre esprit, trouvez votre paix",
+      "titleRest": "votre esprit. Clarifiez, défiez et recadrez.",
+      "toolkit": "Boîte à outils de bien-être mental",
       "learnMore": "En savoir plus"
+    },
+    "features": {
+      "captureWorries": "Capturez rapidement les inquiétudes",
+      "evidenceBased": "Invites basées sur des preuves",
+      "trackGrowth": "Suivez les recadrages et la croissance"
+    },
+    "nextStep": {
+      "title": "Votre prochaine étape douce",
+      "description": "Déchargez les pensées en boucle dans un flux structuré. Séparez les faits des peurs, faites émerger des perspectives équilibrées et pratiquez des récits plus calmes qui restent.",
+      "privacy": "Privé par défaut • Vous possédez vos données",
+      "steps": {
+        "logWorry": "Enregistrer l'inquiétude",
+        "challengeBelief": "Défier la croyance",
+        "reframeThought": "Recadrer la pensée",
+        "noteAction": "Noter l'action"
+      }
     },
     "howItWorks": {
       "title": "Comment Ease vous aide",
@@ -158,6 +176,7 @@
         "subtitle": "Outils de respiration guidée et d'ancrage"
       },
       "dashboard": {
+        "title": "Suivez vos progrès",
         "subtitle": "Modèles, insights et recadrages"
       }
     }
@@ -237,5 +256,146 @@
     "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
     "notFound": "La ressource demandée n'a pas été trouvée.",
     "validationError": "Veuillez vérifier votre saisie et réessayer."
+  },
+  "calmCorner": {
+    "title": "Votre coin de calme",
+    "subtitle": "Trouvez la paix dans le moment présent avec des exercices de respiration guidée et d'ancrage",
+    "breathing": {
+      "title": "Exercice de respiration guidée",
+      "subtitle": "Modèle de respiration 4-4-6-2 • Prouvé pour activer votre réponse de relaxation",
+      "ready": "Prêt à commencer ?",
+      "readySubtitle": "Suivez le cercle et laissez votre souffle vous guider vers le calme",
+      "start": "Commencer à respirer",
+      "stop": "Arrêter la session",
+      "inhale": "Inspirez...",
+      "hold": "Retenez...",
+      "exhale": "Expirez...",
+      "pause": "Pause...",
+      "phases": {
+        "inhale": "Phase d'inspiration",
+        "hold": "Phase de rétention", 
+        "exhale": "Phase d'expiration",
+        "pause": "Phase de pause"
+      }
+    },
+    "techniques": {
+      "title": "Techniques de calme rapides",
+      "subtitle": "Outils simples et efficaces que vous pouvez utiliser partout pour trouver le calme dans les moments de stress",
+      "progressiveRelaxation": {
+        "title": "Relaxation progressive",
+        "description": "Tendez et relâchez chaque groupe musculaire, en commençant par vos orteils et en remontant vers votre tête.",
+        "duration": "5-10 minutes"
+      },
+      "grounding": {
+        "title": "Ancrage 5-4-3-2-1",
+        "description": "Nommez 5 choses que vous voyez, 4 que vous pouvez toucher, 3 que vous entendez, 2 que vous sentez et 1 que vous goûtez.",
+        "duration": "2-3 minutes"
+      },
+      "selfMassage": {
+        "title": "Auto-massage doux",
+        "description": "Massez vos tempes, épaules ou mains avec des mouvements circulaires lents.",
+        "duration": "3-5 minutes"
+      },
+      "mindfulObservation": {
+        "title": "Observation attentive", 
+        "description": "Concentrez-vous complètement sur un objet près de vous. Remarquez sa couleur, sa texture et ses détails.",
+        "duration": "1-2 minutes"
+      },
+      "howToDoIt": "Comment faire :"
+    },
+    "affirmations": {
+      "title": "Rappels doux",
+      "subtitle": "Mots compatissants pour réconforter votre cœur et vous rappeler votre force",
+      "list": {
+        "feeling": "Ce sentiment passera, comme les nuages dans le ciel.",
+        "safe": "Je suis en sécurité dans ce moment, ici et maintenant.",
+        "visitors": "Mes inquiétudes ne me définissent pas ; ce ne sont que des visiteurs.",
+        "handle": "Je peux gérer tout ce qui m'arrive.",
+        "okay": "C'est normal de ne pas aller bien parfois.",
+        "worthy": "Je mérite la paix et le calme."
+      }
+    },
+    "emergency": {
+      "title": "Besoin d'aide immédiate ?",
+      "subtitle": "Si vous êtes en crise ou avez des pensées d'automutilation, veuillez vous adresser immédiatement",
+      "crisisText": {
+        "title": "Ligne de crise par texto",
+        "subtitle": "Disponible 24h/24 et 7j/7",
+        "contact": "Envoyez ACCUEIL au 741741"
+      },
+      "suicidePrevention": {
+        "title": "Prévention du suicide",
+        "subtitle": "Support 24h/24 et 7j/7", 
+        "contact": "Appelez le 988"
+      },
+      "emergency": {
+        "title": "Services d'urgence",
+        "subtitle": "Urgence vitale",
+        "contact": "Appelez le 911"
+      },
+      "reminder": "Rappelez-vous : Demander de l'aide est un signe de force, pas de faiblesse. Vous comptez, et il y a des gens qui se soucient de vous."
+    }
+  },
+  "worryReflection": {
+    "title": "Bocal à inquiétudes",
+    "activeWorries": "inquiétude active || inquiétudes actives",
+    "dailyWorryTime": "Temps d'inquiétude quotidien",
+    "min": "min",
+    "worryTimeHelp": "Réservez du temps pour traiter les inquiétudes",
+    "currentWorries": "Inquiétudes actuelles",
+    "physicalResponses": "Réponses physiques",
+    "added": "Ajouté",
+    "releaseWorry": "Libérer l'inquiétude",
+    "released": "Libéré",
+    "unknown": "Inconnu",
+    "emptyJar": {
+      "title": "Votre bocal à inquiétudes est vide",
+      "subtitle": "Aucune inquiétude capturée pour le moment. Ajoutez-en une pour commencer !",
+      "addFirst": "Ajouter la première inquiétude"
+    },
+    "releasedWorries": {
+      "title": "Inquiétudes libérées",
+      "subtitle": "Vous avez lâché prise sur {count} inquiétude || Vous avez lâché prise sur {count} inquiétudes",
+      "andMore": "Et {count} de plus..."
+    }
+  },
+  "easeboard": {
+    "title": "Easeboard",
+    "quickInsights": {
+      "weighing": "Ce qui m'a pesé",
+      "feltMost": "Où je l'ai le plus ressenti",
+      "calmMoments": "Mes moments de calme",
+      "worryTime": "Temps d'inquiétude"
+    },
+    "trends": {
+      "noData": "Pas encore de données",
+      "great": "Excellent progrès ! 📈",
+      "making": "Faire des progrès 📊",
+      "building": "Construire la conscience 🌱"
+    },
+    "stats": {
+      "totalWorries": "Total des inquiétudes",
+      "activeNow": "Actives maintenant",
+      "released": "Libérées",
+      "progress": "Progrès"
+    },
+    "patterns": {
+      "title": "Modèles d'inquiétude",
+      "commonCategory": "Catégorie la plus courante",
+      "commonBodyResponse": "Réponse corporelle la plus courante",
+      "releaseRate": "Taux de libération",
+      "released": "libérées"
+    },
+    "activity": {
+      "title": "Activité récente",
+      "released": "Libérée",
+      "active": "Active",
+      "noActivity": "Pas encore d'activité",
+      "addFirst": "Ajoutez votre première inquiétude"
+    },
+    "mood": {
+      "title": "Comment je me suis senti",
+      "comingSoon": "Suivi de l'humeur bientôt disponible"
+    }
   }
 }
