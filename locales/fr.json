@@ -15,9 +15,12 @@
   },
   "navigation": {
     "home": "Accueil",
-    "dashboard": "Tableau de bord",
+  "dashboard": "Easeboard",
     "worries": "Inquiétudes",
+    "addWorry": "Ajouter",
     "reflections": "Réflexions",
+    "calmCorner": "Calme",
+    "help": "Aide",
     "profile": "Profil",
     "settings": "Paramètres",
     "signIn": "Se connecter",

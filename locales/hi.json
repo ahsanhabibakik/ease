@@ -15,9 +15,12 @@
   },
   "navigation": {
     "home": "होम",
-    "dashboard": "डैशबोर्ड",
+  "dashboard": "Easeboard",
     "worries": "चिंताएं",
+    "addWorry": "जोड़ें",
     "reflections": "चिंतन",
+    "calmCorner": "शांति",
+    "help": "सहायता",
     "profile": "प्रोफाइल",
     "settings": "सेटिंग्स",
     "signIn": "साइन इन",

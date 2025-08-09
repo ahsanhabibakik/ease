@@ -22,10 +22,11 @@ export default function Navbar() {
 
   const NAV = [
     { href:'/', label: t('navigation.home') },
-    { href:'/add-worry', label: t('navigation.worries') },
+    { href:'/add-worry', label: t('navigation.addWorry'), icon: '＋' },
     { href:'/worry-reflection', label: t('navigation.reflections') },
-    { href:'/calm-corner', label:'Calm Corner' },
+    { href:'/calm-corner', label: t('navigation.calmCorner') },
     { href:'/easeboard', label: t('navigation.dashboard') },
+    { href:'/companion', label: t('navigation.help') },
   ];
 
   const toggleTheme = () => {
@@ -34,14 +35,16 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur border-b border-[var(--c-border)] bg-[color-mix(in_srgb,var(--c-bg)_80%,transparent)]">
+    <header className="sticky top-0 z-40 backdrop-blur-md border-b border-[var(--c-border)] bg-[color-mix(in_srgb,var(--c-bg)_85%,transparent)] supports-[backdrop-filter]:bg-[color-mix(in_srgb,var(--c-bg)_80%,transparent)]">
       <nav aria-label="Main" className="layout-container h-[64px] flex items-center gap-4">
         <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight focus-outline">
           <span className="avatar-ring"><span className="w-9 h-9 rounded-full bg-[var(--c-surface)] text-sm font-semibold flex items-center justify-center text-[var(--c-accent)]">E</span></span>
           <span className="hidden sm:inline text-[var(--c-text)]">Ease</span>
         </Link>
         
-        <button onClick={toggleTheme} className="hidden md:inline-flex btn-ghost btn px-3 py-2 !text-sm" aria-label="Toggle theme">Theme</button>
+        <button onClick={toggleTheme} className="hidden lg:inline-flex btn-ghost btn px-3 py-2 !text-sm" aria-label="Toggle theme">
+          <span className="text-base">🌙</span>
+        </button>
         
         {/* Mobile menu button */}
         <button onClick={()=>setMobileMenuOpen(o=>!o)} className="md:hidden ml-auto btn-ghost btn px-3 py-2 !text-sm" aria-label="Toggle menu">{mobileMenuOpen?'Close':'Menu'}</button>
@@ -50,8 +53,9 @@ export default function Navbar() {
         <ul className="hidden md:flex items-center gap-1 ml-2">
           {NAV.map(i=>{ const active = pathname===i.href; return (
             <li key={i.href}>
-              <Link href={i.href} aria-current={active? 'page':undefined} className={clsx('relative px-3 py-2 text-sm rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-accent)]', active ? 'text-[var(--c-text)] bg-[var(--c-surface-alt)]':'text-[var(--c-text-soft)] hover:text-[var(--c-text)] hover:bg-[var(--c-surface-alt)]')}>
-                {i.label}
+              <Link href={i.href} aria-current={active? 'page':undefined} className={clsx('relative px-3 py-2 text-sm rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-accent)] flex items-center gap-1.5', active ? 'text-[var(--c-text)] bg-[var(--c-surface-alt)]':'text-[var(--c-text-soft)] hover:text-[var(--c-text)] hover:bg-[var(--c-surface-alt)]')}>
+                {i.icon && <span className="text-base font-bold">{i.icon}</span>}
+                <span className={clsx(i.href === '/add-worry' ? 'text-xs md:text-sm' : '')}>{i.label}</span>
                 {active && <span className="absolute inset-x-2 -bottom-px h-[2px] rounded-full bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)]" aria-hidden />}
               </Link>
             </li> ); })}
@@ -59,7 +63,6 @@ export default function Navbar() {
         {/* Desktop Navigation Actions */}
         <div className="hidden md:flex items-center gap-3 ml-auto">
           <LanguageSwitcher />
-          <Link href="/add-worry"><Button variant="subtle" leftIcon={<span>＋</span>}>{t('worries.addNew')}</Button></Link>
           
           {/* Authentication Section */}
           {!session ? (
@@ -89,8 +92,9 @@ export default function Navbar() {
                 const active = pathname===i.href; 
                 return (
                   <li key={i.href}>
-                    <Link href={i.href} className={clsx('block w-full px-3 py-2 rounded-md text-sm font-medium', active ? 'bg-[var(--c-surface)] text-[var(--c-text)] shadow-sm':'text-[var(--c-text-soft)] hover:bg-[var(--c-surface)] hover:text-[var(--c-text)]')}>
-                      {i.label}
+                    <Link href={i.href} className={clsx('block w-full px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2', active ? 'bg-[var(--c-surface)] text-[var(--c-text)] shadow-sm':'text-[var(--c-text-soft)] hover:bg-[var(--c-surface)] hover:text-[var(--c-text)]')}>
+                      {i.icon && <span className="text-base font-bold">{i.icon}</span>}
+                      <span className={clsx(i.href === '/add-worry' ? 'text-sm' : '')}>{i.label}</span>
                     </Link>
                   </li>
                 ); 
