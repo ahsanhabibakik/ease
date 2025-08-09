@@ -6,44 +6,25 @@ export default function Home() {
   const { t } = useTranslation();
   
   return (
-    <div className="space-y-16">
-      {/* Hero */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--c-accent)]/20 via-[var(--c-bg)] to-[var(--c-accent-alt)]/20 p-8 sm:p-16 shadow-lg ring-1 ring-[var(--c-border)]">
-        <div className="max-w-4xl mx-auto relative z-10 text-center">
-          <div className="mb-8">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)] flex items-center justify-center shadow-lg">
-              <span className="text-3xl">🤗</span>
-            </div>
-            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
-              <span className="bg-gradient-to-r from-[var(--c-text)] to-[var(--c-text-soft)] bg-clip-text text-transparent">
-                Ease Your Mind,
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)] bg-clip-text text-transparent">
-                Find Your Peace
-              </span>
-            </h1>
-            <p className="text-xl text-[var(--c-text-soft)] leading-relaxed max-w-3xl mx-auto">
-              {t('dashboard.subtitle')}
-            </p>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
-            <Link href="/add-worry" className="w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)] text-white px-8 py-4 text-base font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:outline-none focus-visible:ring-2 ring-[var(--c-accent)]/40">
-              <span>🫙</span>
+    <div className="space-y-12">
+      {/* Simplified Hero */}
+      <section className="rounded-2xl border border-[var(--c-border)] bg-[var(--c-surface)] px-6 py-12 sm:py-14 sm:px-10 shadow-sm">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--c-text)]">
+            Ease your mind. Track, challenge & reframe worries.
+          </h1>
+          <p className="text-base sm:text-lg text-[var(--c-text-soft)] max-w-2xl mx-auto leading-relaxed">
+            {t('dashboard.subtitle')}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center sm:items-center max-w-md mx-auto">
+            <Link href="/add-worry" className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl bg-[var(--c-accent)] text-white px-6 py-3 text-sm font-medium shadow hover:shadow-md transition focus:outline-none focus-visible:ring-2 ring-[var(--c-accent)]/50">
               {t('dashboard.addWorry')}
             </Link>
-            <Link href="/companion" className="w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-2xl border-2 border-[var(--c-border)] bg-[var(--c-surface)]/70 backdrop-blur px-8 py-4 text-base font-medium text-[var(--c-text)] hover:bg-[var(--c-surface)] hover:scale-105 transition-all duration-300 focus:outline-none focus-visible:ring-2 ring-[var(--c-accent)]/40">
-              <span>💡</span>
-              Learn How It Works
+            <Link href="/companion" className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-[var(--c-border)] bg-[var(--c-surface-alt)] px-6 py-3 text-sm font-medium text-[var(--c-text)] hover:bg-[var(--c-surface)] transition focus:outline-none focus-visible:ring-2 ring-[var(--c-accent)]/40">
+              Learn how it works
             </Link>
           </div>
         </div>
-        
-        {/* Floating elements */}
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[var(--c-accent-alt)]/10 blur-3xl" />
-        <div className="pointer-events-none absolute -left-32 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-[var(--c-accent)]/10 blur-3xl" />
-        <div className="pointer-events-none absolute top-10 left-1/2 -translate-x-1/2 h-48 w-48 rounded-full bg-[var(--c-accent-alt)]/5 blur-2xl" />
       </section>
 
       {/* How It Works */}
