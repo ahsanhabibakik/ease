@@ -1,11 +1,16 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import useWorryStore, { Worry } from '@/stores/worryStore';
 import ChallengeButton from '@/components/ChallengeButton';
+import { useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
+import { toastSuccess } from '@/lib/toast';
+import { useTranslation } from '@/lib/intl';
 
 export default function WorryReflection() {
+  const { t } = useTranslation();
   const { 
     getActiveWorries, 
     getReleasedWorries, 
@@ -17,6 +22,14 @@ export default function WorryReflection() {
   const [activeWorries, setActiveWorries] = useState<Worry[]>([]);
   const [releasedWorries, setReleasedWorries] = useState<Worry[]>([]);
   const [tempWorryTime, setTempWorryTime] = useState(settings.dailyWorryTime);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const completed = searchParams.get('completed');
+    if (completed === 'true') {
+      toastSuccess('Challenge complete', { description: 'Reflection saved' });
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     setActiveWorries(getActiveWorries());
@@ -27,10 +40,12 @@ export default function WorryReflection() {
     releaseWorry(id);
     setActiveWorries(getActiveWorries());
     setReleasedWorries(getReleasedWorries());
+    toast.success('Worry released');
   };
 
   const handleUpdateWorryTime = () => {
     updateSettings({ dailyWorryTime: tempWorryTime });
+    toast.message('Daily worry time updated');
   };
 
   const formatDate = (date: Date) => {
@@ -48,14 +63,14 @@ export default function WorryReflection() {
       <section className="bg-white/90 backdrop-blur rounded-2xl shadow-sm ring-1 ring-gray-200/70 p-6 sm:p-8">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-bold">Worry Jar</h1>
+            <h1 className="text-2xl font-bold">{t('worryReflection.title')}</h1>
             <p className="text-gray-600">
-              {activeWorries.length} active {activeWorries.length === 1 ? 'worry' : 'worries'}
+              {activeWorries.length} {t('worryReflection.activeWorries', { count: activeWorries.length })}
             </p>
           </div>
           <div className="text-right">
             <div className="flex items-center gap-2 mb-2">
-              <label htmlFor="worry-time" className="text-sm font-medium">Daily worry time:</label>
+              <label htmlFor="worry-time" className="text-sm font-medium">{t('worryReflection.dailyWorryTime')}:</label>
               <input 
                 id="worry-time"
                 type="number" 
@@ -66,16 +81,16 @@ export default function WorryReflection() {
                 onBlur={handleUpdateWorryTime}
                 className="w-16 text-center border rounded px-2 py-1 text-sm"
               />
-              <span className="text-sm">min</span>
+              <span className="text-sm">{t('worryReflection.min')}</span>
             </div>
-            <p className="text-xs text-gray-500">Set aside time to process worries</p>
+            <p className="text-xs text-gray-500">{t('worryReflection.worryTimeHelp')}</p>
           </div>
         </div>
 
         {/* Active Worries */}
         {activeWorries.length > 0 ? (
           <div className="space-y-4">
-            <h2 className="font-semibold text-lg">Current Worries</h2>
+            <h2 className="font-semibold text-lg">{t('worryReflection.currentWorries')}</h2>
             <div className="grid gap-4">
               {activeWorries.map((worry) => (
                 <div key={worry.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
@@ -87,7 +102,7 @@ export default function WorryReflection() {
                   
                   {worry.bodyResponses.length > 0 && (
                     <div className="mb-3">
-                      <p className="text-sm text-gray-600 mb-1">Physical responses:</p>
+                      <p className="text-sm text-gray-600 mb-1">{t('worryReflection.physicalResponses')}:</p>
                       <div className="flex flex-wrap gap-1">
                         {worry.bodyResponses.map((response, idx) => (
                           <span key={idx} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
@@ -100,7 +115,7 @@ export default function WorryReflection() {
                   
                   <div className="flex justify-between items-center gap-3">
                     <span className="text-xs text-gray-500">
-                      Added {formatDate(worry.createdAt)}
+                      {t('worryReflection.added')} {formatDate(worry.createdAt)}
                     </span>
                     <div className="flex gap-2">
                       <ChallengeButton 
@@ -112,7 +127,7 @@ export default function WorryReflection() {
                         onClick={() => handleReleaseWorry(worry.id)}
                         className="px-4 py-2 bg-gradient-to-r from-accentLavender to-accentTeal text-white rounded-lg text-sm hover:shadow-md transition-shadow"
                       >
-                        Release Worry
+                        {t('worryReflection.releaseWorry')}
                       </button>
                     </div>
                   </div>
@@ -127,13 +142,13 @@ export default function WorryReflection() {
                 <span className="text-4xl">🫙</span>
               </div>
             </div>
-            <h2 className="font-semibold text-lg mb-2">Your worry jar is empty</h2>
-            <p className="text-gray-600 mb-4">No worries captured yet. Add one to get started!</p>
+            <h2 className="font-semibold text-lg mb-2">{t('worryReflection.emptyJar.title')}</h2>
+            <p className="text-gray-600 mb-4">{t('worryReflection.emptyJar.subtitle')}</p>
             <Link 
               href="/add-worry" 
               className="inline-block px-6 py-2 bg-gradient-to-r from-accentLavender to-accentTeal text-white rounded-lg hover:shadow-md transition-shadow"
             >
-              Add First Worry
+              {t('worryReflection.emptyJar.addFirst')}
             </Link>
           </div>
         )}
@@ -142,9 +157,9 @@ export default function WorryReflection() {
       {/* Released Worries */}
       {releasedWorries.length > 0 && (
         <section className="bg-white/90 backdrop-blur rounded-2xl shadow-sm ring-1 ring-gray-200/70 p-6 sm:p-8">
-          <h2 className="font-semibold text-lg mb-4">Released Worries</h2>
+          <h2 className="font-semibold text-lg mb-4">{t('worryReflection.releasedWorries.title')}</h2>
           <p className="text-sm text-gray-600 mb-4">
-            You&apos;ve let go of {releasedWorries.length} {releasedWorries.length === 1 ? 'worry' : 'worries'}
+            {t('worryReflection.releasedWorries.subtitle', { count: releasedWorries.length })}
           </p>
           <div className="grid gap-3">
             {releasedWorries.slice(0, 5).map((worry) => (
@@ -155,14 +170,14 @@ export default function WorryReflection() {
                     <p className="text-sm text-gray-600">{worry.category}</p>
                   </div>
                   <span className="text-xs text-gray-500">
-                    Released {worry.releasedAt ? formatDate(worry.releasedAt) : 'Unknown'}
+                    {t('worryReflection.released')} {worry.releasedAt ? formatDate(worry.releasedAt) : t('worryReflection.unknown')}
                   </span>
                 </div>
               </div>
             ))}
             {releasedWorries.length > 5 && (
               <p className="text-sm text-gray-500 text-center">
-                And {releasedWorries.length - 5} more...
+                {t('worryReflection.releasedWorries.andMore', { count: releasedWorries.length - 5 })}
               </p>
             )}
           </div>
