@@ -13,7 +13,10 @@
       "Bash(pnpm run:*)",
       "Bash(timeout 15s pnpm run dev)",
       "Bash(git push:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint)",
+      "Bash(npx tsc:*)"
     ],
     "deny": []
   }

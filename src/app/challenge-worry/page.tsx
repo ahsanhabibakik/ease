@@ -4,12 +4,11 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useWorryStore, { CognitiveDistortion, CognitiveChallenge } from '@/stores/worryStore';
 import { useSession } from 'next-auth/react';
-import { toast } from 'sonner';
 import { toastApiError, toastSuccess, toastInfo } from '@/lib/toast';
 import { useTranslation } from '@/lib/intl';
 
 // Cognitive distortion definitions for reference - now using translations
-const getDistortionDefinitions = (t: any) => ({
+const getDistortionDefinitions = (t: (key: string) => string) => ({
   [CognitiveDistortion.ALL_OR_NOTHING]: {
     name: t('challengeWorry.distortions.ALL_OR_NOTHING.name'),
     description: t('challengeWorry.distortions.ALL_OR_NOTHING.description'),
@@ -79,7 +78,7 @@ interface ChallengeStep {
   description?: string;
 }
 
-const getChallengeSteps = (t: any): ChallengeStep[] => [
+const getChallengeSteps = (t: (key: string) => string): ChallengeStep[] => [
   {
     id: 'evidence-for',
     title: t('challengeWorry.steps.evidenceFor.title'),
@@ -155,7 +154,7 @@ const ChallengeWorryContent: React.FC = () => {
       setChallengeId(newChallengeId);
       toastInfo(t('challengeWorry.challengeStarted'), { description: t('challengeWorry.challengeStartedDesc') });
     }
-  }, [worryId, worryText, challengeId, startChallenge]);
+  }, [worryId, worryText, challengeId, startChallenge, t]);
 
   if (!worryId || !worryText) {
     return (
@@ -654,7 +653,7 @@ const ChallengeWorryPage: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accentTeal mx-auto mb-4"></div>
-          <p className="text-gray-600">{t('challengeWorry.loading')}</p>
+          <p className="text-gray-600">Loading challenge...</p>
         </div>
       </div>
     }>
