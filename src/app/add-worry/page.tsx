@@ -7,16 +7,18 @@ import useWorryStore from '@/stores/worryStore';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody, CardHeader, CardTitle } from '@/components/ui/Card';
+import { useTranslation } from '@/lib/intl';
 
 export default function AddWorry() {
   const router = useRouter();
   const addWorry = useWorryStore((state) => state.addWorry);
   const { data: session } = useSession();
+  const { t } = useTranslation();
   
-  const BASE_CATEGORY_PRESETS = ['School','Work','Family','Finance','Politics','Health','Relationships','Other'];
+  const BASE_CATEGORY_PRESETS = [t('addWorry.categories.school'), t('addWorry.categories.work'), t('addWorry.categories.family'), t('addWorry.categories.finance'), t('addWorry.categories.politics'), t('addWorry.categories.health'), t('addWorry.categories.relationships'), t('addWorry.categories.other')];
   const [customCategories, setCustomCategories] = useState<string[]>([]);
   const BODY_RESPONSES = [
-    'Sweaty palms','Racing heartbeat','Jaw tightness','Restless legs','Stomach knots','Shoulder tension','Chest tightness','Shallow breath','Head pressure','Other'
+    t('addWorry.bodyResponses.sweatyPalms'), t('addWorry.bodyResponses.racingHeartbeat'), t('addWorry.bodyResponses.jawTightness'), t('addWorry.bodyResponses.restlessLegs'), t('addWorry.bodyResponses.stomachKnots'), t('addWorry.bodyResponses.shoulderTension'), t('addWorry.bodyResponses.chestTightness'), t('addWorry.bodyResponses.shallowBreath'), t('addWorry.bodyResponses.headPressure'), t('addWorry.bodyResponses.other')
   ];
   const DRAFT_KEY = 'ease-add-worry-draft-v1';
 
@@ -30,7 +32,7 @@ export default function AddWorry() {
   });
   const [suggestIndex, setSuggestIndex] = useState(0);
   const nameSuggestions = [
-    'Job interview nerves','That meeting tomorrow','Conversation I keep replaying','Money uncertainty','Health test results','Upcoming presentation'
+    t('addWorry.suggestions.jobInterview'), t('addWorry.suggestions.meetingTomorrow'), t('addWorry.suggestions.conversation'), t('addWorry.suggestions.moneyUncertainty'), t('addWorry.suggestions.healthTests'), t('addWorry.suggestions.presentation')
   ];
 
   // Load draft
@@ -82,7 +84,7 @@ export default function AddWorry() {
     e.preventDefault();
     
     if (!formData.name.trim() || !formData.description.trim()) {
-      alert('Please fill in both the worry name and description.');
+      alert(t('addWorry.validation.required'));
       return;
     }
     
@@ -123,7 +125,7 @@ export default function AddWorry() {
       router.push('/worry-reflection');
     } catch (error) {
       console.error('Error adding worry:', error);
-      alert('Something went wrong saving your worry. It may have been stored locally.');
+      alert(t('addWorry.errors.saveFailed'));
     } finally {
       setIsSubmitting(false);
     }
@@ -141,46 +143,76 @@ export default function AddWorry() {
   const placeholder = nameSuggestions[suggestIndex];
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <Card>
-        <CardHeader>
-          <CardTitle className="h2 mb-1">Add a Worry</CardTitle>
-          <p className="text-soft text-sm">Externalize the thought so you can evaluate it later with clarity.</p>
-          {!session && (
-            <p className="mt-3 text-xs rounded-md border border-[var(--c-warn)]/40 bg-[var(--c-warn)]/10 text-[var(--c-warn)] px-3 py-2">Sign in to sync worries across devices. Unsigned worries stay only in this browser.</p>
-          )}
-        </CardHeader>
+    <div className="max-w-3xl mx-auto space-y-6">
+      {/* Header Section */}
+      <div className="text-center space-y-4">
+        <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)] flex items-center justify-center shadow-lg">
+          <span className="text-2xl">🤗</span>
+        </div>
+        <div>
+          <h1 className="h2 mb-2 bg-gradient-to-r from-[var(--c-text)] to-[var(--c-text-soft)] bg-clip-text text-transparent">{t('addWorry.title')}</h1>
+          <p className="text-soft text-base max-w-2xl mx-auto">{t('addWorry.subtitle')}</p>
+        </div>
+      </div>
+      
+      {/* Warning for unsigned users */}
+      {!session && (
+        <div className="bg-gradient-to-r from-[var(--c-warn)]/10 to-[var(--c-accent)]/10 border border-[var(--c-warn)]/30 rounded-xl p-4 text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span className="text-lg">💡</span>
+            <span className="text-sm font-medium text-[var(--c-text)]">{t('addWorry.signInTip.title')}</span>
+          </div>
+          <p className="text-xs text-[var(--c-text-soft)]">{t('addWorry.signInTip.message')}</p>
+        </div>
+      )}
+      
+      <Card className="card-elevated">
+        <CardHeader className="pb-4">
         <CardBody>
-          <form onSubmit={handleSubmit} className="form-gap">
-            <div className="form-gap">
-              <div>
-                <label htmlFor="worry-name" className="block mb-1 font-medium text-[var(--c-text)]">Give your worry a name</label>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Core Worry Input */}
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <label htmlFor="worry-name" className="flex items-center gap-2 text-base font-semibold text-[var(--c-text)]">
+                  <span className="text-lg">🏷️</span>
+                  {t('addWorry.form.nameLabel')}
+                </label>
                 <input
                   id="worry-name"
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  placeholder={`e.g., ${placeholder}`}
-                  className="field-input"
+                  placeholder={t('addWorry.form.namePlaceholder', { example: placeholder })}
+                  className="field-input text-base py-4 rounded-xl border-2 focus:border-[var(--c-accent)] transition-all duration-200"
                   required
                 />
+                <p className="text-xs text-[var(--c-text-faint)] ml-1">{t('addWorry.form.nameHelp')}</p>
               </div>
-              <div>
-                <label htmlFor="worry-description" className="block mb-1 font-medium text-[var(--c-text)]">Why does it matter to you?</label>
+              
+              <div className="space-y-3">
+                <label htmlFor="worry-description" className="flex items-center gap-2 text-base font-semibold text-[var(--c-text)]">
+                  <span className="text-lg">💭</span>
+                  {t('addWorry.form.descriptionLabel')}
+                </label>
                 <textarea
                   id="worry-description"
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder="Share what's on your heart..."
-                  className="field-input min-h-[110px] resize-vertical"
+                  placeholder={t('addWorry.form.descriptionPlaceholder')}
+                  className="field-input min-h-[120px] resize-vertical text-base py-4 rounded-xl border-2 focus:border-[var(--c-accent)] transition-all duration-200"
                   required
                 />
+                <p className="text-xs text-[var(--c-text-faint)] ml-1">{t('addWorry.form.descriptionHelp')}</p>
               </div>
             </div>
-            <div className="section-gap">
-              <div>
-                <label className="block mb-2 font-medium text-[var(--c-text)]">Life area</label>
-                <div className="flex flex-wrap gap-2">
+            {/* Life Area Selection */}
+            <div className="space-y-4">
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 text-base font-semibold text-[var(--c-text)]">
+                  <span className="text-lg">🌍</span>
+                  {t('addWorry.form.categoryLabel')}
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {BASE_CATEGORY_PRESETS.concat(customCategories).filter((v,i,a)=>a.indexOf(v)===i).concat('Custom').map(cat => {
                     const active = formData.category === cat;
                     return (
@@ -188,7 +220,7 @@ export default function AddWorry() {
                         type="button"
                         key={cat}
                         onClick={() => setFormData(prev => ({ ...prev, category: cat }))}
-                        className={`chip ${active ? 'chip-active' : ''}`}
+                        className={`chip py-3 px-4 text-sm font-medium rounded-xl border-2 transition-all duration-200 ${active ? 'bg-[var(--c-accent)] text-white border-[var(--c-accent)] shadow-md scale-105' : 'bg-[var(--c-surface)] border-[var(--c-border)] hover:border-[var(--c-accent)]/50 hover:scale-105'}`}
                       >{cat}</button>
                     );
                   })}
@@ -198,14 +230,19 @@ export default function AddWorry() {
                     type="text"
                     value={formData.customCategory}
                     onChange={e => setFormData(prev => ({ ...prev, customCategory: e.target.value }))}
-                    placeholder="Enter custom area (e.g., Creativity)"
-                    className="field-input mt-3"
+                    placeholder={t('addWorry.form.customCategoryPlaceholder')}
+                    className="field-input mt-3 rounded-xl border-2 focus:border-[var(--c-accent)]"
                   />
                 )}
+                <p className="text-xs text-[var(--c-text-faint)] ml-1">{t('addWorry.form.categoryHelp')}</p>
               </div>
-              <div>
-                <label className="block mb-2 font-medium text-[var(--c-text)]">Body responses (select all that apply)</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {/* Body Response Selection */}
+              <div className="space-y-3">
+                <label className="flex items-center gap-2 text-base font-semibold text-[var(--c-text)]">
+                  <span className="text-lg">💗</span>
+                  {t('addWorry.form.bodyLabel')}
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {BODY_RESPONSES.map(resp => {
                     const active = formData.bodyResponses.includes(resp);
                     return (
@@ -213,34 +250,86 @@ export default function AddWorry() {
                         type="button"
                         key={resp}
                         onClick={() => toggleBodyResponse(resp)}
-                        className={`chip body-chip ${active ? 'body-chip-active' : ''}`}
+                        className={`flex items-center justify-between py-3 px-4 text-sm rounded-xl border-2 transition-all duration-200 ${active ? 'bg-[var(--c-accent)]/10 border-[var(--c-accent)] text-[var(--c-accent)] shadow-sm' : 'bg-[var(--c-surface)] border-[var(--c-border)] hover:border-[var(--c-accent)]/50'}`}
                       >
-                        <span className="truncate">{resp}</span>
-                        {active && <span aria-hidden>✓</span>}
+                        <span className="text-left">{resp}</span>
+                        <span className={`text-base transition-all ${active ? 'scale-110 text-[var(--c-accent)]' : 'text-transparent'}`}>✓</span>
                       </button>
                     );
                   })}
                 </div>
+                <p className="text-xs text-[var(--c-text-faint)] ml-1">{t('addWorry.form.bodyHelp')}</p>
               </div>
-              <div>
-                <label htmlFor="intensity-slider" className="block mb-2 font-medium text-[var(--c-text)]">Current intensity: <span className="font-semibold">{formData.intensity}/10</span></label>
-                <input
-                  id="intensity-slider"
-                  type="range"
-                  min={1}
-                  max={10}
-                  value={formData.intensity}
-                  onChange={e => setFormData(prev => ({ ...prev, intensity: Number(e.target.value) }))}
-                  className="w-full"
-                />
-                <div className="flex justify-between text-[10px] text-[var(--c-text-faint)] mt-1">
-                  <span>Calm</span><span>Moderate</span><span>High</span>
+            </div>
+            {/* Intensity Slider */}
+            <div className="space-y-4 bg-[var(--c-surface-alt)] rounded-2xl p-6">
+              <div className="space-y-3">
+                <label htmlFor="intensity-slider" className="flex items-center gap-2 text-base font-semibold text-[var(--c-text)]">
+                  <span className="text-lg">🌡️</span>
+                  {t('addWorry.form.intensityLabel')}
+                </label>
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <span className="text-3xl font-bold text-[var(--c-accent)] bg-[var(--c-accent)]/10 px-4 py-2 rounded-xl">{formData.intensity}/10</span>
+                  </div>
+                  <input
+                    id="intensity-slider"
+                    type="range"
+                    min={1}
+                    max={10}
+                    value={formData.intensity}
+                    onChange={e => setFormData(prev => ({ ...prev, intensity: Number(e.target.value) }))}
+                    className="w-full h-3 bg-[var(--c-border)] rounded-full appearance-none cursor-pointer slider-thumb"
+                  />
+                  <div className="flex justify-between text-xs text-[var(--c-text-faint)]">
+                    <span className="flex items-center gap-1"><span>🌱</span> {t('addWorry.intensity.calm')}</span>
+                    <span className="flex items-center gap-1"><span>⚖️</span> {t('addWorry.intensity.moderate')}</span>
+                    <span className="flex items-center gap-1"><span>🌋</span> {t('addWorry.intensity.intense')}</span>
+                  </div>
+                  <p className="text-xs text-[var(--c-text-faint)] text-center">{t('addWorry.form.intensityHelp')}</p>
                 </div>
               </div>
             </div>
-            <div className="pt-2">
-              <Button type="submit" variant="primary" className="w-full py-3 text-[var(--fs-sm)]" disabled={isSubmitting}>{isSubmitting ? 'Adding Worry...' : 'Drop It Gently'}</Button>
-              <p className="text-center text-xs mt-3"><Link href="/companion#worry-input" className="text-[var(--c-accent)] hover:underline">How this works</Link></p>
+            {/* Submit Section */}
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-[var(--c-accent)]/5 to-[var(--c-accent-alt)]/5 rounded-2xl p-6 text-center">
+                <div className="space-y-4">
+                  <div className="text-2xl">🤗</div>
+                  <p className="text-sm text-[var(--c-text-soft)] max-w-md mx-auto">
+                    {t('addWorry.encouragement')}
+                  </p>
+                </div>
+              </div>
+              
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-4 px-6 rounded-2xl text-base font-semibold transition-all duration-300 ${
+                  isSubmitting 
+                    ? 'bg-[var(--c-border)] text-[var(--c-text-soft)] cursor-not-allowed' 
+                    : 'bg-gradient-to-r from-[var(--c-accent)] to-[var(--c-accent-alt)] text-white hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]'
+                }`}
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="animate-spin">⚙️</span>
+                    {t('addWorry.form.submitting')}
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center gap-2">
+                    <span>🫙</span>
+                    {t('addWorry.form.submit')}
+                  </span>
+                )}
+              </button>
+              
+              <div className="text-center space-y-2">
+                <Link href="/companion#worry-input" className="inline-flex items-center gap-1 text-sm text-[var(--c-accent)] hover:text-[var(--c-accent-alt)] transition-colors">
+                  <span>💡</span>
+                  {t('addWorry.learnMore')}
+                </Link>
+                <p className="text-xs text-[var(--c-text-faint)]">{t('addWorry.processLater')}</p>
+              </div>
             </div>
           </form>
         </CardBody>

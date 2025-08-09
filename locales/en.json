@@ -129,6 +129,108 @@
     "saveSettings": "Save Settings",
     "settingsSaved": "Settings saved successfully"
   },
+  "home": {
+    "hero": {
+      "title": "Ease Your Mind, Find Your Peace",
+      "learnMore": "Learn More"
+    },
+    "howItWorks": {
+      "title": "How Ease Helps",
+      "subtitle": "A structured, science-informed flow to externalize worry, evaluate it rationally, and cultivate calm."
+    },
+    "steps": {
+      "capture": {
+        "title": "Capture",
+        "desc": "Lighten mental load by safely storing and labeling worries with context."
+      },
+      "challenge": {
+        "title": "Challenge", 
+        "desc": "Use cognitive techniques to examine evidence, distortions, and probability."
+      },
+      "reframe": {
+        "title": "Reframe & Grow",
+        "desc": "Generate balanced thoughts, track insights, and reinforce adaptive patterns."
+      }
+    },
+    "quickAccess": {
+      "calmCorner": {
+        "title": "Need Calm Right Now?",
+        "subtitle": "Guided breathing & grounding tools"
+      },
+      "dashboard": {
+        "subtitle": "Patterns, insights & reframes"
+      }
+    }
+  },
+  "addWorry": {
+    "title": "What's Weighing on Your Heart?",
+    "subtitle": "Give your worry a safe place to rest. Externalizing your thoughts helps you see them more clearly and process them with compassion.",
+    "signInTip": {
+      "title": "Quick tip",
+      "message": "Sign in to sync your worries across devices and never lose your progress."
+    },
+    "form": {
+      "nameLabel": "Give your worry a name",
+      "namePlaceholder": "e.g., {example}",
+      "nameHelp": "Keep it simple and specific - this helps you recognize the worry later",
+      "descriptionLabel": "Tell your worry story",
+      "descriptionPlaceholder": "Share what's on your heart... Why does this worry matter to you right now?",
+      "descriptionHelp": "Express what's really at stake for you - there's no wrong way to share",
+      "categoryLabel": "Where does this belong in your life?",
+      "customCategoryPlaceholder": "Enter custom area (e.g., Creativity, Parenting)",
+      "categoryHelp": "Categorizing helps you spot patterns over time",
+      "bodyLabel": "Where do you feel this in your body?",
+      "bodyHelp": "Physical awareness helps you recognize worry patterns early",
+      "intensityLabel": "How intense does this feel right now?",
+      "intensityHelp": "Your current feeling level - this can change, and that's okay",
+      "submit": "Drop It Gently",
+      "submitting": "Gently placing in your worry jar..."
+    },
+    "categories": {
+      "school": "School",
+      "work": "Work", 
+      "family": "Family",
+      "finance": "Finance",
+      "politics": "Politics",
+      "health": "Health",
+      "relationships": "Relationships",
+      "other": "Other"
+    },
+    "bodyResponses": {
+      "sweatyPalms": "Sweaty palms",
+      "racingHeartbeat": "Racing heartbeat", 
+      "jawTightness": "Jaw tightness",
+      "restlessLegs": "Restless legs",
+      "stomachKnots": "Stomach knots",
+      "shoulderTension": "Shoulder tension",
+      "chestTightness": "Chest tightness",
+      "shallowBreath": "Shallow breath",
+      "headPressure": "Head pressure",
+      "other": "Other"
+    },
+    "suggestions": {
+      "jobInterview": "Job interview nerves",
+      "meetingTomorrow": "That meeting tomorrow",
+      "conversation": "Conversation I keep replaying",
+      "moneyUncertainty": "Money uncertainty", 
+      "healthTests": "Health test results",
+      "presentation": "Upcoming presentation"
+    },
+    "intensity": {
+      "calm": "Calm",
+      "moderate": "Moderate",
+      "intense": "Intense"
+    },
+    "encouragement": "You're taking a brave step by acknowledging this worry. Remember, you're not alone in this.",
+    "learnMore": "How this process helps",
+    "processLater": "You'll be guided to process this worry when you're ready",
+    "validation": {
+      "required": "Please fill in both the worry name and description."
+    },
+    "errors": {
+      "saveFailed": "Something went wrong saving your worry. It may have been stored locally."
+    }
+  },
   "errors": {
     "generic": "Something went wrong. Please try again.",
     "networkError": "Network error. Please check your connection.",

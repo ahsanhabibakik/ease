@@ -11,7 +11,7 @@ export default function LocalePage() {
       <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-500/20 via-white to-cyan-500/20 dark:from-purple-500/10 dark:via-gray-900 dark:to-cyan-500/10 p-8 sm:p-12 shadow-lg ring-1 ring-purple-200/50 dark:ring-purple-800/50">
         <div className="max-w-3xl relative z-10">
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-purple-800 to-cyan-600 dark:from-purple-400 dark:via-purple-300 dark:to-cyan-400">
-            {t('common.welcome')} - Ease Your Mind
+            {t('home.hero.title')}
           </h1>
           <p className="mt-5 text-lg text-gray-700 dark:text-gray-300 leading-relaxed max-w-xl">
             {t('dashboard.subtitle')}
@@ -22,7 +22,7 @@ export default function LocalePage() {
               {t('dashboard.addWorry')}
             </Link>
             <Link href="/companion" className="inline-flex items-center gap-2 rounded-xl border-2 border-purple-200 dark:border-purple-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur px-6 py-3 text-sm font-medium text-purple-700 dark:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:border-purple-300 dark:hover:border-purple-600 focus:outline-none focus-visible:ring-2 ring-purple-500/40 transition-all duration-200">
-              Learn More
+              {t('home.hero.learnMore')}
             </Link>
           </div>
         </div>
@@ -34,15 +34,15 @@ export default function LocalePage() {
       <section className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-cyan-600 dark:from-purple-400 dark:to-cyan-400">How Ease Helps</h2>
-            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm sm:text-base max-w-xl">A structured, science-informed flow to externalize worry, evaluate it rationally, and cultivate calm.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-cyan-600 dark:from-purple-400 dark:to-cyan-400">{t('home.howItWorks.title')}</h2>
+            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm sm:text-base max-w-xl">{t('home.howItWorks.subtitle')}</p>
           </div>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {[
-            { title: 'Capture', desc: 'Lighten mental load by safely storing and labeling worries with context.', color: 'from-purple-500 to-purple-600' },
-            { title: 'Challenge', desc: 'Use cognitive techniques to examine evidence, distortions, and probability.', color: 'from-indigo-500 to-purple-500' },
-            { title: 'Reframe & Grow', desc: 'Generate balanced thoughts, track insights, and reinforce adaptive patterns.', color: 'from-cyan-500 to-indigo-500' },
+            { title: t('home.steps.capture.title'), desc: t('home.steps.capture.desc'), color: 'from-purple-500 to-purple-600' },
+            { title: t('home.steps.challenge.title'), desc: t('home.steps.challenge.desc'), color: 'from-indigo-500 to-purple-500' },
+            { title: t('home.steps.reframe.title'), desc: t('home.steps.reframe.desc'), color: 'from-cyan-500 to-indigo-500' },
           ].map((card, i) => (
             <div key={card.title} className="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-800 border border-purple-200/50 dark:border-purple-700/50 p-6 flex flex-col shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-br ${card.color}/10 transition-opacity`} />
@@ -61,8 +61,8 @@ export default function LocalePage() {
       {/* Quick Access */}
       <section className="grid gap-6 md:grid-cols-2">
         {[
-          { href: '/calm-corner', title: 'Need Calm Right Now?', subtitle: 'Guided breathing & grounding tools', icon: '🫧', gradient: 'from-blue-500 to-cyan-500' },
-          { href: '/easeboard', title: t('navigation.dashboard'), subtitle: 'Patterns, insights & reframes', icon: '📊', gradient: 'from-purple-500 to-pink-500' },
+          { href: '/calm-corner', title: t('home.quickAccess.calmCorner.title'), subtitle: t('home.quickAccess.calmCorner.subtitle'), icon: '🫧', gradient: 'from-blue-500 to-cyan-500' },
+          { href: '/easeboard', title: t('navigation.dashboard'), subtitle: t('home.quickAccess.dashboard.subtitle'), icon: '📊', gradient: 'from-purple-500 to-pink-500' },
         ].map(tile => (
           <Link key={tile.href} href={tile.href} className="group relative overflow-hidden rounded-2xl border border-purple-200/50 dark:border-purple-700/50 bg-white dark:bg-gray-800 p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <div className={`absolute inset-0 bg-gradient-to-br ${tile.gradient}/0 group-hover:${tile.gradient}/10 transition-colors`} />

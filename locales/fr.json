@@ -129,6 +129,39 @@
     "saveSettings": "Enregistrer les paramètres",
     "settingsSaved": "Paramètres enregistrés avec succès"
   },
+  "home": {
+    "hero": {
+      "title": "Apaisez votre esprit, trouvez votre paix",
+      "learnMore": "En savoir plus"
+    },
+    "howItWorks": {
+      "title": "Comment Ease vous aide",
+      "subtitle": "Un flux structuré et scientifique pour externaliser l'inquiétude, l'évaluer rationnellement et cultiver le calme."
+    },
+    "steps": {
+      "capture": {
+        "title": "Capturer",
+        "desc": "Allégez la charge mentale en stockant et étiquetant en sécurité les inquiétudes avec leur contexte."
+      },
+      "challenge": {
+        "title": "Défier", 
+        "desc": "Utilisez des techniques cognitives pour examiner les preuves, les distorsions et la probabilité."
+      },
+      "reframe": {
+        "title": "Recadrer et grandir",
+        "desc": "Générez des pensées équilibrées, suivez les insights et renforcez les modèles adaptatifs."
+      }
+    },
+    "quickAccess": {
+      "calmCorner": {
+        "title": "Besoin de calme maintenant ?",
+        "subtitle": "Outils de respiration guidée et d'ancrage"
+      },
+      "dashboard": {
+        "subtitle": "Modèles, insights et recadrages"
+      }
+    }
+  },
   "errors": {
     "generic": "Quelque chose s'est mal passé. Veuillez réessayer.",
     "networkError": "Erreur réseau. Veuillez vérifier votre connexion.",
