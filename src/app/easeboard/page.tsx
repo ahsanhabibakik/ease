@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import useWorryStore from '@/stores/worryStore';
+import { useTranslation } from '@/lib/intl';
 
 export default function EaseboardPage() {
+  const { t } = useTranslation();
   const { worries, getActiveWorries, getReleasedWorries } = useWorryStore();
   const [stats, setStats] = useState({
     totalWorries: 0,
@@ -15,10 +17,10 @@ export default function EaseboardPage() {
   });
 
   const quickInsights = [
-    "What&apos;s Been Weighing on Me",
-    "Where I&apos;ve Felt It Most",
-    'My Calm Moments',
-    'Worry Time'
+    t('easeboard.quickInsights.weighing'),
+    t('easeboard.quickInsights.feltMost'),
+    t('easeboard.quickInsights.calmMoments'),
+    t('easeboard.quickInsights.worryTime')
   ];
 
   useEffect(() => {
@@ -52,11 +54,11 @@ export default function EaseboardPage() {
   }, [worries, getActiveWorries, getReleasedWorries]);
 
   const getWorryTrend = () => {
-    if (stats.totalWorries === 0) return "No data yet";
+    if (stats.totalWorries === 0) return t('easeboard.trends.noData');
     const releaseRate = (stats.releasedWorries / stats.totalWorries) * 100;
-    if (releaseRate > 70) return "Great progress! 📈";
-    if (releaseRate > 40) return "Making progress 📊";
-    return "Building awareness 🌱";
+    if (releaseRate > 70) return t('easeboard.trends.great');
+    if (releaseRate > 40) return t('easeboard.trends.making');
+    return t('easeboard.trends.building');
   };
 
   const getRecentActivity = () => {
@@ -71,24 +73,24 @@ export default function EaseboardPage() {
     <div className="space-y-10 max-w-7xl mx-auto">
       <div className="max-w-6xl mx-auto space-y-6">
           <section className="bg-white p-6 rounded-2xl shadow-md">
-            <h1 className="text-3xl font-bold mb-6">Easeboard</h1>
+            <h1 className="text-3xl font-bold mb-6">{t('easeboard.title')}</h1>
             
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg">
-                <h3 className="font-semibold text-blue-800">Total Worries</h3>
+                <h3 className="font-semibold text-blue-800">{t('easeboard.stats.totalWorries')}</h3>
                 <p className="text-2xl font-bold text-blue-900">{stats.totalWorries}</p>
               </div>
               <div className="bg-gradient-to-r from-orange-50 to-orange-100 p-4 rounded-lg">
-                <h3 className="font-semibold text-orange-800">Active Now</h3>
+                <h3 className="font-semibold text-orange-800">{t('easeboard.stats.activeNow')}</h3>
                 <p className="text-2xl font-bold text-orange-900">{stats.activeWorries}</p>
               </div>
               <div className="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg">
-                <h3 className="font-semibold text-green-800">Released</h3>
+                <h3 className="font-semibold text-green-800">{t('easeboard.stats.released')}</h3>
                 <p className="text-2xl font-bold text-green-900">{stats.releasedWorries}</p>
               </div>
               <div className="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-lg">
-                <h3 className="font-semibold text-purple-800">Progress</h3>
+                <h3 className="font-semibold text-purple-800">{t('easeboard.stats.progress')}</h3>
                 <p className="text-sm font-medium text-purple-900">{getWorryTrend()}</p>
               </div>
             </div>
@@ -109,31 +111,31 @@ export default function EaseboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Patterns Section */}
             <section className="bg-white p-6 rounded-2xl shadow-md">
-              <h2 className="font-semibold text-xl mb-4">Worry Patterns</h2>
+              <h2 className="font-semibold text-xl mb-4">{t('easeboard.patterns.title')}</h2>
               
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Most Common Category</h3>
+                  <h3 className="font-medium text-gray-700 mb-2">{t('easeboard.patterns.commonCategory')}</h3>
                   <div className="bg-gray-50 p-3 rounded-lg">
                     <span className="font-semibold">{stats.topCategory}</span>
                   </div>
                 </div>
                 
                 <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Most Common Body Response</h3>
+                  <h3 className="font-medium text-gray-700 mb-2">{t('easeboard.patterns.commonBodyResponse')}</h3>
                   <div className="bg-gray-50 p-3 rounded-lg">
                     <span className="font-semibold">{stats.topBodyResponse}</span>
                   </div>
                 </div>
                 
                 <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Release Rate</h3>
+                  <h3 className="font-medium text-gray-700 mb-2">{t('easeboard.patterns.releaseRate')}</h3>
                   <div className="bg-gray-50 p-3 rounded-lg">
                     <div className="flex items-center justify-between">
                       <span>
                         {stats.totalWorries > 0 
                           ? Math.round((stats.releasedWorries / stats.totalWorries) * 100) 
-                          : 0}% released
+                          : 0}% {t('easeboard.patterns.released')}
                       </span>
                       <div className="w-20 bg-gray-200 rounded-full h-2">
                         <div 
@@ -153,7 +155,7 @@ export default function EaseboardPage() {
 
             {/* Recent Activity */}
             <section className="bg-white p-6 rounded-2xl shadow-md">
-              <h2 className="font-semibold text-xl mb-4">Recent Activity</h2>
+              <h2 className="font-semibold text-xl mb-4">{t('easeboard.activity.title')}</h2>
               
               {getRecentActivity().length > 0 ? (
                 <div className="space-y-3">
@@ -171,19 +173,19 @@ export default function EaseboardPage() {
                           ? 'bg-green-100 text-green-800' 
                           : 'bg-orange-100 text-orange-800'
                       }`}>
-                        {worry.isReleased ? 'Released' : 'Active'}
+                        {worry.isReleased ? t('easeboard.activity.released') : t('easeboard.activity.active')}
                       </span>
                     </div>
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-gray-500 mb-4">No activity yet</p>
+                  <p className="text-gray-500 mb-4">{t('easeboard.activity.noActivity')}</p>
                   <Link 
                     href="/add-worry" 
                     className="inline-block px-4 py-2 bg-gradient-to-r from-accentLavender to-accentTeal text-white rounded-lg text-sm"
                   >
-                    Add Your First Worry
+                    {t('easeboard.activity.addFirst')}
                   </Link>
                 </div>
               )}
@@ -192,11 +194,11 @@ export default function EaseboardPage() {
 
           {/* How I've Been Feeling Chart Placeholder */}
           <section className="bg-white p-6 rounded-2xl shadow-md">
-            <h2 className="font-semibold mb-2">How I&apos;ve Been Feeling</h2>
+            <h2 className="font-semibold mb-2">{t('easeboard.mood.title')}</h2>
             <div className="h-32 flex items-center justify-center text-gray-400 bg-gray-50 rounded-lg">
               <div className="text-center">
                 <p className="mb-2">📊</p>
-                <p className="text-sm">Mood tracking coming soon</p>
+                <p className="text-sm">{t('easeboard.mood.comingSoon')}</p>
               </div>
             </div>
           </section>
