@@ -11,7 +11,8 @@
     "confirm": "Confirmer",
     "welcome": "Bienvenue",
     "error": "Erreur",
-    "success": "Succès"
+    "success": "Succès",
+    "challengeWorry": "Défier ce souci"
   },
   "navigation": {
     "home": "Accueil",
@@ -396,6 +397,76 @@
     "mood": {
       "title": "Comment je me suis senti",
       "comingSoon": "Suivi de l'humeur bientôt disponible"
+    }
+  },
+  "companion": {
+    "title": "Votre compagnon compatissant",
+    "subtitle": "Guidance douce pour votre parcours avec l'inquiétude et la paix",
+    "quickTipsTitle": "Conseils rapides pour aujourd'hui",
+    "guidedHelpTitle": "Aide guidée",
+    "clickToCollapse": "Cliquer pour réduire",
+    "clickForGuidance": "Cliquer pour une guidance détaillée",
+    "gentleRemindersTitle": "Rappels doux",
+    "startJourneyTitle": "Nouveau ici ? Commencez votre voyage",
+    "quickTips": {
+      "startSmall": {
+        "title": "Commencer petit",
+        "tip": "Commencez par une inquiétude à la fois. Vous n'avez pas besoin de tout résoudre aujourd'hui."
+      },
+      "setWorryTime": {
+        "title": "Définir un temps d'inquiétude",
+        "tip": "Consacrez 10-15 minutes par jour au traitement des inquiétudes, puis laissez-les reposer."
+      },
+      "beGentle": {
+        "title": "Soyez doux",
+        "tip": "Traitez vos inquiétudes (et vous-même) avec la gentillesse que vous montreriez à un bon ami."
+      },
+      "practiceRegularly": {
+        "title": "Pratiquer régulièrement",
+        "tip": "Comme toute compétence, la gestion de l'inquiétude devient plus facile avec une pratique constante."
+      }
+    },
+    "guides": {
+      "worryInput": {
+        "title": "Comment ajouter des inquiétudes",
+        "content": "Ajouter des inquiétudes à Ease, c'est comme les placer dans un contenant sûr où elles peuvent être reconnues et traitées :\\n\\n1. **Donnez un nom à votre inquiétude** - Gardez-le simple et spécifique\\n2. **Partagez pourquoi c'est important** - Exprimez ce qui est vraiment en jeu pour vous\\n3. **Choisissez un domaine de vie** - Cela vous aide à voir les modèles avec le temps\\n4. **Remarquez les réponses corporelles** - La conscience des symptômes physiques aide à reconnaître les modèles d'inquiétude\\n\\nRappelez-vous : Ajouter une inquiétude ne la rend pas plus grande - elle la rend gérable."
+      },
+      "breathing": {
+        "title": "Exercices de respiration",
+        "content": "Le modèle de respiration 4-4-6-2 est conçu pour activer la réponse de relaxation de votre corps :\\n\\n• **Inspirez pendant 4 temps** - Respirez lentement par le nez\\n• **Retenez pendant 4 temps** - Laissez le souffle s'installer dans votre corps\\n• **Expirez pendant 6 temps** - Relâchez lentement par la bouche\\n• **Pause pendant 2 temps** - Reposez-vous avant le prochain souffle\\n\\nCe modèle aide à déplacer votre système nerveux de l'anxiété vers le calme."
+      },
+      "releasing": {
+        "title": "Libérer les inquiétudes",
+        "content": "Libérer une inquiétude ne signifie pas l'ignorer. Cela signifie que vous l'avez suffisamment traitée pour l'instant :\\n\\n• **Reconnaissez l'inquiétude** - \\\"Je te vois, inquiétude à propos de...\\\"\\n• **Remerciez-la de vous protéger** - Les inquiétudes viennent souvent du soin\\n• **Libérez-la doucement** - Comme libérer un papillon\\n• **Faites confiance au processus** - Vous pouvez toujours y revenir si nécessaire\\n\\nLibérer est un acte d'auto-compassion, pas d'évitement."
+      },
+      "patterns": {
+        "title": "Comprendre vos modèles",
+        "content": "Votre Easeboard montre des modèles pour vous aider à comprendre vos habitudes d'inquiétude :\\n\\n• **Catégories** - Quels domaines de la vie déclenchent le plus d'inquiétudes ?\\n• **Réponses corporelles** - Comment votre corps signale-t-il l'inquiétude ?\\n• **Timing** - Quand les inquiétudes ont-elles tendance à apparaître ?\\n• **Taux de libération** - À quelle fréquence laissez-vous partir les inquiétudes ?\\n\\nLes modèles ne sont pas des jugements - ils sont des informations pour vous aider à mieux prendre soin de vous."
+      }
+    },
+    "reminders": {
+      "feelings": "Vos sentiments sont valides et méritent des soins.",
+      "alone": "Vous n'avez pas à porter toutes vos inquiétudes seul.",
+      "peace": "Prendre du temps pour la paix n'est pas égoïste—c'est nécessaire.",
+      "steps": "Chaque petit pas vers le calme est significatif.",
+      "resilient": "Vous êtes plus résilient que vos inquiétudes."
+    },
+    "journey": {
+      "addWorry": {
+        "title": "Ajoutez votre première inquiétude",
+        "description": "Commencez par placer doucement une préoccupation dans votre bocal à inquiétudes.",
+        "button": "Ajouter une inquiétude"
+      },
+      "findCalm": {
+        "title": "Trouvez votre calme",
+        "description": "Essayez un exercice de respiration ou une technique douce.",
+        "button": "Coin calme"
+      },
+      "trackProgress": {
+        "title": "Suivez vos progrès",
+        "description": "Voyez vos modèles et célébrez votre croissance.",
+        "button": "Easeboard"
+      }
     }
   }
 }
