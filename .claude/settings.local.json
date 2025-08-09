@@ -18,7 +18,8 @@
       "Bash(npm run lint)",
       "Bash(npx tsc:*)",
       "Bash(pnpm build:*)",
-      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" pnpm build)"
+      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" pnpm build)",
+      "Bash(timeout:*)"
     ],
     "deny": []
   }
